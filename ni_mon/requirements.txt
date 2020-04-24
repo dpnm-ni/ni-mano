@@ -1,0 +1,11 @@
+# should also freeze depedencies modules
+Werkzeug==0.16.0
+
+connexion == 1.1.15
+python_dateutil == 2.6.0
+setuptools >= 21.0.0
+python-keystoneclient == 3.17.0
+requests == 2.22.0
+confluent-kafka==1.1.0
+pyyaml==5.1.2
+influxdb==5.2.3

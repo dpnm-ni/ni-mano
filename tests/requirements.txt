@@ -1,0 +1,4 @@
+pytest
+pyyaml
+git+https://github.com/dpnm-ni/ni_mon_client.git
+git+https://github.com/dpnm-ni/nfvo_module_client.git

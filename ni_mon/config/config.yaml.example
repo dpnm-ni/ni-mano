@@ -1,0 +1,19 @@
+kafka_client:
+  consumer:
+    bootstrap.servers: <kafka_server_address>:9092
+    enable.auto.commit: False
+    enable.auto.offset.store: False
+    # debug: 'cgrp,fetch,topic,broker,protocol'
+
+openstack_client:
+  auth:
+    auth_url: "http://<controller_ip>/identity/v3"
+    username: "admin"
+    password: <password>
+    project_name: "demo"
+    user_domain_id: "default"
+    project_domain_id: "default"
+
+influxdb_client:
+  server: <influxdb_server_address>
+  database: collectd

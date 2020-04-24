@@ -1,0 +1,37 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# config files, only keep example files
+*.yaml
+
+# virtual env
+.env/
+
+# code editor
+.vscode
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+#Ipython Notebook
+.ipynb_checkpoints

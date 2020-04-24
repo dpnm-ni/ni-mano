@@ -1,0 +1,15 @@
+confluent-kafka==1.1.0
+pyyaml==5.1.2
+influxdb==5.2.3
+Werkzeug==0.16.0
+connexion == 1.1.15
+python_dateutil == 2.6.0
+setuptools >= 21.0.0
+python-keystoneclient == 3.17.0
+requests == 2.22.0
+certifi >= 14.05.14
+six >= 1.10
+urllib3 >= 1.15.1
+python-openstackclient == 4.0.0
+tinydb == 3.15.1
+tinydb-serialization == 1.0.4

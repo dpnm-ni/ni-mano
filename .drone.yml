@@ -1,0 +1,25 @@
+---
+kind: pipeline
+type: docker
+name: prod__ni-mon-tests__nightly__python-3.5
+
+steps:
+- name: config target
+  image: python:3.5
+  commands:
+  - cd config
+  - cp config.yaml.example config.yaml
+  - sed -i 's/<ni_mon_server_addr>/141.223.82.66/g' config.yaml
+  - sed -i 's/<ni_ni_nfvo_addr>/141.223.82.66/g' config.yaml
+- name: test with python 3
+  image: python:3.5
+  commands:
+  - pip install -r requirements_ni_tests.txt
+  - pytest tests/test_ni_mon.py
+
+trigger:
+  branch:
+  - master
+  event:
+  - cron
+

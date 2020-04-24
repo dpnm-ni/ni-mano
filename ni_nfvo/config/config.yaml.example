@@ -1,0 +1,14 @@
+openstack_client:
+  auth:
+    auth_url: "http://<monitoring_server_address>/identity/v3"
+    username: "admin"
+    password: <password>
+    project_name: "demo"
+    user_domain_id: "default"
+    project_domain_id: "default"
+
+  vnf:
+    # each vnfs connect two openstack networks, data network and management network
+    # the name should be unique
+    data_net_name: "NI-data"
+    mgmt_net_name: "NI-management"
