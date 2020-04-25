@@ -1,7 +1,2 @@
-certifi >= 14.05.14
-six >= 1.10
-python_dateutil >= 2.5.3
-setuptools >= 21.0.0
-urllib3 >= 1.15.1
 git+https://github.com/dpnm-ni/ni-mano#subdirectory=ni_mon_client_api
 git+https://github.com/dpnm-ni/ni-mano#subdirectory=ni_nfvo_client_api

@@ -10,14 +10,16 @@ steps:
     MONITORING_HOST_PROD:
       from_secret: monitoring_host_prod
   commands:
+  - echo $MONITORING_HOST_PROD
   - cd tests/config
   - cp config.yaml.example config.yaml
   - sed -i "s/<ni_mon_server_addr>/$MONITORING_HOST_PROD/g" config.yaml
   - sed -i "s/<ni_ni_nfvo_addr>/$MONITORING_HOST_PROD/g" config.yaml
+  - cat config.yaml
 - name: test with python 3
   image: python:3.5
   commands:
-  - pip install -r requirements_ni_tests.txt
+  - ./install_reqs_dev.sh
   - pytest tests/test_ni_mon.py
 
 trigger:

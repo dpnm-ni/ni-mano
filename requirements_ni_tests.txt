@@ -1,3 +1,0 @@
--r requirements_ni_clients.txt
-pytest==5.4.1
-pyyaml==5.1.2
