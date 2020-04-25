@@ -1,16 +1,19 @@
 ---
 kind: pipeline
 type: docker
-name: prod__ni-mon-tests__nightly__python-3.5
+name: ni-mon-tests__nightly__python-3.5__prod
 
 steps:
 - name: config target
   image: python:3.5
+  environment:
+    MONITORING_HOST_PROD:
+      from_secret: monitoring_host_prod
   commands:
-  - cd config
+  - cd tests/config
   - cp config.yaml.example config.yaml
-  - sed -i 's/<ni_mon_server_addr>/141.223.82.66/g' config.yaml
-  - sed -i 's/<ni_ni_nfvo_addr>/141.223.82.66/g' config.yaml
+  - sed -i "s/<ni_mon_server_addr>/$MONITORING_HOST_PROD/g" config.yaml
+  - sed -i "s/<ni_ni_nfvo_addr>/$MONITORING_HOST_PROD/g" config.yaml
 - name: test with python 3
   image: python:3.5
   commands:
