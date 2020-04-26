@@ -19,6 +19,16 @@ steps:
   commands:
   - ./install_reqs_tests.sh
   - pytest tests/test_ni_mon.py
+- name: notify slack if nightly test fail
+  image: python:3.5
+  commands:
+  - export SLACK_HOOK_URL='https://hooks.slack.com/services/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'
+  - curl -X POST -H 'Content-type:application/json' --data '{"channel":"#ci_status", "username":"ci_report",
+      "text":"_${DRONE_REPO_NAME}__:Testbed nightly check __failed__"}'
+      $SLACK_HOOK_URL
+  when:
+    status:
+    - failure
 
 trigger:
   branch:
@@ -81,3 +91,15 @@ steps:
   - bash -c 'python -m ni_mon > ni_mon.log 2>&1' & sleep 5
   - bash -c 'python -m ni_nfvo > ni_nfvo.log 2>&1' & sleep 5
   - python -m pytest tests || (cat *.log & exit 1)
+
+- name: notify slack test result
+  image: python:3.5
+  commands:
+  - export SLACK_HOOK_URL='https://hooks.slack.com/services/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'
+  - curl -X POST -H 'Content-type:application/json' --data '{"channel":"#ci_status", "username":"ci_report",
+      "text":"_${DRONE_REPO_NAME}__:Build status is __${DRONE_BUILD_STATUS}__"}'
+      $SLACK_HOOK_URL
+  when:
+    status:
+    - success
+    - failure
