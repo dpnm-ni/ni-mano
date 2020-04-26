@@ -188,15 +188,17 @@ def get_nodes():  # noqa: E501
 
         if topo_node["type"] == "compute":
             for raw_node in raw_nodes:
-                if topo_node["name"] == raw_node["hypervisor_hostname"]:
+                if topo_node["id"] == raw_node["hypervisor_hostname"]:
                     ip=raw_node["host_ip"]
                     n_cores=raw_node["vcpus"]
                     ram_mb=raw_node["memory_mb"]
                     break
 
         node = Node(
+                # in some case, we need to use compute node name,
+                # thus we use node name (hostname) as the node id
                 id=topo_node["id"],
-                name=topo_node["name"],
+                name=topo_node["id"],
                 type=topo_node["type"],
                 ip=ip,
                 n_cores=n_cores,
@@ -220,7 +222,7 @@ def get_topology():  # noqa: E501
     """
 
     topology = Topology()
-    topology.nodes = [node["name"] for node in topo.get("nodes")]
+    topology.nodes = [node["id"] for node in topo.get("nodes")]
     topology.links = [link["id"] for link in topo.get("links")]
 
     return topology
@@ -368,7 +370,8 @@ def _get_vnf_instance(raw_vnf, ports):
             name=raw_vnf["name"],
             status=raw_vnf["status"],
             flavor_id=raw_vnf["flavor"]["id"],
-            node_id=_get_node_id(raw_vnf["OS-EXT-SRV-ATTR:host"]),
+            # node id is the same as hostname
+            node_id=raw_vnf["OS-EXT-SRV-ATTR:host"],
             ports=ports
         )
 
@@ -376,10 +379,3 @@ def _get_vnf_instance(raw_vnf, ports):
 def _get_port_name(port_id):
     # this is how openstack map the port id to port name
     return "tap%s" %(port_id[:11])
-
-
-def _get_node_id(node_name):
-    for node in topo.get("nodes"):
-        if node["name"] == node_name:
-            return node["id"]
-    abort(404, "Cannot find node if of node %s" %(node_name))

@@ -73,10 +73,10 @@ def test_measurement_vnf():
 def test_measurement_node():
     nodes = ni_mon_api.get_nodes()
     for node in nodes:
-        measurement_types = ni_mon_api.get_measurement_types(node.name)
+        measurement_types = ni_mon_api.get_measurement_types(node.id)
 
         for measurement_type in measurement_types:
             current_dt = datetime.now()
             past_dt = current_dt - timedelta(seconds=30)
-            measurement_results = ni_mon_api.get_measurement(node.name, measurement_type, past_dt, current_dt)
+            measurement_results = ni_mon_api.get_measurement(node.id, measurement_type, past_dt, current_dt)
             assert len(measurement_results) > 0

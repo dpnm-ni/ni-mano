@@ -1,10 +1,9 @@
+# The id of compute node should be the same as the node hostname
 nodes:
   - id: "<node1_id>"
-    name: "<node1_id>"
     type: "compute"
     core_freq_MHz: 3200
   - id: "<sw1_id>"
-    name: "<sw1_id>"
     type: "switch"
 links:
   - id: 1
