@@ -14,10 +14,10 @@ steps:
   - cp config.yaml.example config.yaml
   - sed -i "s/<ni_mon_server_addr>/$MONITORING_HOST_PROD/g" config.yaml
   - sed -i "s/<ni_ni_nfvo_addr>/$MONITORING_HOST_PROD/g" config.yaml
-- name: test with python 3
+- name: run test
   image: python:3.5
   commands:
-  - ./install_reqs_dev.sh
+  - ./install_reqs_tests.sh
   - pytest tests/test_ni_mon.py
 
 trigger:
@@ -25,4 +25,60 @@ trigger:
   - master
   event:
   - cron
+
+---
+kind: pipeline
+type: docker
+name: ni-tests__dev
+
+steps:
+- name: config target
+  image: python:3.5
+  environment:
+    COMPUTE_HOSTNAME_DEV:
+      from_secret: compute_hostname_dev
+    CONTROLLER_HOST_DEV:
+      from_secret: controller_host_dev
+    MONITORING_HOST_DEV:
+      from_secret: monitoring_host_dev
+    OPENSTACK_PASSWORD:
+      from_secret: openstack_password
+    MONITORING_HOST_PROD:
+      from_secret: monitoring_host_prod
+
+  commands:
+  # config ni_mon
+  - cd ni_mon/config
+  - cp config.yaml.example config.yaml
+  - sed -i "s/<kafka_server_address>/$MONITORING_HOST_DEV/g" config.yaml
+  - sed -i "s/<controller_ip>/$CONTROLLER_HOST_DEV/g" config.yaml
+  - sed -i "s/<influxdb_server_address>/$MONITORING_HOST_DEV/g" config.yaml
+  - sed -i "s/<password>/$OPENSTACK_PASSWORD/g" config.yaml
+  - cat config.yaml
+  # does not need to subtitute the sw-id
+  - cp topo.yaml.example topo.yaml
+  - sed -i "s/<node1_id>/$COMPUTE_HOSTNAME_DEV/g" topo.yaml
+
+  # config ni_nfvo
+  - cd ../../ni_nfvo/config
+  - cp config.yaml.example config.yaml
+  - sed -i "s/<controller_server_address>/$CONTROLLER_HOST_DEV/g" config.yaml
+  - sed -i "s/<password>/$OPENSTACK_PASSWORD/g" config.yaml
+  - cat config.yaml
+
+  # config tests
+  - cd ../../tests/config
+  - cp config.yaml.example config.yaml
+  - sed -i "s/<ni_mon_server_addr>/localhost/g" config.yaml
+  - sed -i "s/<ni_ni_nfvo_addr>/localhost/g" config.yaml
+  - cat config.yaml
+
+- name: run modules and tests
+  image: python:3.5
+  commands:
+  - ./install_reqs_all.sh
+  # need sleep so that services has time to init
+  - bash -c 'python -m ni_mon > ni_mon.log 2>&1' & sleep 5
+  - bash -c 'python -m ni_nfvo > ni_nfvo.log 2>&1' & sleep 5
+  - python -m pytest tests || cat *.log
 

@@ -9,7 +9,7 @@ openstack_client:
   auth:
     auth_url: "http://<controller_ip>/identity/v3"
     username: "admin"
-    password: <password>
+    password: "<password>"
     project_name: "demo"
     user_domain_id: "default"
     project_domain_id: "default"
