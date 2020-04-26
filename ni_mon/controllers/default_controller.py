@@ -19,25 +19,26 @@ from flask import abort
 
 
 def get_measurement_types(id):  # noqa: E501
-    """get a list of measurements of a vnf instance
+    """get a list of measurements of a vnf instance or a compute node
 
-    Return a list of measurements of a vnf instance  # noqa: E501
+     # noqa: E501
 
-    :param id: The id of the vnf instance
+    :param id: The id of the vnf instance or compute node
     :type id: str
 
     :rtype: List[str]
     """
     return influxdb_client.get_measurement_types(id)
 
+
 def get_measurement(id, measurement_type, start_time, end_time):  # noqa: E501
-    """get measurement value
+    """Return the value of a measurement of a vnf instance or compute node at a timestamp or a timestamp period
 
-    Return the value of a measurement of a vnf instance at a timestamp or a timestamp period  # noqa: E501
+     # noqa: E501
 
-    :param id: The id of the vnf instance
+    :param id: The id of the vnf instance or compute node
     :type id: str
-    :param measurement_type: The measurement_type
+    :param measurement_type: The measurement metric, which can be get using getMeasurementTypes()
     :type measurement_type: str
     :param start_time: starting time to get the measurement
     :type start_time: str
@@ -62,9 +63,9 @@ def get_measurement(id, measurement_type, start_time, end_time):  # noqa: E501
 
 
 def get_link(id):  # noqa: E501
-    """get detailed information of a link
+    """get a link
 
-    Return detailed information of a link.  # noqa: E501
+     # noqa: E501
 
     :param id: The id of the link
     :type id: str
@@ -91,7 +92,7 @@ def get_link(id):  # noqa: E501
 def get_link_between_nodes(node1_id, node2_id):  # noqa: E501
     """get detailed information of a link between two specific nodes
 
-    Return detailed information of a link between two specific nodes.  # noqa: E501
+     # noqa: E501
 
     :param node1_id: The id of the first node in the link
     :type node1_id: str
@@ -122,7 +123,7 @@ def get_link_between_nodes(node1_id, node2_id):  # noqa: E501
 def get_links():  # noqa: E501
     """get list of link
 
-    Return list of link id.  # noqa: E501
+     # noqa: E501
 
 
     :rtype: List[Link]
@@ -146,9 +147,9 @@ def get_links():  # noqa: E501
 
 
 def get_node(id):  # noqa: E501
-    """get detailed information of a node
+    """get information of a node
 
-    Return detailed information of a node  # noqa: E501
+     # noqa: E501
 
     :param id: The id of the node
     :type id: str
@@ -166,7 +167,7 @@ def get_node(id):  # noqa: E501
 def get_nodes():  # noqa: E501
     """get a list of nodes
 
-    Return a list of nodes  # noqa: E501
+     # noqa: E501
 
 
     :rtype: List[Node]
@@ -213,9 +214,9 @@ def get_nodes():  # noqa: E501
 
 
 def get_topology():  # noqa: E501
-    """get topology
+    """Return a topology with lists of node names and link ids
 
-    Return a topology with lists of node names and link ids  # noqa: E501
+     # noqa: E501
 
 
     :rtype: Topology
@@ -227,10 +228,11 @@ def get_topology():  # noqa: E501
 
     return topology
 
+
 def get_vnf_flavor(id):  # noqa: E501
     """get detailed information of a vnfflavor
 
-    Return detailed information of a vnfflavor  # noqa: E501
+     # noqa: E501
 
     :param id: The id of the vnfflavor
     :type id: str
@@ -274,7 +276,7 @@ def get_vnf_flavor(id):  # noqa: E501
 def get_vnf_flavors():  # noqa: E501
     """get a list of vnfflavors
 
-    Return a list of vnfflavors  # noqa: E501
+     # noqa: E501
 
 
     :rtype: List[VNFFlavor]
@@ -296,7 +298,7 @@ def get_vnf_flavors():  # noqa: E501
 def get_vnf_instance(id):  # noqa: E501
     """get detailed information of a vnf instance
 
-    Return detailed information of a vnf instance  # noqa: E501
+     # noqa: E501
 
     :param id: The id of the vnf instance
     :type id: str
@@ -326,7 +328,7 @@ def get_vnf_instance(id):  # noqa: E501
 def get_vnf_instances():  # noqa: E501
     """get a list of vnf instances
 
-    Return a list of vnf instances  # noqa: E501
+     # noqa: E501
 
 
     :rtype: List[VNFInstance]

@@ -56,6 +56,7 @@ class Topology(object):
     def nodes(self):
         """Gets the nodes of this Topology.  # noqa: E501
 
+        List of node ids  # noqa: E501
 
         :return: The nodes of this Topology.  # noqa: E501
         :rtype: list[str]
@@ -66,6 +67,7 @@ class Topology(object):
     def nodes(self, nodes):
         """Sets the nodes of this Topology.
 
+        List of node ids  # noqa: E501
 
         :param nodes: The nodes of this Topology.  # noqa: E501
         :type: list[str]
@@ -77,6 +79,7 @@ class Topology(object):
     def links(self):
         """Gets the links of this Topology.  # noqa: E501
 
+        List of link ids  # noqa: E501
 
         :return: The links of this Topology.  # noqa: E501
         :rtype: list[str]
@@ -87,6 +90,7 @@ class Topology(object):
     def links(self, links):
         """Sets the links of this Topology.
 
+        List of link ids  # noqa: E501
 
         :param links: The links of this Topology.  # noqa: E501
         :type: list[str]

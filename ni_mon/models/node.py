@@ -123,6 +123,7 @@ class Node(Model):
     def type(self) -> str:
         """Gets the type of this Node.
 
+        the type of node. currently, can be compute or switch  # noqa: E501
 
         :return: The type of this Node.
         :rtype: str
@@ -133,6 +134,7 @@ class Node(Model):
     def type(self, type: str):
         """Sets the type of this Node.
 
+        the type of node. currently, can be compute or switch  # noqa: E501
 
         :param type: The type of this Node.
         :type type: str

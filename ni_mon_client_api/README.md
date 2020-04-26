@@ -56,7 +56,7 @@ api_instance = ni_mon_client.DefaultApi(ni_mon_client.ApiClient(configuration))
 id = 'id_example' # str | The id of the link
 
 try:
-    # get detailed information of a link
+    # get a link
     api_response = api_instance.get_link(id)
     pprint(api_response)
 except ApiException as e:
@@ -70,14 +70,14 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*DefaultApi* | [**get_link**](docs/DefaultApi.md#get_link) | **GET** /link/{id} | get detailed information of a link
+*DefaultApi* | [**get_link**](docs/DefaultApi.md#get_link) | **GET** /link/{id} | get a link
 *DefaultApi* | [**get_link_between_nodes**](docs/DefaultApi.md#get_link_between_nodes) | **GET** /link_between_nodes | get detailed information of a link between two specific nodes
 *DefaultApi* | [**get_links**](docs/DefaultApi.md#get_links) | **GET** /links | get list of link
-*DefaultApi* | [**get_measurement**](docs/DefaultApi.md#get_measurement) | **GET** /vnfinstances/{id}/{measurement_type} | get measurement value
-*DefaultApi* | [**get_measurement_types**](docs/DefaultApi.md#get_measurement_types) | **GET** /measurement_types/{id} | get a list of measurements of a vnf instance
-*DefaultApi* | [**get_node**](docs/DefaultApi.md#get_node) | **GET** /nodes/{id} | get detailed information of a node
+*DefaultApi* | [**get_measurement**](docs/DefaultApi.md#get_measurement) | **GET** /measurements/{id}/{measurement_type} | Return the value of a measurement of a vnf instance or compute node at a timestamp or a timestamp period
+*DefaultApi* | [**get_measurement_types**](docs/DefaultApi.md#get_measurement_types) | **GET** /measurement_types/{id} | get a list of measurements of a vnf instance or a compute node
+*DefaultApi* | [**get_node**](docs/DefaultApi.md#get_node) | **GET** /nodes/{id} | get information of a node
 *DefaultApi* | [**get_nodes**](docs/DefaultApi.md#get_nodes) | **GET** /nodes | get a list of nodes
-*DefaultApi* | [**get_topology**](docs/DefaultApi.md#get_topology) | **GET** /topology | get topology
+*DefaultApi* | [**get_topology**](docs/DefaultApi.md#get_topology) | **GET** /topology | Return a topology with lists of node names and link ids
 *DefaultApi* | [**get_vnf_flavor**](docs/DefaultApi.md#get_vnf_flavor) | **GET** /vnfflavors/{id} | get detailed information of a vnfflavor
 *DefaultApi* | [**get_vnf_flavors**](docs/DefaultApi.md#get_vnf_flavors) | **GET** /vnfflavors | get a list of vnfflavors
 *DefaultApi* | [**get_vnf_instance**](docs/DefaultApi.md#get_vnf_instance) | **GET** /vnfinstances/{id} | get detailed information of a vnf instance

@@ -5,7 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** |  | [optional] 
 **name** | **str** |  | [optional] 
-**type** | **str** |  | [optional] 
+**type** | **str** | the type of node. currently, can be compute or switch | [optional] 
 **ip** | **str** |  | [optional] 
 **n_cores** | **int** |  | [optional] 
 **core_freq_mhz** | **int** |  | [optional] 

@@ -34,9 +34,8 @@ class DefaultApi(object):
         self.api_client = api_client
 
     def get_link(self, id, **kwargs):  # noqa: E501
-        """get detailed information of a link  # noqa: E501
+        """get a link  # noqa: E501
 
-        Return detailed information of a link.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_link(id, async_req=True)
@@ -56,9 +55,8 @@ class DefaultApi(object):
             return data
 
     def get_link_with_http_info(self, id, **kwargs):  # noqa: E501
-        """get detailed information of a link  # noqa: E501
+        """get a link  # noqa: E501
 
-        Return detailed information of a link.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_link_with_http_info(id, async_req=True)
@@ -131,7 +129,6 @@ class DefaultApi(object):
     def get_link_between_nodes(self, node1_id, node2_id, **kwargs):  # noqa: E501
         """get detailed information of a link between two specific nodes  # noqa: E501
 
-        Return detailed information of a link between two specific nodes.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_link_between_nodes(node1_id, node2_id, async_req=True)
@@ -154,7 +151,6 @@ class DefaultApi(object):
     def get_link_between_nodes_with_http_info(self, node1_id, node2_id, **kwargs):  # noqa: E501
         """get detailed information of a link between two specific nodes  # noqa: E501
 
-        Return detailed information of a link between two specific nodes.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_link_between_nodes_with_http_info(node1_id, node2_id, async_req=True)
@@ -234,7 +230,6 @@ class DefaultApi(object):
     def get_links(self, **kwargs):  # noqa: E501
         """get list of link  # noqa: E501
 
-        Return list of link id.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_links(async_req=True)
@@ -255,7 +250,6 @@ class DefaultApi(object):
     def get_links_with_http_info(self, **kwargs):  # noqa: E501
         """get list of link  # noqa: E501
 
-        Return list of link id.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_links_with_http_info(async_req=True)
@@ -319,17 +313,16 @@ class DefaultApi(object):
             collection_formats=collection_formats)
 
     def get_measurement(self, id, measurement_type, start_time, end_time, **kwargs):  # noqa: E501
-        """get measurement value  # noqa: E501
+        """Return the value of a measurement of a vnf instance or compute node at a timestamp or a timestamp period  # noqa: E501
 
-        Return the value of a measurement of a vnf instance at a timestamp or a timestamp period   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_measurement(id, measurement_type, start_time, end_time, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str id: The id of the vnf instance (required)
-        :param str measurement_type: The measurement_type (required)
+        :param str id: The id of the vnf instance or compute node (required)
+        :param str measurement_type: The measurement metric, which can be get using getMeasurementTypes() (required)
         :param datetime start_time: starting time to get the measurement (required)
         :param datetime end_time: ending time to get the measurement (required)
         :return: list[MonitoringEntry]
@@ -344,17 +337,16 @@ class DefaultApi(object):
             return data
 
     def get_measurement_with_http_info(self, id, measurement_type, start_time, end_time, **kwargs):  # noqa: E501
-        """get measurement value  # noqa: E501
+        """Return the value of a measurement of a vnf instance or compute node at a timestamp or a timestamp period  # noqa: E501
 
-        Return the value of a measurement of a vnf instance at a timestamp or a timestamp period   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_measurement_with_http_info(id, measurement_type, start_time, end_time, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str id: The id of the vnf instance (required)
-        :param str measurement_type: The measurement_type (required)
+        :param str id: The id of the vnf instance or compute node (required)
+        :param str measurement_type: The measurement metric, which can be get using getMeasurementTypes() (required)
         :param datetime start_time: starting time to get the measurement (required)
         :param datetime end_time: ending time to get the measurement (required)
         :return: list[MonitoringEntry]
@@ -422,7 +414,7 @@ class DefaultApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/vnfinstances/{id}/{measurement_type}', 'GET',
+            '/measurements/{id}/{measurement_type}', 'GET',
             path_params,
             query_params,
             header_params,
@@ -438,16 +430,15 @@ class DefaultApi(object):
             collection_formats=collection_formats)
 
     def get_measurement_types(self, id, **kwargs):  # noqa: E501
-        """get a list of measurements of a vnf instance  # noqa: E501
+        """get a list of measurements of a vnf instance or a compute node  # noqa: E501
 
-        Return a list of measurements of a vnf instance   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_measurement_types(id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str id: The id of the vnf instance (required)
+        :param str id: The id of the vnf instance or compute node (required)
         :return: list[str]
                  If the method is called asynchronously,
                  returns the request thread.
@@ -460,16 +451,15 @@ class DefaultApi(object):
             return data
 
     def get_measurement_types_with_http_info(self, id, **kwargs):  # noqa: E501
-        """get a list of measurements of a vnf instance  # noqa: E501
+        """get a list of measurements of a vnf instance or a compute node  # noqa: E501
 
-        Return a list of measurements of a vnf instance   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_measurement_types_with_http_info(id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str id: The id of the vnf instance (required)
+        :param str id: The id of the vnf instance or compute node (required)
         :return: list[str]
                  If the method is called asynchronously,
                  returns the request thread.
@@ -533,9 +523,8 @@ class DefaultApi(object):
             collection_formats=collection_formats)
 
     def get_node(self, id, **kwargs):  # noqa: E501
-        """get detailed information of a node  # noqa: E501
+        """get information of a node  # noqa: E501
 
-        Return detailed information of a node   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_node(id, async_req=True)
@@ -555,9 +544,8 @@ class DefaultApi(object):
             return data
 
     def get_node_with_http_info(self, id, **kwargs):  # noqa: E501
-        """get detailed information of a node  # noqa: E501
+        """get information of a node  # noqa: E501
 
-        Return detailed information of a node   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_node_with_http_info(id, async_req=True)
@@ -630,7 +618,6 @@ class DefaultApi(object):
     def get_nodes(self, **kwargs):  # noqa: E501
         """get a list of nodes  # noqa: E501
 
-        Return a list of nodes   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_nodes(async_req=True)
@@ -651,7 +638,6 @@ class DefaultApi(object):
     def get_nodes_with_http_info(self, **kwargs):  # noqa: E501
         """get a list of nodes  # noqa: E501
 
-        Return a list of nodes   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_nodes_with_http_info(async_req=True)
@@ -715,9 +701,8 @@ class DefaultApi(object):
             collection_formats=collection_formats)
 
     def get_topology(self, **kwargs):  # noqa: E501
-        """get topology  # noqa: E501
+        """Return a topology with lists of node names and link ids  # noqa: E501
 
-        Return a topology with lists of node names and link ids   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_topology(async_req=True)
@@ -736,9 +721,8 @@ class DefaultApi(object):
             return data
 
     def get_topology_with_http_info(self, **kwargs):  # noqa: E501
-        """get topology  # noqa: E501
+        """Return a topology with lists of node names and link ids  # noqa: E501
 
-        Return a topology with lists of node names and link ids   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_topology_with_http_info(async_req=True)
@@ -804,14 +788,13 @@ class DefaultApi(object):
     def get_vnf_flavor(self, id, **kwargs):  # noqa: E501
         """get detailed information of a vnfflavor  # noqa: E501
 
-        Return detailed information of a vnfflavor   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_vnf_flavor(id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str id: The name of the vnfflavor (required)
+        :param str id: The id of the vnfflavor (required)
         :return: VNFFlavor
                  If the method is called asynchronously,
                  returns the request thread.
@@ -826,14 +809,13 @@ class DefaultApi(object):
     def get_vnf_flavor_with_http_info(self, id, **kwargs):  # noqa: E501
         """get detailed information of a vnfflavor  # noqa: E501
 
-        Return detailed information of a vnfflavor   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_vnf_flavor_with_http_info(id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str id: The name of the vnfflavor (required)
+        :param str id: The id of the vnfflavor (required)
         :return: VNFFlavor
                  If the method is called asynchronously,
                  returns the request thread.
@@ -899,7 +881,6 @@ class DefaultApi(object):
     def get_vnf_flavors(self, **kwargs):  # noqa: E501
         """get a list of vnfflavors  # noqa: E501
 
-        Return a list of vnfflavors   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_vnf_flavors(async_req=True)
@@ -920,7 +901,6 @@ class DefaultApi(object):
     def get_vnf_flavors_with_http_info(self, **kwargs):  # noqa: E501
         """get a list of vnfflavors  # noqa: E501
 
-        Return a list of vnfflavors   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_vnf_flavors_with_http_info(async_req=True)
@@ -986,7 +966,6 @@ class DefaultApi(object):
     def get_vnf_instance(self, id, **kwargs):  # noqa: E501
         """get detailed information of a vnf instance  # noqa: E501
 
-        Return detailed information of a vnf instance   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_vnf_instance(id, async_req=True)
@@ -1008,7 +987,6 @@ class DefaultApi(object):
     def get_vnf_instance_with_http_info(self, id, **kwargs):  # noqa: E501
         """get detailed information of a vnf instance  # noqa: E501
 
-        Return detailed information of a vnf instance   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_vnf_instance_with_http_info(id, async_req=True)
@@ -1081,7 +1059,6 @@ class DefaultApi(object):
     def get_vnf_instances(self, **kwargs):  # noqa: E501
         """get a list of vnf instances  # noqa: E501
 
-        Return a list of vnf instances   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_vnf_instances(async_req=True)
@@ -1102,7 +1079,6 @@ class DefaultApi(object):
     def get_vnf_instances_with_http_info(self, **kwargs):  # noqa: E501
         """get a list of vnf instances  # noqa: E501
 
-        Return a list of vnf instances   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_vnf_instances_with_http_info(async_req=True)

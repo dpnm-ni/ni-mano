@@ -32,7 +32,7 @@ class TestDefaultApi(unittest.TestCase):
     def test_get_link(self):
         """Test case for get_link
 
-        get detailed information of a link  # noqa: E501
+        get a link  # noqa: E501
         """
         pass
 
@@ -53,21 +53,21 @@ class TestDefaultApi(unittest.TestCase):
     def test_get_measurement(self):
         """Test case for get_measurement
 
-        get measurement value  # noqa: E501
+        Return the value of a measurement of a vnf instance or compute node at a timestamp or a timestamp period  # noqa: E501
         """
         pass
 
     def test_get_measurement_types(self):
         """Test case for get_measurement_types
 
-        get a list of measurements of a vnf instance  # noqa: E501
+        get a list of measurements of a vnf instance or a compute node  # noqa: E501
         """
         pass
 
     def test_get_node(self):
         """Test case for get_node
 
-        get detailed information of a node  # noqa: E501
+        get information of a node  # noqa: E501
         """
         pass
 
@@ -81,7 +81,7 @@ class TestDefaultApi(unittest.TestCase):
     def test_get_topology(self):
         """Test case for get_topology
 
-        get topology  # noqa: E501
+        Return a topology with lists of node names and link ids  # noqa: E501
         """
         pass
 

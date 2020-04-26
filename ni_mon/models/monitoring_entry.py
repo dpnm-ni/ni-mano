@@ -87,6 +87,7 @@ class MonitoringEntry(Model):
     def component_type(self) -> str:
         """Gets the component_type of this MonitoringEntry.
 
+        unused for now  # noqa: E501
 
         :return: The component_type of this MonitoringEntry.
         :rtype: str
@@ -97,6 +98,7 @@ class MonitoringEntry(Model):
     def component_type(self, component_type: str):
         """Sets the component_type of this MonitoringEntry.
 
+        unused for now  # noqa: E501
 
         :param component_type: The component_type of this MonitoringEntry.
         :type component_type: str
@@ -108,6 +110,7 @@ class MonitoringEntry(Model):
     def component_id(self) -> str:
         """Gets the component_id of this MonitoringEntry.
 
+        the id of the VNF instance or compute node  # noqa: E501
 
         :return: The component_id of this MonitoringEntry.
         :rtype: str
@@ -118,6 +121,7 @@ class MonitoringEntry(Model):
     def component_id(self, component_id: str):
         """Sets the component_id of this MonitoringEntry.
 
+        the id of the VNF instance or compute node  # noqa: E501
 
         :param component_id: The component_id of this MonitoringEntry.
         :type component_id: str

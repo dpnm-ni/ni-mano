@@ -128,6 +128,7 @@ class Node(object):
     def type(self):
         """Gets the type of this Node.  # noqa: E501
 
+        the type of node. currently, can be compute or switch  # noqa: E501
 
         :return: The type of this Node.  # noqa: E501
         :rtype: str
@@ -138,6 +139,7 @@ class Node(object):
     def type(self, type):
         """Sets the type of this Node.
 
+        the type of node. currently, can be compute or switch  # noqa: E501
 
         :param type: The type of this Node.  # noqa: E501
         :type: str
