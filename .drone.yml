@@ -81,4 +81,3 @@ steps:
   - bash -c 'python -m ni_mon > ni_mon.log 2>&1' & sleep 5
   - bash -c 'python -m ni_nfvo > ni_nfvo.log 2>&1' & sleep 5
   - python -m pytest tests || (cat *.log & exit 1)
-
