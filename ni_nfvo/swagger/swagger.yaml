@@ -1,0 +1,391 @@
+---
+swagger: "2.0"
+info:
+  description: "NFVO module service for the NI project."
+  version: "1.0.0"
+  title: "NFVO Module Service"
+basePath: "/v2"
+tags:
+- name: "nfvo_module"
+  description: "Provides interfaces to the main functionalities and data of the Tacker\
+    \ NFVO."
+schemes:
+- "http"
+paths:
+  /sfcrs:
+    get:
+      tags:
+      - "sfcr"
+      summary: "Get currently active SFC requests."
+      description: ""
+      operationId: "get_sfcrs"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "Success."
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/SFCR"
+      x-swagger-router-controller: "ni_nfvo.controllers.sfcr_controller"
+    post:
+      tags:
+      - "sfcr"
+      summary: "Add new SFC request. id field is optional"
+      description: ""
+      operationId: "add_sfcr"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "SFC request object to be added."
+        required: true
+        schema:
+          $ref: "#/definitions/SFCR"
+      responses:
+        "200":
+          description: "Success."
+          schema:
+            type: "string"
+        "400":
+          description: "Invalid SFC request parameters supplied."
+      x-swagger-router-controller: "ni_nfvo.controllers.sfcr_controller"
+  /sfcrs/{id}:
+    delete:
+      tags:
+      - "sfcr"
+      summary: "Delete a sfcr."
+      description: ""
+      operationId: "del_sfcr"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "route id"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Success."
+      x-swagger-router-controller: "ni_nfvo.controllers.sfcr_controller"
+  /routes:
+    get:
+      tags:
+      - "route"
+      summary: "Get current route information, i.e., list of all active SFCRs including\
+        \ their paths."
+      description: ""
+      operationId: "get_routes"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "Success."
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Route"
+      x-swagger-router-controller: "ni_nfvo.controllers.route_controller"
+    post:
+      tags:
+      - "route"
+      summary: "Route a request via the provided route. Return route id if success\
+        \ (which also means input route id is ommitted)."
+      description: ""
+      operationId: "set_route"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Route information including SFCR ID and vnf instance ids."
+        required: true
+        schema:
+          $ref: "#/definitions/Route"
+      responses:
+        "200":
+          description: "Success."
+          schema:
+            type: "string"
+        "400":
+          description: "Invalid parameters supplied."
+      x-swagger-router-controller: "ni_nfvo.controllers.route_controller"
+  /routes/{id}:
+    put:
+      tags:
+      - "route"
+      summary: "Update a new route path or new sfcrs."
+      description: ""
+      operationId: "update_route"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "route id"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Route Update info."
+        required: true
+        schema:
+          $ref: "#/definitions/RouteUpdate"
+      responses:
+        "200":
+          description: "Success."
+          schema:
+            type: "string"
+        "400":
+          description: "Invalid parameters supplied."
+      x-swagger-router-controller: "ni_nfvo.controllers.route_controller"
+    delete:
+      tags:
+      - "route"
+      summary: "Delete a Route."
+      description: ""
+      operationId: "del_route"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "route id"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Success."
+      x-swagger-router-controller: "ni_nfvo.controllers.route_controller"
+  /vnfs:
+    post:
+      tags:
+      - "vnf"
+      summary: "Instantiate an instance of a VNF flavor on a given node."
+      description: ""
+      operationId: "deploy_vnf"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Flavor of VNF instance to be deployed as well as the target\
+          \ node. vnf_name is optional"
+        required: true
+        schema:
+          $ref: "#/definitions/body"
+      responses:
+        "200":
+          description: "Success."
+          schema:
+            type: "string"
+        "400":
+          description: "Invalid parameters supplied."
+      x-swagger-router-controller: "ni_nfvo.controllers.vnf_controller"
+  /vnfs/{id}:
+    delete:
+      tags:
+      - "vnf"
+      summary: "Destroy a VNF instance."
+      description: ""
+      operationId: "destroy_vnf"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "vnf id"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Success."
+        "400":
+          description: "Invalid parameters supplied."
+      x-swagger-router-controller: "ni_nfvo.controllers.vnf_controller"
+  /vnfs/{id}/shutdown:
+    post:
+      tags:
+      - "vnf"
+      summary: "Shut down a VNF instance."
+      description: ""
+      operationId: "shutdown_vnf"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of VNF instance to be shut down."
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Success."
+        "400":
+          description: "Invalid parameters supplied."
+      x-swagger-router-controller: "ni_nfvo.controllers.vnf_controller"
+definitions:
+  SFCR:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      name:
+        type: "string"
+      arrivaltime:
+        type: "string"
+        format: "date-time"
+      source_client:
+        type: "string"
+      destination_client:
+        type: "string"
+      src_ip_prefix:
+        type: "string"
+      dst_ip_prefix:
+        type: "string"
+      src_port_min:
+        type: "integer"
+        format: "int32"
+      src_port_max:
+        type: "integer"
+        format: "int32"
+      dst_port_min:
+        type: "integer"
+        format: "int32"
+      dst_port_max:
+        type: "integer"
+        format: "int32"
+      bw:
+        type: "integer"
+        format: "int32"
+      delay:
+        type: "integer"
+        format: "int32"
+      duration:
+        type: "integer"
+        format: "int32"
+      proto:
+        type: "string"
+      nf_chain:
+        type: "array"
+        items:
+          type: "string"
+    description: "SFC request. src/dst ip prefix, src/dst port min/max, proto are\
+      \ optional."
+    example:
+      src_port_max: 6
+      source_client: "source_client"
+      destination_client: "destination_client"
+      dst_ip_prefix: "dst_ip_prefix"
+      nf_chain:
+      - "nf_chain"
+      - "nf_chain"
+      src_ip_prefix: "src_ip_prefix"
+      src_port_min: 0
+      duration: 7
+      dst_port_min: 1
+      delay: 2
+      bw: 5
+      proto: "proto"
+      name: "name"
+      arrivaltime: "2000-01-23T04:56:07.000+00:00"
+      id: "id"
+      dst_port_max: 5
+  Route:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      sfc_name:
+        type: "string"
+      sfcr_ids:
+        type: "array"
+        items:
+          type: "string"
+      vnf_instance_ids:
+        type: "array"
+        description: "each sub-list represent a node on the traffic path. each node\
+          \ is a list of vnf instances, where traffic are load-balanced"
+        items:
+          type: "array"
+          items:
+            type: "string"
+      is_symmetric:
+        type: "boolean"
+    description: "Detailed routing information for a given SFCR ID. sfc_name is optional."
+    example:
+      vnf_instance_ids:
+      - - "vnf_instance_ids"
+        - "vnf_instance_ids"
+      - - "vnf_instance_ids"
+        - "vnf_instance_ids"
+      is_symmetric: true
+      sfc_name: "sfc_name"
+      id: "id"
+      sfcr_ids:
+      - "sfcr_ids"
+      - "sfcr_ids"
+  RouteUpdate:
+    type: "object"
+    properties:
+      sfcr_ids:
+        type: "array"
+        items:
+          type: "string"
+      vnf_instance_ids:
+        type: "array"
+        description: "each sub-list represent a node on the traffic path. each node\
+          \ is a list of vnf instances, where traffic are load-balanced"
+        items:
+          type: "array"
+          items:
+            type: "string"
+    description: "update the path of a route."
+    example:
+      vnf_instance_ids:
+      - - "vnf_instance_ids"
+        - "vnf_instance_ids"
+      - - "vnf_instance_ids"
+        - "vnf_instance_ids"
+      sfcr_ids:
+      - "sfcr_ids"
+      - "sfcr_ids"
+  body:
+    type: "object"
+    properties:
+      flavor_id:
+        type: "string"
+      node_name:
+        type: "string"
+      vnf_name:
+        type: "string"
+      user_data:
+        type: "string"
+externalDocs:
+  description: "Find out more about DPNM NI."
+  url: "http://dpnm.postech.ac.kr/"

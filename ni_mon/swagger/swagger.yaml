@@ -1,0 +1,431 @@
+---
+swagger: "2.0"
+info:
+  description: "Monitoring module for NI project"
+  version: "1.0.0"
+  title: "NI-Mon"
+  contact:
+    email: "vantu.bkhn@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+schemes:
+- "http"
+paths:
+  /topology:
+    get:
+      summary: "get topology"
+      description: "Return a topology with lists of node names and link ids\n"
+      operationId: "get_topology"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Topology"
+      x-swagger-router-controller: "ni_mon.controllers.default_controller"
+  /nodes:
+    get:
+      summary: "get a list of nodes"
+      description: "Return a list of nodes\n"
+      operationId: "get_nodes"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Node"
+      x-swagger-router-controller: "ni_mon.controllers.default_controller"
+  /nodes/{id}:
+    get:
+      summary: "get detailed information of a node"
+      description: "Return detailed information of a node\n"
+      operationId: "get_node"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The id of the node"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Node"
+      x-swagger-router-controller: "ni_mon.controllers.default_controller"
+  /links:
+    get:
+      summary: "get list of link"
+      description: "Return list of link id.\n"
+      operationId: "get_links"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Link"
+      x-swagger-router-controller: "ni_mon.controllers.default_controller"
+  /link/{id}:
+    get:
+      summary: "get detailed information of a link"
+      description: "Return detailed information of a link.\n"
+      operationId: "get_link"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The id of the link"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Link"
+      x-swagger-router-controller: "ni_mon.controllers.default_controller"
+  /link_between_nodes:
+    get:
+      summary: "get detailed information of a link between two specific nodes"
+      description: "Return detailed information of a link between two specific nodes.\n"
+      operationId: "get_link_between_nodes"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "node1_id"
+        in: "query"
+        description: "The id of the first node in the link"
+        required: true
+        type: "string"
+      - name: "node2_id"
+        in: "query"
+        description: "The id of the second node in the link"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Link"
+      x-swagger-router-controller: "ni_mon.controllers.default_controller"
+  /vnfflavors:
+    get:
+      summary: "get a list of vnfflavors"
+      description: "Return a list of vnfflavors\n"
+      operationId: "get_vnf_flavors"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/VNFFlavor"
+      x-swagger-router-controller: "ni_mon.controllers.default_controller"
+  /vnfflavors/{id}:
+    get:
+      summary: "get detailed information of a vnfflavor"
+      description: "Return detailed information of a vnfflavor\n"
+      operationId: "get_vnf_flavor"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The name of the vnfflavor"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/VNFFlavor"
+      x-swagger-router-controller: "ni_mon.controllers.default_controller"
+  /vnfinstances:
+    get:
+      summary: "get a list of vnf instances"
+      description: "Return a list of vnf instances\n"
+      operationId: "get_vnf_instances"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/VNFInstance"
+      x-swagger-router-controller: "ni_mon.controllers.default_controller"
+  /vnfinstances/{id}:
+    get:
+      summary: "get detailed information of a vnf instance"
+      description: "Return detailed information of a vnf instance\n"
+      operationId: "get_vnf_instance"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The id of the vnf instance"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/VNFInstance"
+      x-swagger-router-controller: "ni_mon.controllers.default_controller"
+  /vnfinstances/{id}/{measurement_type}:
+    get:
+      summary: "get measurement value"
+      description: "Return the value of a measurement of a vnf instance at a timestamp\
+        \ or a timestamp period\n"
+      operationId: "get_measurement"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The id of the vnf instance"
+        required: true
+        type: "string"
+      - name: "measurement_type"
+        in: "path"
+        description: "The measurement_type"
+        required: true
+        type: "string"
+      - name: "start_time"
+        in: "query"
+        description: "starting time to get the measurement"
+        required: true
+        type: "string"
+        format: "date-time"
+      - name: "end_time"
+        in: "query"
+        description: "ending time to get the measurement"
+        required: true
+        type: "string"
+        format: "date-time"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/MonitoringEntry"
+      x-swagger-router-controller: "ni_mon.controllers.default_controller"
+  /measurement_types/{id}:
+    get:
+      summary: "get a list of measurements of a vnf instance"
+      description: "Return a list of measurements of a vnf instance\n"
+      operationId: "get_measurement_types"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The id of the vnf instance"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              type: "string"
+      x-swagger-router-controller: "ni_mon.controllers.default_controller"
+definitions:
+  Topology:
+    type: "object"
+    properties:
+      nodes:
+        type: "array"
+        items:
+          type: "string"
+      links:
+        type: "array"
+        items:
+          type: "string"
+    example:
+      nodes:
+      - "nodes"
+      - "nodes"
+      links:
+      - "links"
+      - "links"
+  VNFFlavor:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      name:
+        type: "string"
+      capacity_mbps:
+        type: "integer"
+        format: "int32"
+      delay_us:
+        type: "integer"
+        format: "int32"
+      n_cores:
+        type: "integer"
+        format: "int32"
+      ram_mb:
+        type: "integer"
+        format: "int32"
+    example:
+      n_cores: 1
+      ram_mb: 5
+      capacity_mbps: 0
+      name: "name"
+      id: "id"
+      delay_us: 6
+  Node:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      name:
+        type: "string"
+      type:
+        type: "string"
+      ip:
+        type: "string"
+      n_cores:
+        type: "integer"
+        format: "int32"
+      core_freq_mhz:
+        type: "integer"
+        format: "int32"
+      ram_mb:
+        type: "integer"
+        format: "int32"
+      ram_freq_mhz:
+        type: "integer"
+        format: "int32"
+    example:
+      n_cores: 0
+      ram_freq_mhz: 5
+      ram_mb: 1
+      ip: "ip"
+      name: "name"
+      id: "id"
+      type: "type"
+      core_freq_mhz: 6
+  Link:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      node1_id:
+        type: "string"
+      node2_id:
+        type: "string"
+      delay_us:
+        type: "integer"
+        format: "int32"
+      max_bw_mbps:
+        type: "integer"
+        format: "int32"
+    example:
+      id: "id"
+      node1_id: "node1_id"
+      node2_id: "node2_id"
+      delay_us: 0
+      max_bw_mbps: 6
+  MonitoringEntry:
+    type: "object"
+    properties:
+      timestamp:
+        type: "string"
+        format: "date-time"
+      component_type:
+        type: "string"
+      component_id:
+        type: "string"
+      measurement_type:
+        type: "string"
+      measurement_value:
+        type: "number"
+        format: "double"
+    example:
+      component_type: "component_type"
+      measurement_value: 0.80082819046101150206595775671303272247314453125
+      component_id: "component_id"
+      measurement_type: "measurement_type"
+      timestamp: "2000-01-23T04:56:07.000+00:00"
+  NetworkPort:
+    type: "object"
+    properties:
+      port_id:
+        type: "string"
+      port_name:
+        type: "string"
+      network_id:
+        type: "string"
+      ip_addresses:
+        type: "array"
+        items:
+          type: "string"
+    example:
+      port_name: "port_name"
+      network_id: "network_id"
+      ip_addresses:
+      - "ip_addresses"
+      - "ip_addresses"
+      port_id: "port_id"
+  VNFInstance:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      name:
+        type: "string"
+      status:
+        type: "string"
+        description: "state of VNF VM. (ACTIVE, SHUTOFF, ERROR, etc.)"
+      flavor_id:
+        type: "string"
+      node_id:
+        type: "string"
+      ports:
+        type: "array"
+        items:
+          $ref: "#/definitions/NetworkPort"
+    example:
+      flavor_id: "flavor_id"
+      name: "name"
+      id: "id"
+      ports:
+      - port_name: "port_name"
+        network_id: "network_id"
+        ip_addresses:
+        - "ip_addresses"
+        - "ip_addresses"
+        port_id: "port_id"
+      - port_name: "port_name"
+        network_id: "network_id"
+        ip_addresses:
+        - "ip_addresses"
+        - "ip_addresses"
+        port_id: "port_id"
+      status: "status"
+      node_id: "node_id"
+externalDocs:
+  description: "Find out more about DPNM NI."
+  url: "http://dpnm.postech.ac.kr/"

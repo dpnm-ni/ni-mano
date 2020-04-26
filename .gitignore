@@ -7,7 +7,7 @@ __pycache__/
 *.so
 
 # config files, only keep example files
-*.yaml
+**/config/*.yaml
 
 # virtual env
 .env/
