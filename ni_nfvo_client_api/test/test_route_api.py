@@ -15,16 +15,16 @@ from __future__ import absolute_import
 
 import unittest
 
-import nfvo_client
-from nfvo_client.api.route_api import RouteApi  # noqa: E501
-from nfvo_client.rest import ApiException
+import ni_nfvo_client
+from ni_nfvo_client.api.route_api import RouteApi  # noqa: E501
+from ni_nfvo_client.rest import ApiException
 
 
 class TestRouteApi(unittest.TestCase):
     """RouteApi unit test stubs"""
 
     def setUp(self):
-        self.api = nfvo_client.api.route_api.RouteApi()  # noqa: E501
+        self.api = ni_nfvo_client.api.route_api.RouteApi()  # noqa: E501
 
     def tearDown(self):
         pass
@@ -46,7 +46,7 @@ class TestRouteApi(unittest.TestCase):
     def test_set_route(self):
         """Test case for set_route
 
-        Route a request via the provided route. Return route id if success (which also means input route id is ommitted).  # noqa: E501
+        Route a request via the provided route. Return route ID if success.  # noqa: E501
         """
         pass
 

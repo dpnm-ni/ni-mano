@@ -6,6 +6,7 @@ from flask import json
 from six import BytesIO
 
 from ni_nfvo.models.sfcr import SFCR  # noqa: E501
+from ni_nfvo.models.sfcr_spec import SFCRSpec  # noqa: E501
 from ni_nfvo.test import BaseTestCase
 
 
@@ -15,13 +16,13 @@ class TestSfcrController(BaseTestCase):
     def test_add_sfcr(self):
         """Test case for add_sfcr
 
-        Add new SFC request. id field is optional
+        Add new SFC request. return sfcr ID if success
         """
-        body = SFCR()
+        sfcr_spec = SFCRSpec()
         response = self.client.open(
-            '/v2/sfcrs',
+            '/sfcrs',
             method='POST',
-            data=json.dumps(body),
+            data=json.dumps(sfcr_spec),
             content_type='application/json')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -32,7 +33,7 @@ class TestSfcrController(BaseTestCase):
         Delete a sfcr.
         """
         response = self.client.open(
-            '/v2/sfcrs/{id}'.format(id='id_example'),
+            '/sfcrs/{id}'.format(id='id_example'),
             method='DELETE',
             content_type='application/json')
         self.assert200(response,
@@ -44,7 +45,7 @@ class TestSfcrController(BaseTestCase):
         Get currently active SFC requests.
         """
         response = self.client.open(
-            '/v2/sfcrs',
+            '/sfcrs',
             method='GET',
             content_type='application/json')
         self.assert200(response,

@@ -15,7 +15,9 @@
 from __future__ import absolute_import
 
 # import models into model package
-from nfvo_client.models.body import Body
-from nfvo_client.models.route import Route
-from nfvo_client.models.route_update import RouteUpdate
-from nfvo_client.models.sfcr import SFCR
+from ni_nfvo_client.models.route import Route
+from ni_nfvo_client.models.route_spec import RouteSpec
+from ni_nfvo_client.models.route_update_spec import RouteUpdateSpec
+from ni_nfvo_client.models.sfcr import SFCR
+from ni_nfvo_client.models.sfcr_spec import SFCRSpec
+from ni_nfvo_client.models.vnf_spec import VNFSpec

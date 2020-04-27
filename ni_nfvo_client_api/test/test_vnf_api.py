@@ -15,16 +15,16 @@ from __future__ import absolute_import
 
 import unittest
 
-import nfvo_client
-from nfvo_client.api.vnf_api import VnfApi  # noqa: E501
-from nfvo_client.rest import ApiException
+import ni_nfvo_client
+from ni_nfvo_client.api.vnf_api import VnfApi  # noqa: E501
+from ni_nfvo_client.rest import ApiException
 
 
 class TestVnfApi(unittest.TestCase):
     """VnfApi unit test stubs"""
 
     def setUp(self):
-        self.api = nfvo_client.api.vnf_api.VnfApi()  # noqa: E501
+        self.api = ni_nfvo_client.api.vnf_api.VnfApi()  # noqa: E501
 
     def tearDown(self):
         pass
@@ -32,7 +32,7 @@ class TestVnfApi(unittest.TestCase):
     def test_deploy_vnf(self):
         """Test case for deploy_vnf
 
-        Instantiate an instance of a VNF flavor on a given node.  # noqa: E501
+        Instantiate an instance of a VNF flavor on a given node. Return vnf ID if success  # noqa: E501
         """
         pass
 

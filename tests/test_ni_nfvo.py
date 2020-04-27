@@ -1,8 +1,8 @@
 from __future__ import print_function
-import nfvo_client
+import ni_nfvo_client
 import time
 from datetime import datetime, timedelta
-from nfvo_client.rest import ApiException as NfvoApiException
+from ni_nfvo_client.rest import ApiException as NfvoApiException
 from ni_mon_client.rest import ApiException as NimonApiException
 from pprint import pprint
 from tests.config import cfg
@@ -10,12 +10,12 @@ from tests.test_ni_mon import ni_mon_api
 
 import pytest
 
-nfvo_client_cfg = nfvo_client.Configuration()
-nfvo_client_cfg.host = cfg["ni_nfvo"]["host"]
+ni_nfvo_client_cfg = ni_nfvo_client.Configuration()
+ni_nfvo_client_cfg.host = cfg["ni_nfvo"]["host"]
 
-ni_nfvo_vnf_api = nfvo_client.VnfApi(nfvo_client.ApiClient(nfvo_client_cfg))
-ni_nfvo_sfcr_api = nfvo_client.SfcrApi(nfvo_client.ApiClient(nfvo_client_cfg))
-ni_nfvo_route_api = nfvo_client.RouteApi(nfvo_client.ApiClient(nfvo_client_cfg))
+ni_nfvo_vnf_api = ni_nfvo_client.VnfApi(ni_nfvo_client.ApiClient(ni_nfvo_client_cfg))
+ni_nfvo_sfcr_api = ni_nfvo_client.SfcrApi(ni_nfvo_client.ApiClient(ni_nfvo_client_cfg))
+ni_nfvo_route_api = ni_nfvo_client.RouteApi(ni_nfvo_client.ApiClient(ni_nfvo_client_cfg))
 
 
 def check_vnf_running_w_timeout(vnf_id, timeout):
@@ -52,7 +52,7 @@ def deploy_vnf_from_flavor(flavor_name, vnf_name):
     nodes = ni_mon_api.get_nodes()
 
     # deploy vnf
-    vnf_fw_spec = nfvo_client.Body(flavor_id=flavor_id,
+    vnf_fw_spec = ni_nfvo_client.VNFSpec(flavor_id=flavor_id,
                                 vnf_name=vnf_name)
     vnf_id = ni_nfvo_vnf_api.deploy_vnf(vnf_fw_spec)
 
@@ -91,10 +91,9 @@ def check_sfcr_exist(sfcr_id):
 
 
 def create_sample_sfcr(sfcr_name, source_client, destination_client=None):
-    sfcr_spec = nfvo_client.SFCR(name=sfcr_name,
+    sfcr_spec = ni_nfvo_client.SFCRSpec(name=sfcr_name,
                                  source_client=source_client,
                                  destination_client=destination_client,
-                                 arrivaltime=datetime.now(),
                                  src_port_min=0,
                                  src_port_max=65535,
                                  dst_port_min=0,
@@ -120,7 +119,7 @@ def check_route_exist(route_id):
 
 
 def create_sample_route(sfc_name, sfcr_id, vnf_instance_id, is_symmetric):
-    route_spec = nfvo_client.Route(sfc_name=sfc_name,
+    route_spec = ni_nfvo_client.RouteSpec(sfc_name=sfc_name,
                                    sfcr_ids=[sfcr_id],
                                    vnf_instance_ids=[[vnf_instance_id]],
                                    is_symmetric=is_symmetric)
@@ -131,7 +130,7 @@ def create_sample_route(sfc_name, sfcr_id, vnf_instance_id, is_symmetric):
 
 
 def update_sample_route(route_id, new_vnf_instance_id):
-    route_update_spec = nfvo_client.RouteUpdate(vnf_instance_ids=[[new_vnf_instance_id]])
+    route_update_spec = ni_nfvo_client.RouteUpdateSpec(vnf_instance_ids=[[new_vnf_instance_id]])
     ni_nfvo_route_api.update_route(route_id, route_update_spec)
 
 

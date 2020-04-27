@@ -6,7 +6,8 @@ from flask import json
 from six import BytesIO
 
 from ni_nfvo.models.route import Route  # noqa: E501
-from ni_nfvo.models.route_update import RouteUpdate  # noqa: E501
+from ni_nfvo.models.route_spec import RouteSpec  # noqa: E501
+from ni_nfvo.models.route_update_spec import RouteUpdateSpec  # noqa: E501
 from ni_nfvo.test import BaseTestCase
 
 
@@ -19,7 +20,7 @@ class TestRouteController(BaseTestCase):
         Delete a Route.
         """
         response = self.client.open(
-            '/v2/routes/{id}'.format(id='id_example'),
+            '/routes/{id}'.format(id='id_example'),
             method='DELETE',
             content_type='application/json')
         self.assert200(response,
@@ -31,7 +32,7 @@ class TestRouteController(BaseTestCase):
         Get current route information, i.e., list of all active SFCRs including their paths.
         """
         response = self.client.open(
-            '/v2/routes',
+            '/routes',
             method='GET',
             content_type='application/json')
         self.assert200(response,
@@ -40,13 +41,13 @@ class TestRouteController(BaseTestCase):
     def test_set_route(self):
         """Test case for set_route
 
-        Route a request via the provided route. Return route id if success (which also means input route id is ommitted).
+        Route a request via the provided route. Return route ID if success.
         """
-        body = Route()
+        route_spec = RouteSpec()
         response = self.client.open(
-            '/v2/routes',
+            '/routes',
             method='POST',
-            data=json.dumps(body),
+            data=json.dumps(route_spec),
             content_type='application/json')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -56,11 +57,11 @@ class TestRouteController(BaseTestCase):
 
         Update a new route path or new sfcrs.
         """
-        body = RouteUpdate()
+        route_update_spec = RouteUpdateSpec()
         response = self.client.open(
-            '/v2/routes/{id}'.format(id='id_example'),
+            '/routes/{id}'.format(id='id_example'),
             method='PUT',
-            data=json.dumps(body),
+            data=json.dumps(route_update_spec),
             content_type='application/json')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))

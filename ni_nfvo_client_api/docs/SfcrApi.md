@@ -1,36 +1,34 @@
-# nfvo_client.SfcrApi
+# ni_nfvo_client.SfcrApi
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**add_sfcr**](SfcrApi.md#add_sfcr) | **POST** /sfcrs | Add new SFC request. id field is optional
+[**add_sfcr**](SfcrApi.md#add_sfcr) | **POST** /sfcrs | Add new SFC request. return sfcr ID if success
 [**del_sfcr**](SfcrApi.md#del_sfcr) | **DELETE** /sfcrs/{id} | Delete a sfcr.
 [**get_sfcrs**](SfcrApi.md#get_sfcrs) | **GET** /sfcrs | Get currently active SFC requests.
 
 
 # **add_sfcr**
-> str add_sfcr(body)
+> str add_sfcr(sfcr_spec)
 
-Add new SFC request. id field is optional
-
-
+Add new SFC request. return sfcr ID if success
 
 ### Example
 ```python
 from __future__ import print_function
 import time
-import nfvo_client
-from nfvo_client.rest import ApiException
+import ni_nfvo_client
+from ni_nfvo_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = nfvo_client.SfcrApi()
-body = nfvo_client.SFCR() # SFCR | SFC request object to be added.
+api_instance = ni_nfvo_client.SfcrApi()
+sfcr_spec = ni_nfvo_client.SFCRSpec() # SFCRSpec | SFC request object to be added.
 
 try:
-    # Add new SFC request. id field is optional
-    api_response = api_instance.add_sfcr(body)
+    # Add new SFC request. return sfcr ID if success
+    api_response = api_instance.add_sfcr(sfcr_spec)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling SfcrApi->add_sfcr: %s\n" % e)
@@ -40,7 +38,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**SFCR**](SFCR.md)| SFC request object to be added. | 
+ **sfcr_spec** | [**SFCRSpec**](SFCRSpec.md)| SFC request object to be added. | 
 
 ### Return type
 
@@ -68,12 +66,12 @@ Delete a sfcr.
 ```python
 from __future__ import print_function
 import time
-import nfvo_client
-from nfvo_client.rest import ApiException
+import ni_nfvo_client
+from ni_nfvo_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = nfvo_client.SfcrApi()
+api_instance = ni_nfvo_client.SfcrApi()
 id = 'id_example' # str | route id
 
 try:
@@ -109,18 +107,16 @@ No authorization required
 
 Get currently active SFC requests.
 
-
-
 ### Example
 ```python
 from __future__ import print_function
 import time
-import nfvo_client
-from nfvo_client.rest import ApiException
+import ni_nfvo_client
+from ni_nfvo_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = nfvo_client.SfcrApi()
+api_instance = ni_nfvo_client.SfcrApi()
 
 try:
     # Get currently active SFC requests.

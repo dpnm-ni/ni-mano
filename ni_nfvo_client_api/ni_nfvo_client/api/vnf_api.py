@@ -18,7 +18,7 @@ import re  # noqa: F401
 # python 2 and python 3 compatibility library
 import six
 
-from nfvo_client.api_client import ApiClient
+from ni_nfvo_client.api_client import ApiClient
 
 
 class VnfApi(object):
@@ -33,45 +33,43 @@ class VnfApi(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def deploy_vnf(self, body, **kwargs):  # noqa: E501
-        """Instantiate an instance of a VNF flavor on a given node.  # noqa: E501
+    def deploy_vnf(self, vnf_spec, **kwargs):  # noqa: E501
+        """Instantiate an instance of a VNF flavor on a given node. Return vnf ID if success  # noqa: E501
 
-          # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.deploy_vnf(body, async_req=True)
+        >>> thread = api.deploy_vnf(vnf_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param Body body: Flavor of VNF instance to be deployed as well as the target node. vnf_name is optional (required)
+        :param VNFSpec vnf_spec: Flavor of VNF instance to be deployed as well as the target node. (required)
         :return: str
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.deploy_vnf_with_http_info(body, **kwargs)  # noqa: E501
+            return self.deploy_vnf_with_http_info(vnf_spec, **kwargs)  # noqa: E501
         else:
-            (data) = self.deploy_vnf_with_http_info(body, **kwargs)  # noqa: E501
+            (data) = self.deploy_vnf_with_http_info(vnf_spec, **kwargs)  # noqa: E501
             return data
 
-    def deploy_vnf_with_http_info(self, body, **kwargs):  # noqa: E501
-        """Instantiate an instance of a VNF flavor on a given node.  # noqa: E501
+    def deploy_vnf_with_http_info(self, vnf_spec, **kwargs):  # noqa: E501
+        """Instantiate an instance of a VNF flavor on a given node. Return vnf ID if success  # noqa: E501
 
-          # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.deploy_vnf_with_http_info(body, async_req=True)
+        >>> thread = api.deploy_vnf_with_http_info(vnf_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param Body body: Flavor of VNF instance to be deployed as well as the target node. vnf_name is optional (required)
+        :param VNFSpec vnf_spec: Flavor of VNF instance to be deployed as well as the target node. (required)
         :return: str
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['body']  # noqa: E501
+        all_params = ['vnf_spec']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -86,10 +84,10 @@ class VnfApi(object):
                 )
             params[key] = val
         del params['kwargs']
-        # verify the required parameter 'body' is set
-        if ('body' not in params or
-                params['body'] is None):
-            raise ValueError("Missing the required parameter `body` when calling `deploy_vnf`")  # noqa: E501
+        # verify the required parameter 'vnf_spec' is set
+        if ('vnf_spec' not in params or
+                params['vnf_spec'] is None):
+            raise ValueError("Missing the required parameter `vnf_spec` when calling `deploy_vnf`")  # noqa: E501
 
         collection_formats = {}
 
@@ -103,8 +101,8 @@ class VnfApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in params:
-            body_params = params['body']
+        if 'vnf_spec' in params:
+            body_params = params['vnf_spec']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501

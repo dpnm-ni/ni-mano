@@ -1,4 +1,4 @@
-# nfvo_client.RouteApi
+# ni_nfvo_client.RouteApi
 
 All URIs are relative to *http://localhost*
 
@@ -6,7 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**del_route**](RouteApi.md#del_route) | **DELETE** /routes/{id} | Delete a Route.
 [**get_routes**](RouteApi.md#get_routes) | **GET** /routes | Get current route information, i.e., list of all active SFCRs including their paths.
-[**set_route**](RouteApi.md#set_route) | **POST** /routes | Route a request via the provided route. Return route id if success (which also means input route id is ommitted).
+[**set_route**](RouteApi.md#set_route) | **POST** /routes | Route a request via the provided route. Return route ID if success.
 [**update_route**](RouteApi.md#update_route) | **PUT** /routes/{id} | Update a new route path or new sfcrs.
 
 
@@ -21,12 +21,12 @@ Delete a Route.
 ```python
 from __future__ import print_function
 import time
-import nfvo_client
-from nfvo_client.rest import ApiException
+import ni_nfvo_client
+from ni_nfvo_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = nfvo_client.RouteApi()
+api_instance = ni_nfvo_client.RouteApi()
 id = 'id_example' # str | route id
 
 try:
@@ -68,12 +68,12 @@ Get current route information, i.e., list of all active SFCRs including their pa
 ```python
 from __future__ import print_function
 import time
-import nfvo_client
-from nfvo_client.rest import ApiException
+import ni_nfvo_client
+from ni_nfvo_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = nfvo_client.RouteApi()
+api_instance = ni_nfvo_client.RouteApi()
 
 try:
     # Get current route information, i.e., list of all active SFCRs including their paths.
@@ -102,9 +102,9 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **set_route**
-> str set_route(body)
+> str set_route(route_spec)
 
-Route a request via the provided route. Return route id if success (which also means input route id is ommitted).
+Route a request via the provided route. Return route ID if success.
 
 
 
@@ -112,17 +112,17 @@ Route a request via the provided route. Return route id if success (which also m
 ```python
 from __future__ import print_function
 import time
-import nfvo_client
-from nfvo_client.rest import ApiException
+import ni_nfvo_client
+from ni_nfvo_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = nfvo_client.RouteApi()
-body = nfvo_client.Route() # Route | Route information including SFCR ID and vnf instance ids.
+api_instance = ni_nfvo_client.RouteApi()
+route_spec = ni_nfvo_client.RouteSpec() # RouteSpec | Route information including SFCR ID and vnf instance ids.
 
 try:
-    # Route a request via the provided route. Return route id if success (which also means input route id is ommitted).
-    api_response = api_instance.set_route(body)
+    # Route a request via the provided route. Return route ID if success.
+    api_response = api_instance.set_route(route_spec)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling RouteApi->set_route: %s\n" % e)
@@ -132,7 +132,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Route**](Route.md)| Route information including SFCR ID and vnf instance ids. | 
+ **route_spec** | [**RouteSpec**](RouteSpec.md)| Route information including SFCR ID and vnf instance ids. | 
 
 ### Return type
 
@@ -150,7 +150,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_route**
-> str update_route(id, body)
+> str update_route(id, route_update_spec)
 
 Update a new route path or new sfcrs.
 
@@ -160,18 +160,18 @@ Update a new route path or new sfcrs.
 ```python
 from __future__ import print_function
 import time
-import nfvo_client
-from nfvo_client.rest import ApiException
+import ni_nfvo_client
+from ni_nfvo_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = nfvo_client.RouteApi()
+api_instance = ni_nfvo_client.RouteApi()
 id = 'id_example' # str | route id
-body = nfvo_client.RouteUpdate() # RouteUpdate | Route Update info.
+route_update_spec = ni_nfvo_client.RouteUpdateSpec() # RouteUpdateSpec | Route Update info.
 
 try:
     # Update a new route path or new sfcrs.
-    api_response = api_instance.update_route(id, body)
+    api_response = api_instance.update_route(id, route_update_spec)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling RouteApi->update_route: %s\n" % e)
@@ -182,7 +182,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| route id | 
- **body** | [**RouteUpdate**](RouteUpdate.md)| Route Update info. | 
+ **route_update_spec** | [**RouteUpdateSpec**](RouteUpdateSpec.md)| Route Update info. | 
 
 ### Return type
 

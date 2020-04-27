@@ -33,5 +33,3 @@ def get_compute_data(url, params=None):
         return req.json()
     else:
         abort(req.status_code, req.text)
-
-

@@ -32,8 +32,8 @@ class SFCR(object):
     """
     swagger_types = {
         'id': 'str',
-        'name': 'str',
         'arrivaltime': 'datetime',
+        'name': 'str',
         'source_client': 'str',
         'destination_client': 'str',
         'src_ip_prefix': 'str',
@@ -42,17 +42,17 @@ class SFCR(object):
         'src_port_max': 'int',
         'dst_port_min': 'int',
         'dst_port_max': 'int',
+        'proto': 'str',
         'bw': 'int',
         'delay': 'int',
         'duration': 'int',
-        'proto': 'str',
         'nf_chain': 'list[str]'
     }
 
     attribute_map = {
         'id': 'id',
-        'name': 'name',
         'arrivaltime': 'arrivaltime',
+        'name': 'name',
         'source_client': 'source_client',
         'destination_client': 'destination_client',
         'src_ip_prefix': 'src_ip_prefix',
@@ -61,19 +61,19 @@ class SFCR(object):
         'src_port_max': 'src_port_max',
         'dst_port_min': 'dst_port_min',
         'dst_port_max': 'dst_port_max',
+        'proto': 'proto',
         'bw': 'bw',
         'delay': 'delay',
         'duration': 'duration',
-        'proto': 'proto',
         'nf_chain': 'nf_chain'
     }
 
-    def __init__(self, id=None, name=None, arrivaltime=None, source_client=None, destination_client=None, src_ip_prefix=None, dst_ip_prefix=None, src_port_min=None, src_port_max=None, dst_port_min=None, dst_port_max=None, bw=None, delay=None, duration=None, proto=None, nf_chain=None):  # noqa: E501
+    def __init__(self, id=None, arrivaltime=None, name=None, source_client=None, destination_client=None, src_ip_prefix=None, dst_ip_prefix=None, src_port_min=None, src_port_max=None, dst_port_min=None, dst_port_max=None, proto=None, bw=None, delay=None, duration=None, nf_chain=None):  # noqa: E501
         """SFCR - a model defined in Swagger"""  # noqa: E501
 
         self._id = None
-        self._name = None
         self._arrivaltime = None
+        self._name = None
         self._source_client = None
         self._destination_client = None
         self._src_ip_prefix = None
@@ -82,19 +82,19 @@ class SFCR(object):
         self._src_port_max = None
         self._dst_port_min = None
         self._dst_port_max = None
+        self._proto = None
         self._bw = None
         self._delay = None
         self._duration = None
-        self._proto = None
         self._nf_chain = None
         self.discriminator = None
 
         if id is not None:
             self.id = id
-        if name is not None:
-            self.name = name
         if arrivaltime is not None:
             self.arrivaltime = arrivaltime
+        if name is not None:
+            self.name = name
         if source_client is not None:
             self.source_client = source_client
         if destination_client is not None:
@@ -111,14 +111,14 @@ class SFCR(object):
             self.dst_port_min = dst_port_min
         if dst_port_max is not None:
             self.dst_port_max = dst_port_max
+        if proto is not None:
+            self.proto = proto
         if bw is not None:
             self.bw = bw
         if delay is not None:
             self.delay = delay
         if duration is not None:
             self.duration = duration
-        if proto is not None:
-            self.proto = proto
         if nf_chain is not None:
             self.nf_chain = nf_chain
 
@@ -144,27 +144,6 @@ class SFCR(object):
         self._id = id
 
     @property
-    def name(self):
-        """Gets the name of this SFCR.  # noqa: E501
-
-
-        :return: The name of this SFCR.  # noqa: E501
-        :rtype: str
-        """
-        return self._name
-
-    @name.setter
-    def name(self, name):
-        """Sets the name of this SFCR.
-
-
-        :param name: The name of this SFCR.  # noqa: E501
-        :type: str
-        """
-
-        self._name = name
-
-    @property
     def arrivaltime(self):
         """Gets the arrivaltime of this SFCR.  # noqa: E501
 
@@ -186,9 +165,31 @@ class SFCR(object):
         self._arrivaltime = arrivaltime
 
     @property
+    def name(self):
+        """Gets the name of this SFCR.  # noqa: E501
+
+
+        :return: The name of this SFCR.  # noqa: E501
+        :rtype: str
+        """
+        return self._name
+
+    @name.setter
+    def name(self, name):
+        """Sets the name of this SFCR.
+
+
+        :param name: The name of this SFCR.  # noqa: E501
+        :type: str
+        """
+
+        self._name = name
+
+    @property
     def source_client(self):
         """Gets the source_client of this SFCR.  # noqa: E501
 
+        the id of the source VM (not VNF)  # noqa: E501
 
         :return: The source_client of this SFCR.  # noqa: E501
         :rtype: str
@@ -199,6 +200,7 @@ class SFCR(object):
     def source_client(self, source_client):
         """Sets the source_client of this SFCR.
 
+        the id of the source VM (not VNF)  # noqa: E501
 
         :param source_client: The source_client of this SFCR.  # noqa: E501
         :type: str
@@ -210,6 +212,7 @@ class SFCR(object):
     def destination_client(self):
         """Gets the destination_client of this SFCR.  # noqa: E501
 
+        the id of the destination VM (not VNF)  # noqa: E501
 
         :return: The destination_client of this SFCR.  # noqa: E501
         :rtype: str
@@ -220,6 +223,7 @@ class SFCR(object):
     def destination_client(self, destination_client):
         """Sets the destination_client of this SFCR.
 
+        the id of the destination VM (not VNF)  # noqa: E501
 
         :param destination_client: The destination_client of this SFCR.  # noqa: E501
         :type: str
@@ -354,69 +358,6 @@ class SFCR(object):
         self._dst_port_max = dst_port_max
 
     @property
-    def bw(self):
-        """Gets the bw of this SFCR.  # noqa: E501
-
-
-        :return: The bw of this SFCR.  # noqa: E501
-        :rtype: int
-        """
-        return self._bw
-
-    @bw.setter
-    def bw(self, bw):
-        """Sets the bw of this SFCR.
-
-
-        :param bw: The bw of this SFCR.  # noqa: E501
-        :type: int
-        """
-
-        self._bw = bw
-
-    @property
-    def delay(self):
-        """Gets the delay of this SFCR.  # noqa: E501
-
-
-        :return: The delay of this SFCR.  # noqa: E501
-        :rtype: int
-        """
-        return self._delay
-
-    @delay.setter
-    def delay(self, delay):
-        """Sets the delay of this SFCR.
-
-
-        :param delay: The delay of this SFCR.  # noqa: E501
-        :type: int
-        """
-
-        self._delay = delay
-
-    @property
-    def duration(self):
-        """Gets the duration of this SFCR.  # noqa: E501
-
-
-        :return: The duration of this SFCR.  # noqa: E501
-        :rtype: int
-        """
-        return self._duration
-
-    @duration.setter
-    def duration(self, duration):
-        """Sets the duration of this SFCR.
-
-
-        :param duration: The duration of this SFCR.  # noqa: E501
-        :type: int
-        """
-
-        self._duration = duration
-
-    @property
     def proto(self):
         """Gets the proto of this SFCR.  # noqa: E501
 
@@ -438,9 +379,79 @@ class SFCR(object):
         self._proto = proto
 
     @property
+    def bw(self):
+        """Gets the bw of this SFCR.  # noqa: E501
+
+        bandwidth requirement of the sfcr  # noqa: E501
+
+        :return: The bw of this SFCR.  # noqa: E501
+        :rtype: int
+        """
+        return self._bw
+
+    @bw.setter
+    def bw(self, bw):
+        """Sets the bw of this SFCR.
+
+        bandwidth requirement of the sfcr  # noqa: E501
+
+        :param bw: The bw of this SFCR.  # noqa: E501
+        :type: int
+        """
+
+        self._bw = bw
+
+    @property
+    def delay(self):
+        """Gets the delay of this SFCR.  # noqa: E501
+
+        delay requirement of the sfcr  # noqa: E501
+
+        :return: The delay of this SFCR.  # noqa: E501
+        :rtype: int
+        """
+        return self._delay
+
+    @delay.setter
+    def delay(self, delay):
+        """Sets the delay of this SFCR.
+
+        delay requirement of the sfcr  # noqa: E501
+
+        :param delay: The delay of this SFCR.  # noqa: E501
+        :type: int
+        """
+
+        self._delay = delay
+
+    @property
+    def duration(self):
+        """Gets the duration of this SFCR.  # noqa: E501
+
+        sfcr running duration  # noqa: E501
+
+        :return: The duration of this SFCR.  # noqa: E501
+        :rtype: int
+        """
+        return self._duration
+
+    @duration.setter
+    def duration(self, duration):
+        """Sets the duration of this SFCR.
+
+        sfcr running duration  # noqa: E501
+
+        :param duration: The duration of this SFCR.  # noqa: E501
+        :type: int
+        """
+
+        self._duration = duration
+
+    @property
     def nf_chain(self):
         """Gets the nf_chain of this SFCR.  # noqa: E501
 
+        the type of VNFs in the path (e.g.: fw, ids, nat, etc.).  # noqa: E501
 
         :return: The nf_chain of this SFCR.  # noqa: E501
         :rtype: list[str]
@@ -451,6 +462,7 @@ class SFCR(object):
     def nf_chain(self, nf_chain):
         """Sets the nf_chain of this SFCR.
 
+        the type of VNFs in the path (e.g.: fw, ids, nat, etc.).  # noqa: E501
 
         :param nf_chain: The nf_chain of this SFCR.  # noqa: E501
         :type: list[str]

@@ -1,10 +1,12 @@
-# RouteUpdate
+# VNFSpec
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**sfcr_ids** | **list[str]** |  | [optional] 
-**vnf_instance_ids** | **list[list[str]]** | each sub-list represent a node on the traffic path. each node is a list of vnf instances, where traffic are load-balanced | [optional] 
+**flavor_id** | **str** |  | 
+**node_name** | **str** | name of the compute node where VNF will be deployed | [optional] 
+**vnf_name** | **str** |  | [optional] 
+**user_data** | **str** | configuration to pass to the VNF at boot (e.g., cloud-init) | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

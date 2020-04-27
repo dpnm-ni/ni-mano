@@ -1,12 +1,10 @@
-# SFCR
+# SFCRSpec
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** |  | [optional] 
-**arrivaltime** | **datetime** |  | [optional] 
 **name** | **str** |  | [optional] 
-**source_client** | **str** | the id of the source VM (not VNF) | [optional] 
+**source_client** | **str** | the id of the source VM (not VNF) | 
 **destination_client** | **str** | the id of the destination VM (not VNF) | [optional] 
 **src_ip_prefix** | **str** |  | [optional] 
 **dst_ip_prefix** | **str** |  | [optional] 

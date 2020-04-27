@@ -15,13 +15,13 @@ from __future__ import absolute_import
 
 import unittest
 
-import nfvo_client
-from nfvo_client.models.route_update import RouteUpdate  # noqa: E501
-from nfvo_client.rest import ApiException
+import ni_nfvo_client
+from ni_nfvo_client.models.vnf_spec import VNFSpec  # noqa: E501
+from ni_nfvo_client.rest import ApiException
 
 
-class TestRouteUpdate(unittest.TestCase):
-    """RouteUpdate unit test stubs"""
+class TestVNFSpec(unittest.TestCase):
+    """VNFSpec unit test stubs"""
 
     def setUp(self):
         pass
@@ -29,10 +29,10 @@ class TestRouteUpdate(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testRouteUpdate(self):
-        """Test RouteUpdate"""
+    def testVNFSpec(self):
+        """Test VNFSpec"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = nfvo_client.models.route_update.RouteUpdate()  # noqa: E501
+        # model = ni_nfvo_client.models.vnf_spec.VNFSpec()  # noqa: E501
         pass
 
 

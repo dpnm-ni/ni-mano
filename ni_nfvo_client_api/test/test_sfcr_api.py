@@ -15,16 +15,16 @@ from __future__ import absolute_import
 
 import unittest
 
-import nfvo_client
-from nfvo_client.api.sfcr_api import SfcrApi  # noqa: E501
-from nfvo_client.rest import ApiException
+import ni_nfvo_client
+from ni_nfvo_client.api.sfcr_api import SfcrApi  # noqa: E501
+from ni_nfvo_client.rest import ApiException
 
 
 class TestSfcrApi(unittest.TestCase):
     """SfcrApi unit test stubs"""
 
     def setUp(self):
-        self.api = nfvo_client.api.sfcr_api.SfcrApi()  # noqa: E501
+        self.api = ni_nfvo_client.api.sfcr_api.SfcrApi()  # noqa: E501
 
     def tearDown(self):
         pass
@@ -32,7 +32,7 @@ class TestSfcrApi(unittest.TestCase):
     def test_add_sfcr(self):
         """Test case for add_sfcr
 
-        Add new SFC request. id field is optional  # noqa: E501
+        Add new SFC request. return sfcr ID if success  # noqa: E501
         """
         pass
 

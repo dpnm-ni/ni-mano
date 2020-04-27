@@ -1,36 +1,34 @@
-# nfvo_client.VnfApi
+# ni_nfvo_client.VnfApi
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**deploy_vnf**](VnfApi.md#deploy_vnf) | **POST** /vnfs | Instantiate an instance of a VNF flavor on a given node.
+[**deploy_vnf**](VnfApi.md#deploy_vnf) | **POST** /vnfs | Instantiate an instance of a VNF flavor on a given node. Return vnf ID if success
 [**destroy_vnf**](VnfApi.md#destroy_vnf) | **DELETE** /vnfs/{id} | Destroy a VNF instance.
 [**shutdown_vnf**](VnfApi.md#shutdown_vnf) | **POST** /vnfs/{id}/shutdown | Shut down a VNF instance.
 
 
 # **deploy_vnf**
-> str deploy_vnf(body)
+> str deploy_vnf(vnf_spec)
 
-Instantiate an instance of a VNF flavor on a given node.
-
-
+Instantiate an instance of a VNF flavor on a given node. Return vnf ID if success
 
 ### Example
 ```python
 from __future__ import print_function
 import time
-import nfvo_client
-from nfvo_client.rest import ApiException
+import ni_nfvo_client
+from ni_nfvo_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = nfvo_client.VnfApi()
-body = nfvo_client.Body() # Body | Flavor of VNF instance to be deployed as well as the target node. vnf_name is optional
+api_instance = ni_nfvo_client.VnfApi()
+vnf_spec = ni_nfvo_client.VNFSpec() # VNFSpec | Flavor of VNF instance to be deployed as well as the target node.
 
 try:
-    # Instantiate an instance of a VNF flavor on a given node.
-    api_response = api_instance.deploy_vnf(body)
+    # Instantiate an instance of a VNF flavor on a given node. Return vnf ID if success
+    api_response = api_instance.deploy_vnf(vnf_spec)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling VnfApi->deploy_vnf: %s\n" % e)
@@ -40,7 +38,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Body**](Body.md)| Flavor of VNF instance to be deployed as well as the target node. vnf_name is optional | 
+ **vnf_spec** | [**VNFSpec**](VNFSpec.md)| Flavor of VNF instance to be deployed as well as the target node. | 
 
 ### Return type
 
@@ -68,12 +66,12 @@ Destroy a VNF instance.
 ```python
 from __future__ import print_function
 import time
-import nfvo_client
-from nfvo_client.rest import ApiException
+import ni_nfvo_client
+from ni_nfvo_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = nfvo_client.VnfApi()
+api_instance = ni_nfvo_client.VnfApi()
 id = 'id_example' # str | vnf id
 
 try:
@@ -115,12 +113,12 @@ Shut down a VNF instance.
 ```python
 from __future__ import print_function
 import time
-import nfvo_client
-from nfvo_client.rest import ApiException
+import ni_nfvo_client
+from ni_nfvo_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = nfvo_client.VnfApi()
+api_instance = ni_nfvo_client.VnfApi()
 id = 'id_example' # str | ID of VNF instance to be shut down.
 
 try:

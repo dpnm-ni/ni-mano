@@ -3,12 +3,12 @@ swagger: "2.0"
 info:
   description: "NFVO module service for the NI project."
   version: "1.0.0"
-  title: "NFVO Module Service"
-basePath: "/v2"
-tags:
-- name: "nfvo_module"
-  description: "Provides interfaces to the main functionalities and data of the Tacker\
-    \ NFVO."
+  title: "NI-NFVO"
+  contact:
+    email: "vantu.bkhn@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 schemes:
 - "http"
 paths:
@@ -17,7 +17,6 @@ paths:
       tags:
       - "sfcr"
       summary: "Get currently active SFC requests."
-      description: ""
       operationId: "get_sfcrs"
       consumes:
       - "application/json"
@@ -35,8 +34,7 @@ paths:
     post:
       tags:
       - "sfcr"
-      summary: "Add new SFC request. id field is optional"
-      description: ""
+      summary: "Add new SFC request. return sfcr ID if success"
       operationId: "add_sfcr"
       consumes:
       - "application/json"
@@ -44,18 +42,16 @@ paths:
       - "application/json"
       parameters:
       - in: "body"
-        name: "body"
+        name: "sfcr_spec"
         description: "SFC request object to be added."
         required: true
         schema:
-          $ref: "#/definitions/SFCR"
+          $ref: "#/definitions/SFCRSpec"
       responses:
         "200":
           description: "Success."
           schema:
             type: "string"
-        "400":
-          description: "Invalid SFC request parameters supplied."
       x-swagger-router-controller: "ni_nfvo.controllers.sfcr_controller"
   /sfcrs/{id}:
     delete:
@@ -102,8 +98,7 @@ paths:
     post:
       tags:
       - "route"
-      summary: "Route a request via the provided route. Return route id if success\
-        \ (which also means input route id is ommitted)."
+      summary: "Route a request via the provided route. Return route ID if success."
       description: ""
       operationId: "set_route"
       consumes:
@@ -112,11 +107,11 @@ paths:
       - "application/json"
       parameters:
       - in: "body"
-        name: "body"
+        name: "route_spec"
         description: "Route information including SFCR ID and vnf instance ids."
         required: true
         schema:
-          $ref: "#/definitions/Route"
+          $ref: "#/definitions/RouteSpec"
       responses:
         "200":
           description: "Success."
@@ -143,18 +138,16 @@ paths:
         required: true
         type: "string"
       - in: "body"
-        name: "body"
+        name: "route_update_spec"
         description: "Route Update info."
         required: true
         schema:
-          $ref: "#/definitions/RouteUpdate"
+          $ref: "#/definitions/RouteUpdateSpec"
       responses:
         "200":
           description: "Success."
           schema:
             type: "string"
-        "400":
-          description: "Invalid parameters supplied."
       x-swagger-router-controller: "ni_nfvo.controllers.route_controller"
     delete:
       tags:
@@ -180,8 +173,8 @@ paths:
     post:
       tags:
       - "vnf"
-      summary: "Instantiate an instance of a VNF flavor on a given node."
-      description: ""
+      summary: "Instantiate an instance of a VNF flavor on a given node. Return vnf\
+        \ ID if success"
       operationId: "deploy_vnf"
       consumes:
       - "application/json"
@@ -189,19 +182,17 @@ paths:
       - "application/json"
       parameters:
       - in: "body"
-        name: "body"
+        name: "vnf_spec"
         description: "Flavor of VNF instance to be deployed as well as the target\
-          \ node. vnf_name is optional"
+          \ node."
         required: true
         schema:
-          $ref: "#/definitions/body"
+          $ref: "#/definitions/VNFSpec"
       responses:
         "200":
           description: "Success."
           schema:
             type: "string"
-        "400":
-          description: "Invalid parameters supplied."
       x-swagger-router-controller: "ni_nfvo.controllers.vnf_controller"
   /vnfs/{id}:
     delete:
@@ -223,8 +214,6 @@ paths:
       responses:
         "200":
           description: "Success."
-        "400":
-          description: "Invalid parameters supplied."
       x-swagger-router-controller: "ni_nfvo.controllers.vnf_controller"
   /vnfs/{id}/shutdown:
     post:
@@ -246,24 +235,21 @@ paths:
       responses:
         "200":
           description: "Success."
-        "400":
-          description: "Invalid parameters supplied."
       x-swagger-router-controller: "ni_nfvo.controllers.vnf_controller"
 definitions:
-  SFCR:
+  SFCRSpec:
     type: "object"
+    required:
+    - "source_client"
     properties:
-      id:
-        type: "string"
       name:
         type: "string"
-      arrivaltime:
-        type: "string"
-        format: "date-time"
       source_client:
         type: "string"
+        description: "the id of the source VM (not VNF)"
       destination_client:
         type: "string"
+        description: "the id of the destination VM (not VNF)"
       src_ip_prefix:
         type: "string"
       dst_ip_prefix:
@@ -280,23 +266,27 @@ definitions:
       dst_port_max:
         type: "integer"
         format: "int32"
+      proto:
+        type: "string"
       bw:
         type: "integer"
         format: "int32"
+        description: "bandwidth requirement of the sfcr"
       delay:
         type: "integer"
         format: "int32"
+        description: "delay requirement of the sfcr"
       duration:
         type: "integer"
         format: "int32"
-      proto:
-        type: "string"
+        description: "sfcr running duration"
       nf_chain:
         type: "array"
+        description: "the type of VNFs in the path (e.g.: fw, ids, nat, etc.)."
         items:
           type: "string"
-    description: "SFC request. src/dst ip prefix, src/dst port min/max, proto are\
-      \ optional."
+    description: "Specification to create new SFC request. src/dst ip prefix, src/dst\
+      \ port min/max, proto are for traffic classification"
     example:
       src_port_max: 6
       source_client: "source_client"
@@ -313,9 +303,114 @@ definitions:
       bw: 5
       proto: "proto"
       name: "name"
+      dst_port_max: 5
+  SFCR:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      arrivaltime:
+        type: "string"
+        format: "date-time"
+      name:
+        type: "string"
+      source_client:
+        type: "string"
+        description: "the id of the source VM (not VNF)"
+      destination_client:
+        type: "string"
+        description: "the id of the destination VM (not VNF)"
+      src_ip_prefix:
+        type: "string"
+      dst_ip_prefix:
+        type: "string"
+      src_port_min:
+        type: "integer"
+        format: "int32"
+      src_port_max:
+        type: "integer"
+        format: "int32"
+      dst_port_min:
+        type: "integer"
+        format: "int32"
+      dst_port_max:
+        type: "integer"
+        format: "int32"
+      proto:
+        type: "string"
+      bw:
+        type: "integer"
+        format: "int32"
+        description: "bandwidth requirement of the sfcr"
+      delay:
+        type: "integer"
+        format: "int32"
+        description: "delay requirement of the sfcr"
+      duration:
+        type: "integer"
+        format: "int32"
+        description: "sfcr running duration"
+      nf_chain:
+        type: "array"
+        description: "the type of VNFs in the path (e.g.: fw, ids, nat, etc.)."
+        items:
+          type: "string"
+    description: "SFC request."
+    example:
+      src_port_max: 6
+      source_client: "source_client"
+      destination_client: "destination_client"
+      dst_ip_prefix: "dst_ip_prefix"
+      nf_chain:
+      - "nf_chain"
+      - "nf_chain"
+      src_ip_prefix: "src_ip_prefix"
+      src_port_min: 0
+      duration: 7
+      dst_port_min: 1
+      delay: 2
+      bw: 5
+      proto: "proto"
       arrivaltime: "2000-01-23T04:56:07.000+00:00"
+      name: "name"
       id: "id"
       dst_port_max: 5
+  RouteSpec:
+    type: "object"
+    required:
+    - "sfcr_ids"
+    - "vnf_instance_ids"
+    properties:
+      sfc_name:
+        type: "string"
+      sfcr_ids:
+        type: "array"
+        items:
+          type: "string"
+      vnf_instance_ids:
+        type: "array"
+        description: "list of list of vnf id(s). Each sub-list is a node in traffic\
+          \ path, where traffic are load-balanced between VNFs in the node. Each E.g.:\
+          \ [[A,B], [C], [D]] : traffic go to [A, B] node (load-balanced between A\
+          \ and B), then go to C, then go to D."
+        items:
+          type: "array"
+          items:
+            type: "string"
+      is_symmetric:
+        type: "boolean"
+    description: "Specficiation to create routing information for given SFCR ID(s)"
+    example:
+      vnf_instance_ids:
+      - - "vnf_instance_ids"
+        - "vnf_instance_ids"
+      - - "vnf_instance_ids"
+        - "vnf_instance_ids"
+      is_symmetric: true
+      sfc_name: "sfc_name"
+      sfcr_ids:
+      - "sfcr_ids"
+      - "sfcr_ids"
   Route:
     type: "object"
     properties:
@@ -329,15 +424,17 @@ definitions:
           type: "string"
       vnf_instance_ids:
         type: "array"
-        description: "each sub-list represent a node on the traffic path. each node\
-          \ is a list of vnf instances, where traffic are load-balanced"
+        description: "list of list of vnf id(s). Each sub-list is a node in traffic\
+          \ path, where traffic are load-balanced between VNFs in the node. Each E.g.:\
+          \ [[A,B], [C], [D]] : traffic go to [A, B] node (load-balanced between A\
+          \ and B), then go to C, then go to D."
         items:
           type: "array"
           items:
             type: "string"
       is_symmetric:
         type: "boolean"
-    description: "Detailed routing information for a given SFCR ID. sfc_name is optional."
+    description: "Detailed routing (SFC) information."
     example:
       vnf_instance_ids:
       - - "vnf_instance_ids"
@@ -350,7 +447,7 @@ definitions:
       sfcr_ids:
       - "sfcr_ids"
       - "sfcr_ids"
-  RouteUpdate:
+  RouteUpdateSpec:
     type: "object"
     properties:
       sfcr_ids:
@@ -365,7 +462,7 @@ definitions:
           type: "array"
           items:
             type: "string"
-    description: "update the path of a route."
+    description: "Specification to update the path of a route."
     example:
       vnf_instance_ids:
       - - "vnf_instance_ids"
@@ -375,17 +472,27 @@ definitions:
       sfcr_ids:
       - "sfcr_ids"
       - "sfcr_ids"
-  body:
+  VNFSpec:
     type: "object"
+    required:
+    - "flavor_id"
     properties:
       flavor_id:
         type: "string"
       node_name:
         type: "string"
+        description: "name of the compute node where VNF will be deployed"
       vnf_name:
         type: "string"
       user_data:
         type: "string"
+        description: "configuration to pass to the VNF at boot (e.g., cloud-init)"
+    description: "specification to deploy VNF."
+    example:
+      flavor_id: "flavor_id"
+      node_name: "node_name"
+      vnf_name: "vnf_name"
+      user_data: "user_data"
 externalDocs:
   description: "Find out more about DPNM NI."
   url: "http://dpnm.postech.ac.kr/"

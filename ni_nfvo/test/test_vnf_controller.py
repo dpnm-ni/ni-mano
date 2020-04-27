@@ -5,7 +5,7 @@ from __future__ import absolute_import
 from flask import json
 from six import BytesIO
 
-from ni_nfvo.models.body import Body  # noqa: E501
+from ni_nfvo.models.vnf_spec import VNFSpec  # noqa: E501
 from ni_nfvo.test import BaseTestCase
 
 
@@ -15,13 +15,13 @@ class TestVnfController(BaseTestCase):
     def test_deploy_vnf(self):
         """Test case for deploy_vnf
 
-        Instantiate an instance of a VNF flavor on a given node.
+        Instantiate an instance of a VNF flavor on a given node. Return vnf ID if success
         """
-        body = Body()
+        vnf_spec = VNFSpec()
         response = self.client.open(
-            '/v2/vnfs',
+            '/vnfs',
             method='POST',
-            data=json.dumps(body),
+            data=json.dumps(vnf_spec),
             content_type='application/json')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -32,7 +32,7 @@ class TestVnfController(BaseTestCase):
         Destroy a VNF instance.
         """
         response = self.client.open(
-            '/v2/vnfs/{id}'.format(id='id_example'),
+            '/vnfs/{id}'.format(id='id_example'),
             method='DELETE',
             content_type='application/json')
         self.assert200(response,
@@ -44,7 +44,7 @@ class TestVnfController(BaseTestCase):
         Shut down a VNF instance.
         """
         response = self.client.open(
-            '/v2/vnfs/{id}/shutdown'.format(id='id_example'),
+            '/vnfs/{id}/shutdown'.format(id='id_example'),
             method='POST',
             content_type='application/json')
         self.assert200(response,
