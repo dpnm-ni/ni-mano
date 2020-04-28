@@ -16,8 +16,6 @@ base_url = client.base_urls["network"]
 
 
 def create_sfc(fc_prefix, sfcr_ids, vnf_ids_lists, is_symmetric=False):
-    headers = {'X-Auth-Token': client.get_token()}
-
     if len(vnf_ids_lists) == 0:
         error_message = "vnf list is empty"
         current_app.logger.error(error_message)
@@ -59,7 +57,6 @@ def _get_data_port(vnf_instance_id):
 
 def create_flow_classifier(sfcr):
     url = "/v2.0/sfc/flow_classifiers"
-    flow_classifier_ids = []
 
     body = dict()
     # logical_source_port is required
@@ -111,14 +108,14 @@ def _create_port_pairs(postfix_name, port_ids_list, allow_existing_pp=False):
     for i, port_ids in enumerate(port_ids_list):
         port_pairs = []
         for j, port_id in enumerate(port_ids):
-            to_create_new = True;
+            to_create_new = True
 
             if (allow_existing_pp):
                 for port_pair in existing_port_pairs:
                     if port_pair["ingress"] == port_id and port_pair["egress"] == port_id:
                         port_pairs.append(port_pair["id"])
-                        to_create_new = False;
-                        break;
+                        to_create_new = False
+                        break
 
             if to_create_new:
                 body = {
@@ -287,7 +284,6 @@ def _get_all_port_pairs_of_route(route_id):
     return port_pairs
 
 def _update_port_pair_groups(old_pp_groups, new_port_pairs_list):
-    port_pair_groups = []
     for i, pp_group in enumerate(old_pp_groups):
         body = {
                     "port_pair_group": {

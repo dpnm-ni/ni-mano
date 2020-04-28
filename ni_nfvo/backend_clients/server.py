@@ -31,7 +31,7 @@ def create_server(server_name, flavor_id, host_name, custom_user_data):
         os_image_id = extra_specs["extra_specs"]["os_image_id"]
         default_user_data = extra_specs["extra_specs"].get("default_user_data")
     except Exception as e:
-        return "Cannot find os_image_id in flavor extra specs", 404
+        return str(e), 404
 
     if custom_user_data is not None:
         user_data = base64.b64encode(custom_user_data.encode('ascii'))
