@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import requests
 import uuid
+import netaddr
 
 from ni_nfvo.config import cfg
 from ni_nfvo.backend_clients.utils import get_net_id_from_name
@@ -55,30 +56,93 @@ def _get_data_port(vnf_instance_id):
     current_app.logger.error(error_message)
     abort(400, error_message)
 
-def create_flow_classifier(sfcr):
+
+def _ip_prefix_conflict(first_ip_prefix, second_ip_prefix):
+    if first_ip_prefix is None or second_ip_prefix is None:
+        return True
+    first_ipset = netaddr.IPSet([first_ip_prefix])
+    second_ipset = netaddr.IPSet([second_ip_prefix])
+    return bool(first_ipset & second_ipset)
+
+
+def _port_range_conflict( first_port_range_min, first_port_range_max,
+        second_port_range_min, second_port_range_max ):
+    first_conflict = True
+    second_conflict = True
+    if (
+        first_port_range_min is not None and
+        second_port_range_max is not None
+    ):
+        first_conflict = first_port_range_min <= second_port_range_max
+    if (
+        first_port_range_max is not None and
+        second_port_range_min is not None
+    ):
+        second_conflict = second_port_range_min <= first_port_range_max
+    return first_conflict & second_conflict
+
+
+def _protocol_conflict(first_protocol, second_protocol):
+    if first_protocol is None or second_protocol is None:
+        return True
+    return first_protocol == second_protocol
+
+
+def _sfcr_conflict(sfcr1, sfcr2):
+    return all([
+        _protocol_conflict(sfcr1.proto, sfcr2.proto),
+        _ip_prefix_conflict(sfcr1.src_ip_prefix, sfcr2.src_ip_prefix),
+        _ip_prefix_conflict(sfcr1.dst_ip_prefix, sfcr2.dst_ip_prefix),
+        _port_range_conflict(
+            sfcr1.src_port_min,
+            sfcr1.src_port_max,
+            sfcr2.src_port_min,
+            sfcr2.src_port_max
+        ),
+        _port_range_conflict(
+            sfcr1.dst_port_min,
+            sfcr1.dst_port_max,
+            sfcr2.dst_port_min,
+            sfcr2.dst_port_max
+        )
+    ])
+
+
+def create_flow_classifier(sfcr_spec):
     url = "/v2.0/sfc/flow_classifiers"
+
+    # Originally, Openstack allow more relaxed (and flexible) conflict check,
+    # but this can cause later conflict when creating sfc.
+    # Thus we enforce a strict flow-classifier check
+    # at the begining to prevent conflict.
+    for sfcr in db.get_all_sfcrs():
+        # sfcr_spec contain all needed infor for sfcr_confict checking
+        if _sfcr_conflict(sfcr, sfcr_spec):
+            error_message = "sfcr conflict with sfcr: %s" %(sfcr.id)
+            current_app.logger.error(error_message)
+            abort(400, error_message)
 
     body = dict()
     # logical_source_port is required
-    body["logical_source_port"] = _get_data_port(sfcr.source_client)
+    body["logical_source_port"] = _get_data_port(sfcr_spec.source_client)
 
-    if sfcr.destination_client is not None:
-        body["logical_destination_port"] = _get_data_port(sfcr.destination_client)
+    if sfcr_spec.destination_client is not None:
+        body["logical_destination_port"] = _get_data_port(sfcr_spec.destination_client)
 
-    if sfcr.src_ip_prefix is not None:
-        body["source_ip_prefix"] = sfcr.src_ip_prefix
-    if sfcr.dst_ip_prefix is not None:
-        body["destination_ip_prefix"] = sfcr.dst_ip_prefix
-    if sfcr.src_port_min is not None:
-        body["source_port_range_min"] = sfcr.src_port_min
-    if sfcr.src_port_max is not None:
-        body["source_port_range_max"] = sfcr.src_port_max
-    if sfcr.dst_port_min is not None:
-        body["destination_port_range_min"] = sfcr.dst_port_min
-    if sfcr.dst_port_max is not None:
-        body["destination_port_range_max"] = sfcr.dst_port_max
-    if sfcr.proto is not None:
-        body["protocol"] = sfcr.proto
+    if sfcr_spec.src_ip_prefix is not None:
+        body["source_ip_prefix"] = sfcr_spec.src_ip_prefix
+    if sfcr_spec.dst_ip_prefix is not None:
+        body["destination_ip_prefix"] = sfcr_spec.dst_ip_prefix
+    if sfcr_spec.src_port_min is not None:
+        body["source_port_range_min"] = sfcr_spec.src_port_min
+    if sfcr_spec.src_port_max is not None:
+        body["source_port_range_max"] = sfcr_spec.src_port_max
+    if sfcr_spec.dst_port_min is not None:
+        body["destination_port_range_min"] = sfcr_spec.dst_port_min
+    if sfcr_spec.dst_port_max is not None:
+        body["destination_port_range_max"] = sfcr_spec.dst_port_max
+    if sfcr_spec.proto is not None:
+        body["protocol"] = sfcr_spec.proto
 
     body = {"flow_classifier": body}
 
