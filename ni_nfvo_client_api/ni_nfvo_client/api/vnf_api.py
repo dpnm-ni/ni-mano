@@ -34,7 +34,7 @@ class VnfApi(object):
         self.api_client = api_client
 
     def deploy_vnf(self, vnf_spec, **kwargs):  # noqa: E501
-        """Instantiate an instance of a VNF flavor on a given node. Return vnf ID if success  # noqa: E501
+        """Instantiate an instance of a Vnf flavor on a given node. Return vnf ID if success  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -42,7 +42,7 @@ class VnfApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param VNFSpec vnf_spec: Flavor of VNF instance to be deployed as well as the target node. (required)
+        :param VnfSpec vnf_spec: Flavor of Vnf instance to be deployed as well as the target node. (required)
         :return: str
                  If the method is called asynchronously,
                  returns the request thread.
@@ -55,7 +55,7 @@ class VnfApi(object):
             return data
 
     def deploy_vnf_with_http_info(self, vnf_spec, **kwargs):  # noqa: E501
-        """Instantiate an instance of a VNF flavor on a given node. Return vnf ID if success  # noqa: E501
+        """Instantiate an instance of a Vnf flavor on a given node. Return vnf ID if success  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -63,7 +63,7 @@ class VnfApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param VNFSpec vnf_spec: Flavor of VNF instance to be deployed as well as the target node. (required)
+        :param VnfSpec vnf_spec: Flavor of Vnf instance to be deployed as well as the target node. (required)
         :return: str
                  If the method is called asynchronously,
                  returns the request thread.
@@ -131,7 +131,7 @@ class VnfApi(object):
             collection_formats=collection_formats)
 
     def destroy_vnf(self, id, **kwargs):  # noqa: E501
-        """Destroy a VNF instance.  # noqa: E501
+        """Destroy a Vnf instance.  # noqa: E501
 
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -153,7 +153,7 @@ class VnfApi(object):
             return data
 
     def destroy_vnf_with_http_info(self, id, **kwargs):  # noqa: E501
-        """Destroy a VNF instance.  # noqa: E501
+        """Destroy a Vnf instance.  # noqa: E501
 
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -230,7 +230,7 @@ class VnfApi(object):
             collection_formats=collection_formats)
 
     def shutdown_vnf(self, id, **kwargs):  # noqa: E501
-        """Shut down a VNF instance.  # noqa: E501
+        """Shut down a Vnf instance.  # noqa: E501
 
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -239,7 +239,7 @@ class VnfApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str id: ID of VNF instance to be shut down. (required)
+        :param str id: ID of Vnf instance to be shut down. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -252,7 +252,7 @@ class VnfApi(object):
             return data
 
     def shutdown_vnf_with_http_info(self, id, **kwargs):  # noqa: E501
-        """Shut down a VNF instance.  # noqa: E501
+        """Shut down a Vnf instance.  # noqa: E501
 
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -261,7 +261,7 @@ class VnfApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str id: ID of VNF instance to be shut down. (required)
+        :param str id: ID of Vnf instance to be shut down. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.

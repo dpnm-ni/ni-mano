@@ -5,8 +5,8 @@ from __future__ import absolute_import
 from flask import json
 from six import BytesIO
 
-from ni_nfvo.models.sfcr import SFCR  # noqa: E501
-from ni_nfvo.models.sfcr_spec import SFCRSpec  # noqa: E501
+from ni_nfvo.models.sfcr import Sfcr  # noqa: E501
+from ni_nfvo.models.sfcr_spec import SfcrSpec  # noqa: E501
 from ni_nfvo.test import BaseTestCase
 
 
@@ -16,9 +16,9 @@ class TestSfcrController(BaseTestCase):
     def test_add_sfcr(self):
         """Test case for add_sfcr
 
-        Add new SFC request. return sfcr ID if success
+        Add new Sfc request. return sfcr ID if success
         """
-        sfcr_spec = SFCRSpec()
+        sfcr_spec = SfcrSpec()
         response = self.client.open(
             '/sfcrs',
             method='POST',
@@ -42,7 +42,7 @@ class TestSfcrController(BaseTestCase):
     def test_get_sfcrs(self):
         """Test case for get_sfcrs
 
-        Get currently active SFC requests.
+        Get currently active Sfc requests.
         """
         response = self.client.open(
             '/sfcrs',

@@ -1,4 +1,4 @@
-# RouteUpdateSpec
+# SfcUpdateSpec
 
 ## Properties
 Name | Type | Description | Notes

@@ -32,21 +32,21 @@ class TestVnfApi(unittest.TestCase):
     def test_deploy_vnf(self):
         """Test case for deploy_vnf
 
-        Instantiate an instance of a VNF flavor on a given node. Return vnf ID if success  # noqa: E501
+        Instantiate an instance of a Vnf flavor on a given node. Return vnf ID if success  # noqa: E501
         """
         pass
 
     def test_destroy_vnf(self):
         """Test case for destroy_vnf
 
-        Destroy a VNF instance.  # noqa: E501
+        Destroy a Vnf instance.  # noqa: E501
         """
         pass
 
     def test_shutdown_vnf(self):
         """Test case for shutdown_vnf
 
-        Shut down a VNF instance.  # noqa: E501
+        Shut down a Vnf instance.  # noqa: E501
         """
         pass
 

@@ -1,19 +1,19 @@
-# ni_nfvo_client.RouteApi
+# ni_nfvo_client.SfcApi
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**del_route**](RouteApi.md#del_route) | **DELETE** /routes/{id} | Delete a Route.
-[**get_routes**](RouteApi.md#get_routes) | **GET** /routes | Get current route information, i.e., list of all active SFCRs including their paths.
-[**set_route**](RouteApi.md#set_route) | **POST** /routes | Route a request via the provided route. Return route ID if success.
-[**update_route**](RouteApi.md#update_route) | **PUT** /routes/{id} | Update a new route path or new sfcrs.
+[**del_sfc**](SfcApi.md#del_sfc) | **DELETE** /sfcs/{id} | Delete a Sfc.
+[**get_sfcs**](SfcApi.md#get_sfcs) | **GET** /sfcs | Get current sfc information, i.e., list of all active Sfcrs including their paths.
+[**set_sfc**](SfcApi.md#set_sfc) | **POST** /sfcs | Create a Sfc. Return sfc ID if success.
+[**update_sfc**](SfcApi.md#update_sfc) | **PUT** /sfcs/{id} | Update a new sfc path or new sfcrs.
 
 
-# **del_route**
-> del_route(id)
+# **del_sfc**
+> del_sfc(id)
 
-Delete a Route.
+Delete a Sfc.
 
 
 
@@ -26,21 +26,21 @@ from ni_nfvo_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = ni_nfvo_client.RouteApi()
-id = 'id_example' # str | route id
+api_instance = ni_nfvo_client.SfcApi()
+id = 'id_example' # str | sfc id
 
 try:
-    # Delete a Route.
-    api_instance.del_route(id)
+    # Delete a Sfc.
+    api_instance.del_sfc(id)
 except ApiException as e:
-    print("Exception when calling RouteApi->del_route: %s\n" % e)
+    print("Exception when calling SfcApi->del_sfc: %s\n" % e)
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| route id | 
+ **id** | **str**| sfc id | 
 
 ### Return type
 
@@ -57,10 +57,10 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_routes**
-> list[Route] get_routes()
+# **get_sfcs**
+> list[Sfc] get_sfcs()
 
-Get current route information, i.e., list of all active SFCRs including their paths.
+Get current sfc information, i.e., list of all active Sfcrs including their paths.
 
 
 
@@ -73,14 +73,14 @@ from ni_nfvo_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = ni_nfvo_client.RouteApi()
+api_instance = ni_nfvo_client.SfcApi()
 
 try:
-    # Get current route information, i.e., list of all active SFCRs including their paths.
-    api_response = api_instance.get_routes()
+    # Get current sfc information, i.e., list of all active Sfcrs including their paths.
+    api_response = api_instance.get_sfcs()
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling RouteApi->get_routes: %s\n" % e)
+    print("Exception when calling SfcApi->get_sfcs: %s\n" % e)
 ```
 
 ### Parameters
@@ -88,7 +88,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**list[Route]**](Route.md)
+[**list[Sfc]**](Sfc.md)
 
 ### Authorization
 
@@ -101,10 +101,10 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **set_route**
-> str set_route(route_spec)
+# **set_sfc**
+> str set_sfc(sfc_spec)
 
-Route a request via the provided route. Return route ID if success.
+Create a Sfc. Return sfc ID if success.
 
 
 
@@ -117,22 +117,22 @@ from ni_nfvo_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = ni_nfvo_client.RouteApi()
-route_spec = ni_nfvo_client.RouteSpec() # RouteSpec | Route information including SFCR ID and vnf instance ids.
+api_instance = ni_nfvo_client.SfcApi()
+sfc_spec = ni_nfvo_client.SfcSpec() # SfcSpec | Sfc information including Sfcr ID and vnf instance ids.
 
 try:
-    # Route a request via the provided route. Return route ID if success.
-    api_response = api_instance.set_route(route_spec)
+    # Create a Sfc. Return sfc ID if success.
+    api_response = api_instance.set_sfc(sfc_spec)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling RouteApi->set_route: %s\n" % e)
+    print("Exception when calling SfcApi->set_sfc: %s\n" % e)
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **route_spec** | [**RouteSpec**](RouteSpec.md)| Route information including SFCR ID and vnf instance ids. | 
+ **sfc_spec** | [**SfcSpec**](SfcSpec.md)| Sfc information including Sfcr ID and vnf instance ids. | 
 
 ### Return type
 
@@ -149,10 +149,10 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **update_route**
-> str update_route(id, route_update_spec)
+# **update_sfc**
+> str update_sfc(id, sfc_update_spec)
 
-Update a new route path or new sfcrs.
+Update a new sfc path or new sfcrs.
 
 
 
@@ -165,24 +165,24 @@ from ni_nfvo_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = ni_nfvo_client.RouteApi()
-id = 'id_example' # str | route id
-route_update_spec = ni_nfvo_client.RouteUpdateSpec() # RouteUpdateSpec | Route Update info.
+api_instance = ni_nfvo_client.SfcApi()
+id = 'id_example' # str | sfc id
+sfc_update_spec = ni_nfvo_client.SfcUpdateSpec() # SfcUpdateSpec | Sfc Update info.
 
 try:
-    # Update a new route path or new sfcrs.
-    api_response = api_instance.update_route(id, route_update_spec)
+    # Update a new sfc path or new sfcrs.
+    api_response = api_instance.update_sfc(id, sfc_update_spec)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling RouteApi->update_route: %s\n" % e)
+    print("Exception when calling SfcApi->update_sfc: %s\n" % e)
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| route id | 
- **route_update_spec** | [**RouteUpdateSpec**](RouteUpdateSpec.md)| Route Update info. | 
+ **id** | **str**| sfc id | 
+ **sfc_update_spec** | [**SfcUpdateSpec**](SfcUpdateSpec.md)| Sfc Update info. | 
 
 ### Return type
 

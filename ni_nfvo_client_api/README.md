@@ -52,14 +52,14 @@ from ni_nfvo_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = ni_nfvo_client.RouteApi(ni_nfvo_client.ApiClient(configuration))
-id = 'id_example' # str | route id
+api_instance = ni_nfvo_client.SfcApi(ni_nfvo_client.ApiClient(configuration))
+id = 'id_example' # str | sfc id
 
 try:
-    # Delete a Route.
-    api_instance.del_route(id)
+    # Delete a Sfc.
+    api_instance.del_sfc(id)
 except ApiException as e:
-    print("Exception when calling RouteApi->del_route: %s\n" % e)
+    print("Exception when calling SfcApi->del_sfc: %s\n" % e)
 
 ```
 
@@ -69,26 +69,26 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*RouteApi* | [**del_route**](docs/RouteApi.md#del_route) | **DELETE** /routes/{id} | Delete a Route.
-*RouteApi* | [**get_routes**](docs/RouteApi.md#get_routes) | **GET** /routes | Get current route information, i.e., list of all active SFCRs including their paths.
-*RouteApi* | [**set_route**](docs/RouteApi.md#set_route) | **POST** /routes | Route a request via the provided route. Return route ID if success.
-*RouteApi* | [**update_route**](docs/RouteApi.md#update_route) | **PUT** /routes/{id} | Update a new route path or new sfcrs.
-*SfcrApi* | [**add_sfcr**](docs/SfcrApi.md#add_sfcr) | **POST** /sfcrs | Add new SFC request. return sfcr ID if success
+*SfcApi* | [**del_sfc**](docs/SfcApi.md#del_sfc) | **DELETE** /sfcs/{id} | Delete a Sfc.
+*SfcApi* | [**get_sfcs**](docs/SfcApi.md#get_sfcs) | **GET** /sfcs | Get current sfc information, i.e., list of all active Sfcrs including their paths.
+*SfcApi* | [**set_sfc**](docs/SfcApi.md#set_sfc) | **POST** /sfcs | Create a Sfc. Return sfc ID if success.
+*SfcApi* | [**update_sfc**](docs/SfcApi.md#update_sfc) | **PUT** /sfcs/{id} | Update a new sfc path or new sfcrs.
+*SfcrApi* | [**add_sfcr**](docs/SfcrApi.md#add_sfcr) | **POST** /sfcrs | Add new Sfc request. return sfcr ID if success
 *SfcrApi* | [**del_sfcr**](docs/SfcrApi.md#del_sfcr) | **DELETE** /sfcrs/{id} | Delete a sfcr.
-*SfcrApi* | [**get_sfcrs**](docs/SfcrApi.md#get_sfcrs) | **GET** /sfcrs | Get currently active SFC requests.
-*VnfApi* | [**deploy_vnf**](docs/VnfApi.md#deploy_vnf) | **POST** /vnfs | Instantiate an instance of a VNF flavor on a given node. Return vnf ID if success
-*VnfApi* | [**destroy_vnf**](docs/VnfApi.md#destroy_vnf) | **DELETE** /vnfs/{id} | Destroy a VNF instance.
-*VnfApi* | [**shutdown_vnf**](docs/VnfApi.md#shutdown_vnf) | **POST** /vnfs/{id}/shutdown | Shut down a VNF instance.
+*SfcrApi* | [**get_sfcrs**](docs/SfcrApi.md#get_sfcrs) | **GET** /sfcrs | Get currently active Sfc requests.
+*VnfApi* | [**deploy_vnf**](docs/VnfApi.md#deploy_vnf) | **POST** /vnfs | Instantiate an instance of a Vnf flavor on a given node. Return vnf ID if success
+*VnfApi* | [**destroy_vnf**](docs/VnfApi.md#destroy_vnf) | **DELETE** /vnfs/{id} | Destroy a Vnf instance.
+*VnfApi* | [**shutdown_vnf**](docs/VnfApi.md#shutdown_vnf) | **POST** /vnfs/{id}/shutdown | Shut down a Vnf instance.
 
 
 ## Documentation For Models
 
- - [Route](docs/Route.md)
- - [RouteSpec](docs/RouteSpec.md)
- - [RouteUpdateSpec](docs/RouteUpdateSpec.md)
- - [SFCR](docs/SFCR.md)
- - [SFCRSpec](docs/SFCRSpec.md)
- - [VNFSpec](docs/VNFSpec.md)
+ - [Sfc](docs/Sfc.md)
+ - [SfcSpec](docs/SfcSpec.md)
+ - [SfcUpdateSpec](docs/SfcUpdateSpec.md)
+ - [Sfcr](docs/Sfcr.md)
+ - [SfcrSpec](docs/SfcrSpec.md)
+ - [VnfSpec](docs/VnfSpec.md)
 
 
 ## Documentation For Authorization

@@ -4,15 +4,15 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**add_sfcr**](SfcrApi.md#add_sfcr) | **POST** /sfcrs | Add new SFC request. return sfcr ID if success
+[**add_sfcr**](SfcrApi.md#add_sfcr) | **POST** /sfcrs | Add new Sfc request. return sfcr ID if success
 [**del_sfcr**](SfcrApi.md#del_sfcr) | **DELETE** /sfcrs/{id} | Delete a sfcr.
-[**get_sfcrs**](SfcrApi.md#get_sfcrs) | **GET** /sfcrs | Get currently active SFC requests.
+[**get_sfcrs**](SfcrApi.md#get_sfcrs) | **GET** /sfcrs | Get currently active Sfc requests.
 
 
 # **add_sfcr**
 > str add_sfcr(sfcr_spec)
 
-Add new SFC request. return sfcr ID if success
+Add new Sfc request. return sfcr ID if success
 
 ### Example
 ```python
@@ -24,10 +24,10 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = ni_nfvo_client.SfcrApi()
-sfcr_spec = ni_nfvo_client.SFCRSpec() # SFCRSpec | SFC request object to be added.
+sfcr_spec = ni_nfvo_client.SfcrSpec() # SfcrSpec | Sfc request object to be added.
 
 try:
-    # Add new SFC request. return sfcr ID if success
+    # Add new Sfc request. return sfcr ID if success
     api_response = api_instance.add_sfcr(sfcr_spec)
     pprint(api_response)
 except ApiException as e:
@@ -38,7 +38,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **sfcr_spec** | [**SFCRSpec**](SFCRSpec.md)| SFC request object to be added. | 
+ **sfcr_spec** | [**SfcrSpec**](SfcrSpec.md)| Sfc request object to be added. | 
 
 ### Return type
 
@@ -72,7 +72,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = ni_nfvo_client.SfcrApi()
-id = 'id_example' # str | route id
+id = 'id_example' # str | sfc id
 
 try:
     # Delete a sfcr.
@@ -85,7 +85,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| route id | 
+ **id** | **str**| sfc id | 
 
 ### Return type
 
@@ -103,9 +103,9 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_sfcrs**
-> list[SFCR] get_sfcrs()
+> list[Sfcr] get_sfcrs()
 
-Get currently active SFC requests.
+Get currently active Sfc requests.
 
 ### Example
 ```python
@@ -119,7 +119,7 @@ from pprint import pprint
 api_instance = ni_nfvo_client.SfcrApi()
 
 try:
-    # Get currently active SFC requests.
+    # Get currently active Sfc requests.
     api_response = api_instance.get_sfcrs()
     pprint(api_response)
 except ApiException as e:
@@ -131,7 +131,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**list[SFCR]**](SFCR.md)
+[**list[Sfcr]**](Sfcr.md)
 
 ### Authorization
 

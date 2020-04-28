@@ -15,7 +15,7 @@ ni_nfvo_client_cfg.host = cfg["ni_nfvo"]["host"]
 
 ni_nfvo_vnf_api = ni_nfvo_client.VnfApi(ni_nfvo_client.ApiClient(ni_nfvo_client_cfg))
 ni_nfvo_sfcr_api = ni_nfvo_client.SfcrApi(ni_nfvo_client.ApiClient(ni_nfvo_client_cfg))
-ni_nfvo_route_api = ni_nfvo_client.RouteApi(ni_nfvo_client.ApiClient(ni_nfvo_client_cfg))
+ni_nfvo_sfc_api = ni_nfvo_client.SfcApi(ni_nfvo_client.ApiClient(ni_nfvo_client_cfg))
 
 
 def check_vnf_running_w_timeout(vnf_id, timeout):
@@ -48,11 +48,8 @@ def deploy_vnf_from_flavor(flavor_name, vnf_name):
             break
     assert flavor_id != None
 
-    # get nodes
-    nodes = ni_mon_api.get_nodes()
-
     # deploy vnf
-    vnf_fw_spec = ni_nfvo_client.VNFSpec(flavor_id=flavor_id,
+    vnf_fw_spec = ni_nfvo_client.VnfSpec(flavor_id=flavor_id,
                                 vnf_name=vnf_name)
     vnf_id = ni_nfvo_vnf_api.deploy_vnf(vnf_fw_spec)
 
@@ -91,7 +88,7 @@ def check_sfcr_exist(sfcr_id):
 
 
 def create_sample_sfcr(sfcr_name, source_client, destination_client=None):
-    sfcr_spec = ni_nfvo_client.SFCRSpec(name=sfcr_name,
+    sfcr_spec = ni_nfvo_client.SfcrSpec(name=sfcr_name,
                                  source_client=source_client,
                                  destination_client=destination_client,
                                  src_port_min=0,
@@ -110,33 +107,33 @@ def delete_sample_sfcr(sfcr_id):
     assert check_sfcr_exist(sfcr_id) == False
 
 
-def check_route_exist(route_id):
-    routes = ni_nfvo_route_api.get_routes()
-    for route in routes:
-        if route.id == route_id:
+def check_sfc_exist(sfc_id):
+    sfcs = ni_nfvo_sfc_api.get_sfcs()
+    for sfc in sfcs:
+        if sfc.id == sfc_id:
             return True
     return False
 
 
-def create_sample_route(sfc_name, sfcr_id, vnf_instance_id, is_symmetric):
-    route_spec = ni_nfvo_client.RouteSpec(sfc_name=sfc_name,
+def create_sample_sfc(sfc_name, sfcr_id, vnf_instance_id, is_symmetric):
+    sfc_spec = ni_nfvo_client.SfcSpec(sfc_name=sfc_name,
                                    sfcr_ids=[sfcr_id],
                                    vnf_instance_ids=[[vnf_instance_id]],
                                    is_symmetric=is_symmetric)
-    route_id = ni_nfvo_route_api.set_route(route_spec)
-    assert check_route_exist(route_id) == True
+    sfc_id = ni_nfvo_sfc_api.set_sfc(sfc_spec)
+    assert check_sfc_exist(sfc_id) == True
 
-    return route_id
-
-
-def update_sample_route(route_id, new_vnf_instance_id):
-    route_update_spec = ni_nfvo_client.RouteUpdateSpec(vnf_instance_ids=[[new_vnf_instance_id]])
-    ni_nfvo_route_api.update_route(route_id, route_update_spec)
+    return sfc_id
 
 
-def delete_sample_route(route_id):
-    ni_nfvo_route_api.del_route(route_id)
-    assert check_route_exist(route_id) == False
+def update_sample_sfc(sfc_id, new_vnf_instance_id):
+    sfc_update_spec = ni_nfvo_client.SfcUpdateSpec(vnf_instance_ids=[[new_vnf_instance_id]])
+    ni_nfvo_sfc_api.update_sfc(sfc_id, sfc_update_spec)
+
+
+def delete_sample_sfc(sfc_id):
+    ni_nfvo_sfc_api.del_sfc(sfc_id)
+    assert check_sfc_exist(sfc_id) == False
 
 
 def test_ni_nfvo():
@@ -146,17 +143,17 @@ def test_ni_nfvo():
     client2_id = deploy_vnf_from_flavor('vnf.generic.1.512', 'ci-c2')
 
     sfcr_id = create_sample_sfcr('ci-sfcr', client1_id, client2_id)
-    route_id = create_sample_route('ci-route', sfcr_id, vnf_fw1_id, True)
-    update_sample_route(route_id, vnf_fw2_id)
-    delete_sample_route(route_id)
+    sfc_id = create_sample_sfc('ci-sfc', sfcr_id, vnf_fw1_id, True)
+    update_sample_sfc(sfc_id, vnf_fw2_id)
+    delete_sample_sfc(sfc_id)
     delete_sample_sfcr(sfcr_id)
 
     # should be able to recreate and delete again
     time.sleep(2)
     sfcr_id = create_sample_sfcr('ci-sfcr', client1_id, client2_id)
-    route_id = create_sample_route('ci-route', sfcr_id, vnf_fw1_id, False)
-    update_sample_route(route_id, vnf_fw2_id)
-    delete_sample_route(route_id)
+    sfc_id = create_sample_sfc('ci-sfc', sfcr_id, vnf_fw1_id, False)
+    update_sample_sfc(sfc_id, vnf_fw2_id)
+    delete_sample_sfc(sfc_id)
     delete_sample_sfcr(sfcr_id)
 
     destroy_vnf(vnf_fw1_id)

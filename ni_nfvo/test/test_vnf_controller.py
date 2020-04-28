@@ -5,7 +5,7 @@ from __future__ import absolute_import
 from flask import json
 from six import BytesIO
 
-from ni_nfvo.models.vnf_spec import VNFSpec  # noqa: E501
+from ni_nfvo.models.vnf_spec import VnfSpec  # noqa: E501
 from ni_nfvo.test import BaseTestCase
 
 
@@ -15,9 +15,9 @@ class TestVnfController(BaseTestCase):
     def test_deploy_vnf(self):
         """Test case for deploy_vnf
 
-        Instantiate an instance of a VNF flavor on a given node. Return vnf ID if success
+        Instantiate an instance of a Vnf flavor on a given node. Return vnf ID if success
         """
-        vnf_spec = VNFSpec()
+        vnf_spec = VnfSpec()
         response = self.client.open(
             '/vnfs',
             method='POST',
@@ -29,7 +29,7 @@ class TestVnfController(BaseTestCase):
     def test_destroy_vnf(self):
         """Test case for destroy_vnf
 
-        Destroy a VNF instance.
+        Destroy a Vnf instance.
         """
         response = self.client.open(
             '/vnfs/{id}'.format(id='id_example'),
@@ -41,7 +41,7 @@ class TestVnfController(BaseTestCase):
     def test_shutdown_vnf(self):
         """Test case for shutdown_vnf
 
-        Shut down a VNF instance.
+        Shut down a Vnf instance.
         """
         response = self.client.open(
             '/vnfs/{id}/shutdown'.format(id='id_example'),

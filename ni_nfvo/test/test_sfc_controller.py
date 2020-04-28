@@ -5,63 +5,63 @@ from __future__ import absolute_import
 from flask import json
 from six import BytesIO
 
-from ni_nfvo.models.route import Route  # noqa: E501
-from ni_nfvo.models.route_spec import RouteSpec  # noqa: E501
-from ni_nfvo.models.route_update_spec import RouteUpdateSpec  # noqa: E501
+from ni_nfvo.models.sfc import Sfc  # noqa: E501
+from ni_nfvo.models.sfc_spec import SfcSpec  # noqa: E501
+from ni_nfvo.models.sfc_update_spec import SfcUpdateSpec  # noqa: E501
 from ni_nfvo.test import BaseTestCase
 
 
-class TestRouteController(BaseTestCase):
-    """RouteController integration test stubs"""
+class TestSfcController(BaseTestCase):
+    """SfcController integration test stubs"""
 
-    def test_del_route(self):
-        """Test case for del_route
+    def test_del_sfc(self):
+        """Test case for del_sfc
 
-        Delete a Route.
+        Delete a Sfc.
         """
         response = self.client.open(
-            '/routes/{id}'.format(id='id_example'),
+            '/sfcs/{id}'.format(id='id_example'),
             method='DELETE',
             content_type='application/json')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
-    def test_get_routes(self):
-        """Test case for get_routes
+    def test_get_sfcs(self):
+        """Test case for get_sfcs
 
-        Get current route information, i.e., list of all active SFCRs including their paths.
+        Get current sfc information, i.e., list of all active Sfcrs including their paths.
         """
         response = self.client.open(
-            '/routes',
+            '/sfcs',
             method='GET',
             content_type='application/json')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
-    def test_set_route(self):
-        """Test case for set_route
+    def test_set_sfc(self):
+        """Test case for set_sfc
 
-        Route a request via the provided route. Return route ID if success.
+        Create a Sfc. Return sfc ID if success.
         """
-        route_spec = RouteSpec()
+        sfc_spec = SfcSpec()
         response = self.client.open(
-            '/routes',
+            '/sfcs',
             method='POST',
-            data=json.dumps(route_spec),
+            data=json.dumps(sfc_spec),
             content_type='application/json')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
-    def test_update_route(self):
-        """Test case for update_route
+    def test_update_sfc(self):
+        """Test case for update_sfc
 
-        Update a new route path or new sfcrs.
+        Update a new sfc path or new sfcrs.
         """
-        route_update_spec = RouteUpdateSpec()
+        sfc_update_spec = SfcUpdateSpec()
         response = self.client.open(
-            '/routes/{id}'.format(id='id_example'),
+            '/sfcs/{id}'.format(id='id_example'),
             method='PUT',
-            data=json.dumps(route_update_spec),
+            data=json.dumps(sfc_update_spec),
             content_type='application/json')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))

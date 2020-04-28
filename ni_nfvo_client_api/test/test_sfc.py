@@ -16,12 +16,12 @@ from __future__ import absolute_import
 import unittest
 
 import ni_nfvo_client
-from ni_nfvo_client.models.route_update_spec import RouteUpdateSpec  # noqa: E501
+from ni_nfvo_client.models.sfc import Sfc  # noqa: E501
 from ni_nfvo_client.rest import ApiException
 
 
-class TestRouteUpdateSpec(unittest.TestCase):
-    """RouteUpdateSpec unit test stubs"""
+class TestSfc(unittest.TestCase):
+    """Sfc unit test stubs"""
 
     def setUp(self):
         pass
@@ -29,10 +29,10 @@ class TestRouteUpdateSpec(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testRouteUpdateSpec(self):
-        """Test RouteUpdateSpec"""
+    def testSfc(self):
+        """Test Sfc"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = ni_nfvo_client.models.route_update_spec.RouteUpdateSpec()  # noqa: E501
+        # model = ni_nfvo_client.models.sfc.Sfc()  # noqa: E501
         pass
 
 

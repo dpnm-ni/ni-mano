@@ -16,12 +16,12 @@ from __future__ import absolute_import
 import unittest
 
 import ni_nfvo_client
-from ni_nfvo_client.models.vnf_spec import VNFSpec  # noqa: E501
+from ni_nfvo_client.models.vnf_spec import VnfSpec  # noqa: E501
 from ni_nfvo_client.rest import ApiException
 
 
-class TestVNFSpec(unittest.TestCase):
-    """VNFSpec unit test stubs"""
+class TestVnfSpec(unittest.TestCase):
+    """VnfSpec unit test stubs"""
 
     def setUp(self):
         pass
@@ -29,10 +29,10 @@ class TestVNFSpec(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testVNFSpec(self):
-        """Test VNFSpec"""
+    def testVnfSpec(self):
+        """Test VnfSpec"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = ni_nfvo_client.models.vnf_spec.VNFSpec()  # noqa: E501
+        # model = ni_nfvo_client.models.vnf_spec.VnfSpec()  # noqa: E501
         pass
 
 

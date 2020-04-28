@@ -4,15 +4,15 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**deploy_vnf**](VnfApi.md#deploy_vnf) | **POST** /vnfs | Instantiate an instance of a VNF flavor on a given node. Return vnf ID if success
-[**destroy_vnf**](VnfApi.md#destroy_vnf) | **DELETE** /vnfs/{id} | Destroy a VNF instance.
-[**shutdown_vnf**](VnfApi.md#shutdown_vnf) | **POST** /vnfs/{id}/shutdown | Shut down a VNF instance.
+[**deploy_vnf**](VnfApi.md#deploy_vnf) | **POST** /vnfs | Instantiate an instance of a Vnf flavor on a given node. Return vnf ID if success
+[**destroy_vnf**](VnfApi.md#destroy_vnf) | **DELETE** /vnfs/{id} | Destroy a Vnf instance.
+[**shutdown_vnf**](VnfApi.md#shutdown_vnf) | **POST** /vnfs/{id}/shutdown | Shut down a Vnf instance.
 
 
 # **deploy_vnf**
 > str deploy_vnf(vnf_spec)
 
-Instantiate an instance of a VNF flavor on a given node. Return vnf ID if success
+Instantiate an instance of a Vnf flavor on a given node. Return vnf ID if success
 
 ### Example
 ```python
@@ -24,10 +24,10 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = ni_nfvo_client.VnfApi()
-vnf_spec = ni_nfvo_client.VNFSpec() # VNFSpec | Flavor of VNF instance to be deployed as well as the target node.
+vnf_spec = ni_nfvo_client.VnfSpec() # VnfSpec | Flavor of Vnf instance to be deployed as well as the target node.
 
 try:
-    # Instantiate an instance of a VNF flavor on a given node. Return vnf ID if success
+    # Instantiate an instance of a Vnf flavor on a given node. Return vnf ID if success
     api_response = api_instance.deploy_vnf(vnf_spec)
     pprint(api_response)
 except ApiException as e:
@@ -38,7 +38,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **vnf_spec** | [**VNFSpec**](VNFSpec.md)| Flavor of VNF instance to be deployed as well as the target node. | 
+ **vnf_spec** | [**VnfSpec**](VnfSpec.md)| Flavor of Vnf instance to be deployed as well as the target node. | 
 
 ### Return type
 
@@ -58,7 +58,7 @@ No authorization required
 # **destroy_vnf**
 > destroy_vnf(id)
 
-Destroy a VNF instance.
+Destroy a Vnf instance.
 
 
 
@@ -75,7 +75,7 @@ api_instance = ni_nfvo_client.VnfApi()
 id = 'id_example' # str | vnf id
 
 try:
-    # Destroy a VNF instance.
+    # Destroy a Vnf instance.
     api_instance.destroy_vnf(id)
 except ApiException as e:
     print("Exception when calling VnfApi->destroy_vnf: %s\n" % e)
@@ -105,7 +105,7 @@ No authorization required
 # **shutdown_vnf**
 > shutdown_vnf(id)
 
-Shut down a VNF instance.
+Shut down a Vnf instance.
 
 
 
@@ -119,10 +119,10 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = ni_nfvo_client.VnfApi()
-id = 'id_example' # str | ID of VNF instance to be shut down.
+id = 'id_example' # str | ID of Vnf instance to be shut down.
 
 try:
-    # Shut down a VNF instance.
+    # Shut down a Vnf instance.
     api_instance.shutdown_vnf(id)
 except ApiException as e:
     print("Exception when calling VnfApi->shutdown_vnf: %s\n" % e)
@@ -132,7 +132,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| ID of VNF instance to be shut down. | 
+ **id** | **str**| ID of Vnf instance to be shut down. | 
 
 ### Return type
 

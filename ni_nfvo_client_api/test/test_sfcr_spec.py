@@ -16,12 +16,12 @@ from __future__ import absolute_import
 import unittest
 
 import ni_nfvo_client
-from ni_nfvo_client.models.sfcr_spec import SFCRSpec  # noqa: E501
+from ni_nfvo_client.models.sfcr_spec import SfcrSpec  # noqa: E501
 from ni_nfvo_client.rest import ApiException
 
 
-class TestSFCRSpec(unittest.TestCase):
-    """SFCRSpec unit test stubs"""
+class TestSfcrSpec(unittest.TestCase):
+    """SfcrSpec unit test stubs"""
 
     def setUp(self):
         pass
@@ -29,10 +29,10 @@ class TestSFCRSpec(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testSFCRSpec(self):
-        """Test SFCRSpec"""
+    def testSfcrSpec(self):
+        """Test SfcrSpec"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = ni_nfvo_client.models.sfcr_spec.SFCRSpec()  # noqa: E501
+        # model = ni_nfvo_client.models.sfcr_spec.SfcrSpec()  # noqa: E501
         pass
 
 

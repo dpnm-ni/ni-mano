@@ -32,7 +32,7 @@ class TestSfcrApi(unittest.TestCase):
     def test_add_sfcr(self):
         """Test case for add_sfcr
 
-        Add new SFC request. return sfcr ID if success  # noqa: E501
+        Add new Sfc request. return sfcr ID if success  # noqa: E501
         """
         pass
 
@@ -46,7 +46,7 @@ class TestSfcrApi(unittest.TestCase):
     def test_get_sfcrs(self):
         """Test case for get_sfcrs
 
-        Get currently active SFC requests.  # noqa: E501
+        Get currently active Sfc requests.  # noqa: E501
         """
         pass
 

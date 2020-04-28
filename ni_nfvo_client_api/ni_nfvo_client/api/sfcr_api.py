@@ -34,7 +34,7 @@ class SfcrApi(object):
         self.api_client = api_client
 
     def add_sfcr(self, sfcr_spec, **kwargs):  # noqa: E501
-        """Add new SFC request. return sfcr ID if success  # noqa: E501
+        """Add new Sfc request. return sfcr ID if success  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -42,7 +42,7 @@ class SfcrApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param SFCRSpec sfcr_spec: SFC request object to be added. (required)
+        :param SfcrSpec sfcr_spec: Sfc request object to be added. (required)
         :return: str
                  If the method is called asynchronously,
                  returns the request thread.
@@ -55,7 +55,7 @@ class SfcrApi(object):
             return data
 
     def add_sfcr_with_http_info(self, sfcr_spec, **kwargs):  # noqa: E501
-        """Add new SFC request. return sfcr ID if success  # noqa: E501
+        """Add new Sfc request. return sfcr ID if success  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -63,7 +63,7 @@ class SfcrApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param SFCRSpec sfcr_spec: SFC request object to be added. (required)
+        :param SfcrSpec sfcr_spec: Sfc request object to be added. (required)
         :return: str
                  If the method is called asynchronously,
                  returns the request thread.
@@ -140,7 +140,7 @@ class SfcrApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str id: route id (required)
+        :param str id: sfc id (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -162,7 +162,7 @@ class SfcrApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str id: route id (required)
+        :param str id: sfc id (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -230,7 +230,7 @@ class SfcrApi(object):
             collection_formats=collection_formats)
 
     def get_sfcrs(self, **kwargs):  # noqa: E501
-        """Get currently active SFC requests.  # noqa: E501
+        """Get currently active Sfc requests.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -238,7 +238,7 @@ class SfcrApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :return: list[SFCR]
+        :return: list[Sfcr]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -250,7 +250,7 @@ class SfcrApi(object):
             return data
 
     def get_sfcrs_with_http_info(self, **kwargs):  # noqa: E501
-        """Get currently active SFC requests.  # noqa: E501
+        """Get currently active Sfc requests.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -258,7 +258,7 @@ class SfcrApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :return: list[SFCR]
+        :return: list[Sfcr]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -310,7 +310,7 @@ class SfcrApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[SFCR]',  # noqa: E501
+            response_type='list[Sfcr]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
