@@ -16,11 +16,41 @@ data_net_id = get_net_id_from_name(vnf_cfg["data_net_name"])
 base_url = client.base_urls["network"]
 
 
+def _abort_if_sfc_conflict(sfcr_ids, vnf_ids_lists):
+    all_sfcs = db.get_all_sfcs()
+    used_sfcr_ids = []
+    used_vnf_ids = []
+    for sfc in all_sfcs:
+        used_sfcr_ids.extend(sfc.sfcr_ids)
+        for vnf_ids in sfc.vnf_instance_ids:
+            used_vnf_ids.extend(vnf_ids)
+
+    for sfcr_id in sfcr_ids:
+        if sfcr_id in used_sfcr_ids:
+            error_message = "sfcr %s is already used" %(sfcr_id)
+            current_app.logger.error(error_message)
+            abort(400, error_message)
+
+    for vnf_ids in vnf_ids_lists:
+        for vnf_id in vnf_ids:
+            if vnf_id in used_vnf_ids:
+                error_message = "vnf %s is already used" % (vnf_id)
+                current_app.logger.error(error_message)
+                abort(400, error_message)
+
+
 def create_sfc(fc_prefix, sfcr_ids, vnf_ids_lists, is_symmetric=False):
     if len(vnf_ids_lists) == 0:
         error_message = "vnf list is empty"
         current_app.logger.error(error_message)
         abort(404, error_message)
+
+    if len(sfcr_ids) == 0:
+        error_message = "sfcr_ids is empty"
+        current_app.logger.error(error_message)
+        abort(404, error_message)
+
+    _abort_if_sfc_conflict(sfcr_ids, vnf_ids_lists)
 
     port_ids_list = []
     for vnf_ids in vnf_ids_lists:
