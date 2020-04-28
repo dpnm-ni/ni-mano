@@ -14,7 +14,7 @@ vnf_cfg = cfg["openstack_client"]["vnf"]
 mgmt_net_id = get_net_id_from_name(vnf_cfg["mgmt_net_name"])
 data_net_id = get_net_id_from_name(vnf_cfg["data_net_name"])
 
-def create_server(server_prefix, flavor_id, host_name, custom_user_data):
+def create_server(server_name, flavor_id, host_name, custom_user_data):
     # extra specs API link: https://github.com/openstack/nova/blob/master/api-ref/source/os-flavor-extra-specs.inc
     base_url = client.base_urls["compute"]
     headers = {'X-Auth-Token': client.get_token()}
@@ -42,14 +42,14 @@ def create_server(server_prefix, flavor_id, host_name, custom_user_data):
     else:
         user_data = ''
 
-    if server_prefix:
-        server_name = "{}_{}".format(server_prefix, str(uuid.uuid4()))
+    if server_name:
+        _server_name = server_name
     else:
-        server_name = "vnf_{}".format(str(uuid.uuid4()))
+        _server_name = "vnf_{}".format(str(uuid.uuid4()))
 
     data = {
                 "server": {
-                    "name" : server_name,
+                    "name" : _server_name,
                     "imageRef" : os_image_id,
                     "flavorRef" : flavor_id,
                     "user_data" : user_data,
