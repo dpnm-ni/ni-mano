@@ -14,15 +14,18 @@ steps:
   - cp config.yaml.example config.yaml
   - sed -i "s/<ni_mon_server_addr>/$MONITORING_HOST_PROD/g" config.yaml
   - sed -i "s/<ni_ni_nfvo_addr>/$MONITORING_HOST_PROD/g" config.yaml
+
 - name: run test
   image: python:3.5
+  environment:
+    SLACK_HOOK_URL:
+      from_secret: slack_hook_url
   commands:
   - ./install_reqs_tests.sh
   - pytest tests/test_ni_mon.py
 - name: notify slack if nightly test fail
   image: python:3.5
   commands:
-  - export SLACK_HOOK_URL='https://hooks.slack.com/services/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'
   - curl -X POST -H 'Content-type:application/json' --data '{"channel":"#ci_status", "username":"ci_report",
       "text":"_${DRONE_REPO_NAME}__:Testbed nightly check __failed__"}'
       $SLACK_HOOK_URL
@@ -55,7 +58,6 @@ steps:
       from_secret: openstack_password
     MONITORING_HOST_PROD:
       from_secret: monitoring_host_prod
-
   commands:
   # config ni_mon
   - cd ni_mon/config
@@ -94,8 +96,10 @@ steps:
 
 - name: notify slack test result
   image: python:3.5
+  environment:
+    SLACK_HOOK_URL:
+      from_secret: slack_hook_url
   commands:
-  - export SLACK_HOOK_URL='https://hooks.slack.com/services/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'
   - curl -X POST -H 'Content-type:application/json' --data '{"channel":"#ci_status", "username":"ci_report",
       "text":"_${DRONE_REPO_NAME}__:Build status is __${DRONE_BUILD_STATUS}__"}'
       $SLACK_HOOK_URL
