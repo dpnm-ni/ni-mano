@@ -21,7 +21,7 @@ steps:
     SLACK_HOOK_URL:
       from_secret: slack_hook_url
   commands:
-  - ./install_reqs_tests.sh
+  - cd tests && pip install -r requirements.txt && cd ..
   - pytest tests/test_ni_mon.py
 - name: notify slack if nightly test fail
   image: python:3.5
@@ -87,7 +87,9 @@ steps:
 - name: run modules and tests
   image: python:3.5
   commands:
-  - ./install_reqs_all.sh
+  - cd ni_mon && pip install -r requirements.txt && cd ..
+  - cd ni_nfvo && pip install -r requirements.txt && cd ..
+  - cd tests && pip install -r requirements.txt && cd ..
   # need sleep so that services has time to init
   - bash -c 'python -m ni_mon > ni_mon.log 2>&1' & sleep 5
   - bash -c 'python -m ni_nfvo > ni_nfvo.log 2>&1' & sleep 5

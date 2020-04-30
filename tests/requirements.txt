@@ -1,4 +1,4 @@
 pytest
 pyyaml
-git+https://github.com/dpnm-ni/ni_mon_client.git
-git+https://github.com/dpnm-ni/nfvo_module_client.git
+-e ../ni_mon_client_api
+-e ../ni_nfvo_client_api
