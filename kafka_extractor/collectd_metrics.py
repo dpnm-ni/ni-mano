@@ -72,6 +72,9 @@ def virt(data):
     if (data['type'] in ['if_octets', 'if_packets', 'if_dropped']):
         return ('%s___%s' %(data['type_instance'], data['type']))
 
+    if (data['type'] in ['disk_ops', 'disk_octets']):
+        return ('%s___%s' % (data['type_instance'], data['type']))
+
 def aggregation(data):
     if data['plugin_instance'] == 'virt-average' and data['type'] == 'virt_vcpu':
         # FIXME: this is a dirty fix & hacky. virt_vcpu is cpu time (ns), and
