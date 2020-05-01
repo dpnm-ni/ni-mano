@@ -29,7 +29,7 @@ def delivery_report(err, msg):
 
 def extract(message):
     data = message.value().decode('utf-8')
-    data = json.loads(message.value())
+    data = json.loads(data)
     data = data[0]
     return collectd_metrics.get_measurements(data)
 
@@ -78,7 +78,6 @@ def main():
             if msg.error():
                 logger.error("Consumer error: {}".format(msg.error()))
                 continue
-
             measurements = extract(msg)
 
             # Send extracted data to kafka topics
@@ -88,7 +87,7 @@ def main():
             for item in measurements:
                 producer.produce(topic='collectd',
                         value=str({item[0]: item[1]}),
-                        timestamp=item[2],
+                        timestamp=int(item[2]),
                         callback=delivery_report)
                 producer.poll(0)
 
