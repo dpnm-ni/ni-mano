@@ -41,7 +41,7 @@ def test_vnf_instances():
     vnf_instances = ni_mon_api.get_vnf_instances()
     assert len(vnf_instances) > 0
     for i in range(0, len(vnf_instances)):
-        assert vnf_instances[0] == ni_mon_api.get_vnf_instance(vnf_instances[0].id)
+        assert vnf_instances[i] == ni_mon_api.get_vnf_instance(vnf_instances[i].id)
 
 
 def test_get_topology():
