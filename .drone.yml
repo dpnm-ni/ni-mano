@@ -17,14 +17,14 @@ steps:
 
 - name: run test
   image: python:3.5
-  environment:
-    SLACK_HOOK_URL:
-      from_secret: slack_hook_url
   commands:
   - cd tests && pip install -r requirements.txt && cd ..
   - pytest tests/test_ni_mon.py
 - name: notify slack if nightly test fail
   image: python:3.5
+  environment:
+    SLACK_HOOK_URL:
+      from_secret: slack_hook_url
   commands:
   - curl -X POST -H 'Content-type:application/json' --data '{"channel":"#ci_status", "username":"ci_report",
       "text":"_${DRONE_REPO_NAME}__:Testbed nightly check __failed__"}'
