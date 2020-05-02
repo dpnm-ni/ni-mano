@@ -108,3 +108,8 @@ steps:
     status:
     - success
     - failure
+
+trigger:
+  event:
+    exclude:
+    - cron
