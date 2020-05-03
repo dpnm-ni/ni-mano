@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load staticfiles%}
+{% block title %}{% trans "Network Topology" %}{% endblock %}
+{% block js %}
+  {% include "ni_mano/_scripts.html" %}
+{% endblock %}
+{% block main %}
+
+{% include "ni_mano/topos/_balloon_container.html" %}
+{% include "project/network_topology/client_side/_balloon_device.html" %}
+{% include "ni_mano/topos/_balloon_instance.html" %}
+{% include "ni_mano/topos/_balloon_compute.html" %}
+
+<div class="topology-navi">
+  <div class="btn-group" data-toggle="buttons">
+    <label class="btn btn-default" id="toggle_labels_label">
+      <input type="checkbox" autocomplete="off" id="toggle_labels">
+      <span class="fa fa-th-large"></span> {% trans "Toggle Labels" %}
+    </label>
+  </div>
+  <button type="button" class="btn btn-default" id="center_topology">
+    <span class="fa fa-refresh"></span> {%trans "Center Topology" %}
+  </button>
+</div>
+<div id="niTopologyCanvasContainer" class="d3-container">
+</div>
+<div id="topologyMessages"></div>
+<!-- FIXME: this can cause html injection -->
+<script>
+  const topo_data = JSON.parse('{{ topo_data|safe }}');
+</script>
+<script type="text/javascript">
+  if (typeof horizon.ni_topology !== 'undefined') {
+    horizon.ni_topology.init();
+  } else {
+    addHorizonLoadEvent(function () {
+      horizon.ni_topology.init();
+    });
+  }
+</script>
+{% endblock %}

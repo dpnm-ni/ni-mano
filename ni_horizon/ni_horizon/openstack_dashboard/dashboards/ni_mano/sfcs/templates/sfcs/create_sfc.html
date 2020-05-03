@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Create SFC" %}{% endblock %}
+
+{% block page_header %}
+  {% include "horizon/common/_page_header.html" with title=_("Create SFC") %}
+{% endblock page_header %}
+
+{% block main %}
+    {% include 'ni_mano/sfcs/_create_sfc.html' %}
+{% endblock %}

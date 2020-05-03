@@ -1,0 +1,23 @@
+{% extends "horizon/client_side/template.html" %}
+{% load horizon %}
+
+{% block id %}balloon_compute{% endblock %}
+
+{% block template %}
+{% jstemplate %}
+<div class="portTableHeader">
+    <div class="title">[[compute_info_label]]</div>
+</div>
+<table class="detailInfoTable">
+    <caption></caption>
+    <tbody>
+        [[#compute_info]]
+        <tr>
+            <th>IP Address</th>
+            <td>[[ip]]</td>
+        </tr>
+        [[/compute_info]]
+    </tbody>
+</table>
+{% endjstemplate %}
+{% endblock %}

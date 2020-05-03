@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Deploy VNF Instance" %}{% endblock %}
+
+{% block page_header %}
+  {% include "horizon/common/_page_header.html" with title=_("Deploy VNF Instance") %}
+{% endblock page_header %}
+
+{% block main %}
+    {% include 'ni_mano/vnfinstances/_deploy_vnfinstance.html' %}
+{% endblock %}

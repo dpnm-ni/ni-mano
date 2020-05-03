@@ -1,0 +1,4 @@
+ni_mon:
+  host: http://<ni_mon_host_addr>:8383
+ni_nfvo:
+  host: http://<ni_mano_host_addr>:8181
