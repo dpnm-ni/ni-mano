@@ -1,2 +1,4 @@
 -r requirements.txt
 horizon>=14.0.0.0b2,<17.0.0 # Apache-2.0
+-e ../ni_mon_client_api
+-e ../ni_nfvo_client_api
