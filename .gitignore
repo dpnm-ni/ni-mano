@@ -40,3 +40,6 @@ secret.txt
 
 # sfc db
 db.json
+
+*.egg*
+*.pytest*
