@@ -72,7 +72,7 @@ def get_vnf_names(sfc):
 class SfcsTable(tables.DataTable):
     sfc_id = tables.Column('id', verbose_name=_('SFC ID'))
     sfc_name = tables.Column('sfc_name', verbose_name=_('SFC Name'))
-    sfcr_names = tables.Column(get_sfcr_names, verbose_name=_(' Names'))
+    sfcr_names = tables.Column(get_sfcr_names, verbose_name=_('SFCR Names'))
     vnf_instance_names = tables.Column(
         get_vnf_names, verbose_name=_('VNF Names'))
     is_symmetric = tables.Column('is_symmetric', verbose_name=_('Symmetric'))
