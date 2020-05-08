@@ -91,6 +91,7 @@ def create_sample_sfcr(sfcr_name, source_client, destination_client=None):
     sfcr_spec = ni_nfvo_client.SfcrSpec(name=sfcr_name,
                                  source_client=source_client,
                                  destination_client=destination_client,
+                                 src_ip_prefix="192.0.0.8/32",
                                  src_port_min=0,
                                  src_port_max=65535,
                                  dst_port_min=0,
