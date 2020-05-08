@@ -20,17 +20,18 @@ steps:
   commands:
   - cd tests && pip install -r requirements.txt && cd ..
   - pytest tests/test_ni_mon.py
-- name: notify slack if nightly test fail
+- name: notify slack nightly check status
   image: python:3.5
   environment:
     SLACK_HOOK_URL:
       from_secret: slack_hook_url
   commands:
   - curl -X POST -H 'Content-type:application/json' --data '{"channel":"#ci_status", "username":"ci_report",
-      "text":"_${DRONE_REPO_NAME}__:Testbed nightly check __failed__"}'
+      "text":"${DRONE_REPO_NAME} - Testbed nightly check status is ${DRONE_BUILD_STATUS}"}'
       $SLACK_HOOK_URL
   when:
     status:
+    - success
     - failure
 
 trigger:
@@ -102,7 +103,7 @@ steps:
       from_secret: slack_hook_url
   commands:
   - curl -X POST -H 'Content-type:application/json' --data '{"channel":"#ci_status", "username":"ci_report",
-      "text":"_${DRONE_REPO_NAME}__:Build status is __${DRONE_BUILD_STATUS}__"}'
+      "text":"${DRONE_REPO_NAME} - Dev build status is ${DRONE_BUILD_STATUS}"}'
       $SLACK_HOOK_URL
   when:
     status:
