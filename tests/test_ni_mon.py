@@ -72,6 +72,8 @@ def test_measurement_vnf():
 
 def test_measurement_node():
     nodes = ni_mon_api.get_nodes()
+    assert len(nodes) > 0
+
     for node in nodes:
         measurement_types = ni_mon_api.get_measurement_types(node.id)
 
