@@ -34,10 +34,13 @@ class Node(object):
         'id': 'str',
         'name': 'str',
         'type': 'str',
+        'status': 'str',
         'ip': 'str',
         'n_cores': 'int',
+        'n_cores_free': 'int',
         'core_freq_mhz': 'int',
         'ram_mb': 'int',
+        'ram_free_mb': 'int',
         'ram_freq_mhz': 'int'
     }
 
@@ -45,23 +48,29 @@ class Node(object):
         'id': 'id',
         'name': 'name',
         'type': 'type',
+        'status': 'status',
         'ip': 'ip',
         'n_cores': 'n_cores',
+        'n_cores_free': 'n_cores_free',
         'core_freq_mhz': 'core_freq_mhz',
         'ram_mb': 'ram_mb',
+        'ram_free_mb': 'ram_free_mb',
         'ram_freq_mhz': 'ram_freq_mhz'
     }
 
-    def __init__(self, id=None, name=None, type=None, ip=None, n_cores=None, core_freq_mhz=None, ram_mb=None, ram_freq_mhz=None):  # noqa: E501
+    def __init__(self, id=None, name=None, type=None, status=None, ip=None, n_cores=None, n_cores_free=None, core_freq_mhz=None, ram_mb=None, ram_free_mb=None, ram_freq_mhz=None):  # noqa: E501
         """Node - a model defined in Swagger"""  # noqa: E501
 
         self._id = None
         self._name = None
         self._type = None
+        self._status = None
         self._ip = None
         self._n_cores = None
+        self._n_cores_free = None
         self._core_freq_mhz = None
         self._ram_mb = None
+        self._ram_free_mb = None
         self._ram_freq_mhz = None
         self.discriminator = None
 
@@ -71,14 +80,20 @@ class Node(object):
             self.name = name
         if type is not None:
             self.type = type
+        if status is not None:
+            self.status = status
         if ip is not None:
             self.ip = ip
         if n_cores is not None:
             self.n_cores = n_cores
+        if n_cores_free is not None:
+            self.n_cores_free = n_cores_free
         if core_freq_mhz is not None:
             self.core_freq_mhz = core_freq_mhz
         if ram_mb is not None:
             self.ram_mb = ram_mb
+        if ram_free_mb is not None:
+            self.ram_free_mb = ram_free_mb
         if ram_freq_mhz is not None:
             self.ram_freq_mhz = ram_freq_mhz
 
@@ -148,6 +163,27 @@ class Node(object):
         self._type = type
 
     @property
+    def status(self):
+        """Gets the status of this Node.  # noqa: E501
+
+
+        :return: The status of this Node.  # noqa: E501
+        :rtype: str
+        """
+        return self._status
+
+    @status.setter
+    def status(self, status):
+        """Sets the status of this Node.
+
+
+        :param status: The status of this Node.  # noqa: E501
+        :type: str
+        """
+
+        self._status = status
+
+    @property
     def ip(self):
         """Gets the ip of this Node.  # noqa: E501
 
@@ -190,6 +226,27 @@ class Node(object):
         self._n_cores = n_cores
 
     @property
+    def n_cores_free(self):
+        """Gets the n_cores_free of this Node.  # noqa: E501
+
+
+        :return: The n_cores_free of this Node.  # noqa: E501
+        :rtype: int
+        """
+        return self._n_cores_free
+
+    @n_cores_free.setter
+    def n_cores_free(self, n_cores_free):
+        """Sets the n_cores_free of this Node.
+
+
+        :param n_cores_free: The n_cores_free of this Node.  # noqa: E501
+        :type: int
+        """
+
+        self._n_cores_free = n_cores_free
+
+    @property
     def core_freq_mhz(self):
         """Gets the core_freq_mhz of this Node.  # noqa: E501
 
@@ -230,6 +287,27 @@ class Node(object):
         """
 
         self._ram_mb = ram_mb
+
+    @property
+    def ram_free_mb(self):
+        """Gets the ram_free_mb of this Node.  # noqa: E501
+
+
+        :return: The ram_free_mb of this Node.  # noqa: E501
+        :rtype: int
+        """
+        return self._ram_free_mb
+
+    @ram_free_mb.setter
+    def ram_free_mb(self, ram_free_mb):
+        """Sets the ram_free_mb of this Node.
+
+
+        :param ram_free_mb: The ram_free_mb of this Node.  # noqa: E501
+        :type: int
+        """
+
+        self._ram_free_mb = ram_free_mb
 
     @property
     def ram_freq_mhz(self):

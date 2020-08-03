@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from ni_mon.config import cfg
 from ni_mon.models.monitoring_entry import MonitoringEntry
-from ni_mon.models.measurement_types import MeasurementTypes
 
 from datetime import date, datetime
 from influxdb import InfluxDBClient

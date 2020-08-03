@@ -295,9 +295,14 @@ definitions:
       type:
         type: "string"
         description: "the type of node. currently, can be compute or switch"
+      status:
+        type: "string"
       ip:
         type: "string"
       n_cores:
+        type: "integer"
+        format: "int32"
+      n_cores_free:
         type: "integer"
         format: "int32"
       core_freq_mhz:
@@ -306,18 +311,24 @@ definitions:
       ram_mb:
         type: "integer"
         format: "int32"
+      ram_free_mb:
+        type: "integer"
+        format: "int32"
       ram_freq_mhz:
         type: "integer"
         format: "int32"
     example:
+      n_cores_free: 6
       n_cores: 0
-      ram_freq_mhz: 5
-      ram_mb: 1
+      ram_freq_mhz: 2
+      ram_mb: 5
+      ram_free_mb: 5
       ip: "ip"
       name: "name"
       id: "id"
       type: "type"
-      core_freq_mhz: 6
+      core_freq_mhz: 1
+      status: "status"
   Link:
     type: "object"
     properties:

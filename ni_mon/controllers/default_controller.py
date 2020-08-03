@@ -3,7 +3,6 @@ import connexion
 import six
 
 from ni_mon.models.link import Link  # noqa: E501
-from ni_mon.models.measurement_types import MeasurementTypes  # noqa: E501
 from ni_mon.models.monitoring_entry import MonitoringEntry  # noqa: E501
 from ni_mon.models.node import Node  # noqa: E501
 from ni_mon.models.vnf_flavor import VNFFlavor  # noqa: E501
@@ -183,8 +182,11 @@ def get_nodes():  # noqa: E501
     for topo_node in topo.get("nodes"):
         ip = None
         n_cores = None
-        core_freq_mhz = topo_node.get("core_freq_MHz")
         ram_mb = None
+        n_cores_free = None
+        ram_free_mb = None
+        status = None
+        core_freq_mhz = topo_node.get("core_freq_MHz")
         ram_freq_mhz = topo_node.get("ram_freq_MHz")
 
         if topo_node["type"] == "compute":
@@ -193,6 +195,9 @@ def get_nodes():  # noqa: E501
                     ip=raw_node["host_ip"]
                     n_cores=raw_node["vcpus"]
                     ram_mb=raw_node["memory_mb"]
+                    status=raw_node["status"]
+                    n_cores_free=raw_node["vcpus"] - raw_node["vcpus_used"]
+                    ram_free_mb=raw_node["free_ram_mb"]
                     break
 
         node = Node(
@@ -206,6 +211,9 @@ def get_nodes():  # noqa: E501
                 core_freq_mhz=core_freq_mhz,
                 ram_mb=ram_mb,
                 ram_freq_mhz=ram_freq_mhz,
+                status=status,
+                n_cores_free=n_cores_free,
+                ram_free_mb=ram_free_mb,
             )
 
         nodes.append(node)

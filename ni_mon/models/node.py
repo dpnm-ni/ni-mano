@@ -15,7 +15,7 @@ class Node(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, id: str=None, name: str=None, type: str=None, ip: str=None, n_cores: int=None, core_freq_mhz: int=None, ram_mb: int=None, ram_freq_mhz: int=None):  # noqa: E501
+    def __init__(self, id: str=None, name: str=None, type: str=None, status: str=None, ip: str=None, n_cores: int=None, n_cores_free: int=None, core_freq_mhz: int=None, ram_mb: int=None, ram_free_mb: int=None, ram_freq_mhz: int=None):  # noqa: E501
         """Node - a model defined in Swagger
 
         :param id: The id of this Node.  # noqa: E501
@@ -24,14 +24,20 @@ class Node(Model):
         :type name: str
         :param type: The type of this Node.  # noqa: E501
         :type type: str
+        :param status: The status of this Node.  # noqa: E501
+        :type status: str
         :param ip: The ip of this Node.  # noqa: E501
         :type ip: str
         :param n_cores: The n_cores of this Node.  # noqa: E501
         :type n_cores: int
+        :param n_cores_free: The n_cores_free of this Node.  # noqa: E501
+        :type n_cores_free: int
         :param core_freq_mhz: The core_freq_mhz of this Node.  # noqa: E501
         :type core_freq_mhz: int
         :param ram_mb: The ram_mb of this Node.  # noqa: E501
         :type ram_mb: int
+        :param ram_free_mb: The ram_free_mb of this Node.  # noqa: E501
+        :type ram_free_mb: int
         :param ram_freq_mhz: The ram_freq_mhz of this Node.  # noqa: E501
         :type ram_freq_mhz: int
         """
@@ -39,10 +45,13 @@ class Node(Model):
             'id': str,
             'name': str,
             'type': str,
+            'status': str,
             'ip': str,
             'n_cores': int,
+            'n_cores_free': int,
             'core_freq_mhz': int,
             'ram_mb': int,
+            'ram_free_mb': int,
             'ram_freq_mhz': int
         }
 
@@ -50,20 +59,26 @@ class Node(Model):
             'id': 'id',
             'name': 'name',
             'type': 'type',
+            'status': 'status',
             'ip': 'ip',
             'n_cores': 'n_cores',
+            'n_cores_free': 'n_cores_free',
             'core_freq_mhz': 'core_freq_mhz',
             'ram_mb': 'ram_mb',
+            'ram_free_mb': 'ram_free_mb',
             'ram_freq_mhz': 'ram_freq_mhz'
         }
 
         self._id = id
         self._name = name
         self._type = type
+        self._status = status
         self._ip = ip
         self._n_cores = n_cores
+        self._n_cores_free = n_cores_free
         self._core_freq_mhz = core_freq_mhz
         self._ram_mb = ram_mb
+        self._ram_free_mb = ram_free_mb
         self._ram_freq_mhz = ram_freq_mhz
 
     @classmethod
@@ -143,6 +158,27 @@ class Node(Model):
         self._type = type
 
     @property
+    def status(self) -> str:
+        """Gets the status of this Node.
+
+
+        :return: The status of this Node.
+        :rtype: str
+        """
+        return self._status
+
+    @status.setter
+    def status(self, status: str):
+        """Sets the status of this Node.
+
+
+        :param status: The status of this Node.
+        :type status: str
+        """
+
+        self._status = status
+
+    @property
     def ip(self) -> str:
         """Gets the ip of this Node.
 
@@ -185,6 +221,27 @@ class Node(Model):
         self._n_cores = n_cores
 
     @property
+    def n_cores_free(self) -> int:
+        """Gets the n_cores_free of this Node.
+
+
+        :return: The n_cores_free of this Node.
+        :rtype: int
+        """
+        return self._n_cores_free
+
+    @n_cores_free.setter
+    def n_cores_free(self, n_cores_free: int):
+        """Sets the n_cores_free of this Node.
+
+
+        :param n_cores_free: The n_cores_free of this Node.
+        :type n_cores_free: int
+        """
+
+        self._n_cores_free = n_cores_free
+
+    @property
     def core_freq_mhz(self) -> int:
         """Gets the core_freq_mhz of this Node.
 
@@ -225,6 +282,27 @@ class Node(Model):
         """
 
         self._ram_mb = ram_mb
+
+    @property
+    def ram_free_mb(self) -> int:
+        """Gets the ram_free_mb of this Node.
+
+
+        :return: The ram_free_mb of this Node.
+        :rtype: int
+        """
+        return self._ram_free_mb
+
+    @ram_free_mb.setter
+    def ram_free_mb(self, ram_free_mb: int):
+        """Sets the ram_free_mb of this Node.
+
+
+        :param ram_free_mb: The ram_free_mb of this Node.
+        :type ram_free_mb: int
+        """
+
+        self._ram_free_mb = ram_free_mb
 
     @property
     def ram_freq_mhz(self) -> int:
