@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 import requests
+import logging
 
 from keystoneauth1.identity import v3
 from keystoneauth1 import session
 from keystoneclient.v3 import client as keystone_client
 
 from flask import abort
-from flask import current_app
 
 from ni_nfvo.config import cfg
 
+log = logging.getLogger(__name__)
 
 class OpenstackClient():
     def __init__(self, auth_cfg):
@@ -41,7 +42,7 @@ def get_net_id_from_name(net_name):
     req = requests.get("{}{}".format(base_url, "/v2.0/networks"),
         headers={'X-Auth-Token': openstack_client.get_token()})
     if req.status_code != 200:
-        current_app.logger.error(req.text)
+        log.error(req.text)
         abort(req.status_code, req.text)
 
     for net in req.json()["networks"]:
@@ -49,7 +50,7 @@ def get_net_id_from_name(net_name):
             return net["id"]
 
     error_msg = "there is no network with name: " + net_name
-    current_app.logger.error(error_msg)
+    log.error(error_msg)
     abort(404, error_msg)
 
 

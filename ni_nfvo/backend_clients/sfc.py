@@ -2,6 +2,7 @@
 import requests
 import uuid
 import netaddr
+import logging
 
 from ni_nfvo.config import cfg
 from ni_nfvo.backend_clients.utils import get_net_id_from_name
@@ -9,7 +10,8 @@ from ni_nfvo.backend_clients.utils import openstack_client as client
 from ni_nfvo.database import db
 
 from flask import abort
-from flask import current_app
+
+log = logging.getLogger(__name__)
 
 vnf_cfg = cfg["openstack_client"]["vnf"]
 data_net_id = get_net_id_from_name(vnf_cfg["data_net_name"])
@@ -28,26 +30,26 @@ def _abort_if_sfc_conflict(sfcr_ids, vnf_ids_lists):
     for sfcr_id in sfcr_ids:
         if sfcr_id in used_sfcr_ids:
             error_message = "sfcr %s is already used" %(sfcr_id)
-            current_app.logger.error(error_message)
+            log.error(error_message)
             abort(400, error_message)
 
     for vnf_ids in vnf_ids_lists:
         for vnf_id in vnf_ids:
             if vnf_id in used_vnf_ids:
                 error_message = "vnf %s is already used" % (vnf_id)
-                current_app.logger.error(error_message)
+                log.error(error_message)
                 abort(400, error_message)
 
 
 def create_sfc(fc_prefix, sfcr_ids, vnf_ids_lists, is_symmetric=False):
     if len(vnf_ids_lists) == 0:
         error_message = "vnf list is empty"
-        current_app.logger.error(error_message)
+        log.error(error_message)
         abort(404, error_message)
 
     if len(sfcr_ids) == 0:
         error_message = "sfcr_ids is empty"
-        current_app.logger.error(error_message)
+        log.error(error_message)
         abort(404, error_message)
 
     _abort_if_sfc_conflict(sfcr_ids, vnf_ids_lists)
@@ -73,7 +75,7 @@ def _get_data_port(vnf_instance_id):
     req = requests.get("{}{}".format(base_url, url),
         headers={'X-Auth-Token': client.get_token()})
     if req.status_code != 200:
-        current_app.logger.error(req.text)
+        log.error(req.text)
         abort(req.status_code, req.text)
 
     req = req.json()
@@ -83,7 +85,7 @@ def _get_data_port(vnf_instance_id):
             return port["id"]
 
     error_message = "no data port for vnf id: {}".format(vnf_instance_id)
-    current_app.logger.error(error_message)
+    log.error(error_message)
     abort(400, error_message)
 
 
@@ -149,7 +151,7 @@ def create_flow_classifier(sfcr_spec):
         # sfcr_spec contain all needed infor for sfcr_confict checking
         if _sfcr_conflict(sfcr, sfcr_spec):
             error_message = "sfcr conflict with sfcr: %s" %(sfcr.id)
-            current_app.logger.error(error_message)
+            log.error(error_message)
             abort(400, error_message)
 
     body = dict()
@@ -183,7 +185,7 @@ def create_flow_classifier(sfcr_spec):
     if req.status_code == 201:
         return req.json()["flow_classifier"]["id"]
     else:
-        current_app.logger.error(req.text)
+        log.error(req.text)
         abort(req.status_code, req.text)
 
 
@@ -193,7 +195,7 @@ def _create_port_pairs(postfix_name, port_ids_list, allow_existing_pp=False):
     req = requests.get("{}{}".format(base_url, "/v2.0/sfc/port_pairs"),
         headers={'X-Auth-Token': client.get_token()})
     if req.status_code != 200:
-        current_app.logger.error(req.text)
+        log.error(req.text)
         abort(req.status_code, req.text)
     req = req.json()
     existing_port_pairs = req["port_pairs"]
@@ -227,7 +229,7 @@ def _create_port_pairs(postfix_name, port_ids_list, allow_existing_pp=False):
                 if req.status_code == 201:
                     port_pairs.append(req.json()["port_pair"]["id"])
                 else:
-                    current_app.logger.error(req.text)
+                    log.error(req.text)
                     abort(req.status_code, req.text)
 
         port_pairs_list.append(port_pairs)
@@ -252,7 +254,7 @@ def _create_port_pair_groups(postfix_name, port_pairs_list):
         if req.status_code == 201:
             port_pair_groups.append(req.json()["port_pair_group"]["id"])
         else:
-            current_app.logger.error(req.text)
+            log.error(req.text)
             abort(req.status_code, req.text)
 
     return port_pair_groups
@@ -276,7 +278,7 @@ def _create_port_chain(postfix_name, port_pair_groups, flow_classifiers, is_symm
     if req.status_code == 201:
         return req.json()["port_chain"]["id"]
     else:
-        current_app.logger.error(req.text)
+        log.error(req.text)
         abort(req.status_code, req.text)
 
 
@@ -284,7 +286,7 @@ def update_sfc(sfc_id, sfcr_ids=None, vnf_ids_lists=None):
     sfc = db.get_sfc(sfc_id)
     if sfc is None:
         error_message = "sfc_id: {} not found".format(sfc_id)
-        current_app.logger.error(error_message)
+        log.error(error_message)
         abort(404, error_message)
 
     if vnf_ids_lists:
@@ -310,7 +312,7 @@ def _update_sfc_flow_classifiers(sfc, sfcr_ids, update_db=True):
         headers={'X-Auth-Token': client.get_token()})
 
     if req.status_code != 200:
-        current_app.logger.error(req.text)
+        log.error(req.text)
         abort(req.status_code, req.text)
 
     if update_db:
@@ -324,7 +326,7 @@ def _update_sfc_vnf_ids(sfc, vnf_ids_lists,  update_db=True):
     if (len(old_pp_groups) != len(vnf_ids_lists)):
         messages = "number of new port_pair_groups (or vnf types) " \
                     "is different from the original"
-        current_app.logger.error(messages)
+        log.error(messages)
         abort(400, messages)
 
     port_ids_list = []
@@ -350,7 +352,7 @@ def _get_existing_port_pair_groups(sfc_id):
     req = requests.get("{}{}{}".format(base_url, "/v2.0/sfc/port_chains/", sfc_id),
         headers={'X-Auth-Token': client.get_token()})
     if req.status_code != 200:
-        current_app.logger.error(req.text)
+        log.error(req.text)
         abort(req.status_code, req.text)
     req = req.json()
     return req["port_chain"]["port_pair_groups"]
@@ -361,7 +363,7 @@ def _get_all_port_pairs_of_sfc(sfc_id):
     req = requests.get("{}{}{}".format(base_url, "/v2.0/sfc/port_chains/", sfc_id),
         headers={'X-Auth-Token': client.get_token()})
     if req.status_code != 200:
-        current_app.logger.error(req.text)
+        log.error(req.text)
         abort(req.status_code, req.text)
     req = req.json()
     pp_groups = req["port_chain"]["port_pair_groups"]
@@ -370,7 +372,7 @@ def _get_all_port_pairs_of_sfc(sfc_id):
         req = requests.get("{}{}{}".format(base_url, "/v2.0/sfc/port_pair_groups/", pp_group),
         headers={'X-Auth-Token': client.get_token()})
         if req.status_code != 200:
-            current_app.logger.error(req.text)
+            log.error(req.text)
             abort(req.status_code, req.text)
         req = req.json()
         port_pairs.extend(req["port_pair_group"]["port_pairs"])
@@ -390,7 +392,7 @@ def _update_port_pair_groups(old_pp_groups, new_port_pairs_list):
             headers={'X-Auth-Token': client.get_token()})
 
         if req.status_code != 200:
-            current_app.logger.error(req.text)
+            log.error(req.text)
             abort(req.status_code, req.text)
 
 
@@ -402,7 +404,7 @@ def _delete_port_chain_recursive(port_chain_id):
     req = requests.get("{}{}/{}".format(base_url, url, port_chain_id),
         headers={'X-Auth-Token': client.get_token()})
     if req.status_code != 200:
-        current_app.logger.error(req.text)
+        log.error(req.text)
         abort(req.status_code, req.text)
     req = req.json()
     port_pair_groups = req["port_chain"]["port_pair_groups"]
@@ -421,7 +423,7 @@ def _delete_port_chain(port_chain_id):
     req = requests.delete("{}{}/{}".format(base_url, url, port_chain_id),
         headers={'X-Auth-Token': client.get_token()})
     if req.status_code != 204:
-        current_app.logger.error(req.text)
+        log.error(req.text)
         abort(req.status_code, req.text)
 
 def _delete_port_pair(port_pair_id):
@@ -429,7 +431,7 @@ def _delete_port_pair(port_pair_id):
     req = requests.delete("{}{}/{}".format(base_url, url, port_pair_id),
         headers={'X-Auth-Token': client.get_token()})
     if req.status_code != 204:
-        current_app.logger.error(req.text)
+        log.error(req.text)
         abort(req.status_code, req.text)
 
 def _delete_port_pair_group_recursive(port_pair_group_id):
@@ -437,7 +439,7 @@ def _delete_port_pair_group_recursive(port_pair_group_id):
     req = requests.get("{}{}/{}".format(base_url, url, port_pair_group_id),
         headers={'X-Auth-Token': client.get_token()})
     if req.status_code != 200:
-        current_app.logger.error(req.text)
+        log.error(req.text)
         abort(req.status_code, req.text)
     req = req.json()
     port_pairs = req["port_pair_group"]["port_pairs"]
@@ -452,7 +454,7 @@ def _delete_port_pair_group(port_pair_group_id):
     req = requests.delete("{}{}/{}".format(base_url, url, port_pair_group_id),
         headers={'X-Auth-Token': client.get_token()})
     if req.status_code != 204:
-        current_app.logger.error(req.text)
+        log.error(req.text)
         abort(req.status_code, req.text)
 
 def delete_flow_classifier(flow_classifier_id):
@@ -460,5 +462,5 @@ def delete_flow_classifier(flow_classifier_id):
     req = requests.delete("{}{}/{}".format(base_url, url, flow_classifier_id),
         headers={'X-Auth-Token': client.get_token()})
     if req.status_code != 204:
-        current_app.logger.error(req.text)
+        log.error(req.text)
         abort(req.status_code, req.text)

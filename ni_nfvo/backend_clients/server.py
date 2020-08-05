@@ -2,13 +2,15 @@
 import requests
 import uuid
 import base64
+import logging
 
 from ni_nfvo.config import cfg
 from ni_nfvo.backend_clients.utils import get_net_id_from_name
 from ni_nfvo.backend_clients.utils import openstack_client as client
 
 from flask import abort
-from flask import current_app
+
+log = logging.getLogger(__name__)
 
 vnf_cfg = cfg["openstack_client"]["vnf"]
 mgmt_net_id = get_net_id_from_name(vnf_cfg["mgmt_net_name"])
@@ -23,7 +25,7 @@ def create_server(server_name, flavor_id, host_name, custom_user_data):
     req = requests.get("{}{}".format(base_url, url),
         headers=headers)
     if req.status_code != 200:
-        current_app.logger.error(req.text)
+        log.error(req.text)
         abort(req.status_code, req.text)
 
     extra_specs = req.json()
@@ -73,7 +75,7 @@ def create_server(server_name, flavor_id, host_name, custom_user_data):
     if req.status_code == 202:
         return req.json()["server"]["id"], 200
     else:
-        current_app.logger.error(req.text)
+        log.error(req.text)
         abort(req.status_code, req.text)
 
 def stop_server(server_id):
@@ -90,7 +92,7 @@ def stop_server(server_id):
         headers=headers)
 
     if req.status_code != 202:
-        current_app.logger.error(req.text)
+        log.error(req.text)
         abort(req.status_code, req.text)
 
 def destroy_server(server_id):
@@ -102,5 +104,5 @@ def destroy_server(server_id):
         headers=headers)
 
     if req.status_code != 204:
-        current_app.logger.error(req.text)
+        log.error(req.text)
         abort(req.status_code, req.text)
