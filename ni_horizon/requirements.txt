@@ -8,5 +8,3 @@
 #
 # PBR should always appear first
 pbr!=2.1.0,>=2.0.0 # Apache-2.0
-git+https://github.com/dpnm-ni/ni-mano#subdirectory=ni_mon_client_api
-git+https://github.com/dpnm-ni/ni-mano#subdirectory=ni_nfvo_client_api
