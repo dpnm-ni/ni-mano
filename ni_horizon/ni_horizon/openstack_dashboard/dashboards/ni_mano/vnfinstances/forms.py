@@ -27,7 +27,7 @@ class DeployVnfinstance(forms.SelfHandlingForm):
                                      label=_("VNF Flavor"))
 
     nodes = ni_mon_api.get_nodes()
-    node_choices = [(node.name, node.name) for node in nodes]
+    node_choices = [(n.name, n.name) for n in nodes if n.type == "compute"]
     node_name = forms.ChoiceField(choices=node_choices, label=_("Deploy Node"))
 
     user_data = forms.CharField(widget=forms.Textarea,
