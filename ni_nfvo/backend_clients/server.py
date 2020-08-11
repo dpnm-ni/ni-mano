@@ -16,7 +16,7 @@ vnf_cfg = cfg["openstack_client"]["vnf"]
 mgmt_net_id = get_net_id_from_name(vnf_cfg["mgmt_net_name"])
 data_net_id = get_net_id_from_name(vnf_cfg["data_net_name"])
 
-def create_server(server_name, flavor_id, host_name, custom_user_data):
+def create_server(server_name, flavor_id, host_name, custom_user_data, image_id):
     # extra specs API link: https://github.com/openstack/nova/blob/master/api-ref/source/os-flavor-extra-specs.inc
     base_url = client.base_urls["compute"]
     headers = {'X-Auth-Token': client.get_token()}
@@ -30,7 +30,7 @@ def create_server(server_name, flavor_id, host_name, custom_user_data):
 
     extra_specs = req.json()
     try:
-        os_image_id = extra_specs["extra_specs"]["os_image_id"]
+        os_image_id = image_id if image_id is not None else extra_specs["extra_specs"]["os_image_id"]
         default_user_data = extra_specs["extra_specs"].get("default_user_data")
     except Exception as e:
         return str(e), 404

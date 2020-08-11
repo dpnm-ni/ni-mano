@@ -34,23 +34,26 @@ class VnfSpec(object):
         'flavor_id': 'str',
         'node_name': 'str',
         'vnf_name': 'str',
-        'user_data': 'str'
+        'user_data': 'str',
+        'image_id': 'str'
     }
 
     attribute_map = {
         'flavor_id': 'flavor_id',
         'node_name': 'node_name',
         'vnf_name': 'vnf_name',
-        'user_data': 'user_data'
+        'user_data': 'user_data',
+        'image_id': 'image_id'
     }
 
-    def __init__(self, flavor_id=None, node_name=None, vnf_name=None, user_data=None):  # noqa: E501
+    def __init__(self, flavor_id=None, node_name=None, vnf_name=None, user_data=None, image_id=None):  # noqa: E501
         """VnfSpec - a model defined in Swagger"""  # noqa: E501
 
         self._flavor_id = None
         self._node_name = None
         self._vnf_name = None
         self._user_data = None
+        self._image_id = None
         self.discriminator = None
 
         self.flavor_id = flavor_id
@@ -60,6 +63,8 @@ class VnfSpec(object):
             self.vnf_name = vnf_name
         if user_data is not None:
             self.user_data = user_data
+        if image_id is not None:
+            self.image_id = image_id
 
     @property
     def flavor_id(self):
@@ -150,6 +155,29 @@ class VnfSpec(object):
         """
 
         self._user_data = user_data
+
+    @property
+    def image_id(self):
+        """Gets the image_id of this VnfSpec.  # noqa: E501
+
+        custom OS image id other than the default id from falvor  # noqa: E501
+
+        :return: The image_id of this VnfSpec.  # noqa: E501
+        :rtype: str
+        """
+        return self._image_id
+
+    @image_id.setter
+    def image_id(self, image_id):
+        """Sets the image_id of this VnfSpec.
+
+        custom OS image id other than the default id from falvor  # noqa: E501
+
+        :param image_id: The image_id of this VnfSpec.  # noqa: E501
+        :type: str
+        """
+
+        self._image_id = image_id
 
     def to_dict(self):
         """Returns the model properties as a dict"""

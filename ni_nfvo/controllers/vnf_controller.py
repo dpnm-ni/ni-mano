@@ -19,7 +19,11 @@ def deploy_vnf(vnf_spec):  # noqa: E501
     if connexion.request.is_json:
         vnf_spec = VnfSpec.from_dict(connexion.request.get_json())  # noqa: E501
 
-    return server_service.create_server(vnf_spec.vnf_name, vnf_spec.flavor_id, vnf_spec.node_name, vnf_spec.user_data)
+    return server_service.create_server(vnf_spec.vnf_name,
+                                        vnf_spec.flavor_id,
+                                        vnf_spec.node_name,
+                                        vnf_spec.user_data,
+                                        vnf_spec.image_id)
 
 
 def shutdown_vnf(id):  # noqa: E501

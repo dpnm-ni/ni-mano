@@ -15,7 +15,7 @@ class VnfSpec(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, flavor_id: str=None, node_name: str=None, vnf_name: str=None, user_data: str=None):  # noqa: E501
+    def __init__(self, flavor_id: str=None, node_name: str=None, vnf_name: str=None, user_data: str=None, image_id: str=None):  # noqa: E501
         """VnfSpec - a model defined in Swagger
 
         :param flavor_id: The flavor_id of this VnfSpec.  # noqa: E501
@@ -26,25 +26,30 @@ class VnfSpec(Model):
         :type vnf_name: str
         :param user_data: The user_data of this VnfSpec.  # noqa: E501
         :type user_data: str
+        :param image_id: The image_id of this VnfSpec.  # noqa: E501
+        :type image_id: str
         """
         self.swagger_types = {
             'flavor_id': str,
             'node_name': str,
             'vnf_name': str,
-            'user_data': str
+            'user_data': str,
+            'image_id': str
         }
 
         self.attribute_map = {
             'flavor_id': 'flavor_id',
             'node_name': 'node_name',
             'vnf_name': 'vnf_name',
-            'user_data': 'user_data'
+            'user_data': 'user_data',
+            'image_id': 'image_id'
         }
 
         self._flavor_id = flavor_id
         self._node_name = node_name
         self._vnf_name = vnf_name
         self._user_data = user_data
+        self._image_id = image_id
 
     @classmethod
     def from_dict(cls, dikt) -> 'VnfSpec':
@@ -146,3 +151,26 @@ class VnfSpec(Model):
         """
 
         self._user_data = user_data
+
+    @property
+    def image_id(self) -> str:
+        """Gets the image_id of this VnfSpec.
+
+        custom OS image id other than the default id from falvor  # noqa: E501
+
+        :return: The image_id of this VnfSpec.
+        :rtype: str
+        """
+        return self._image_id
+
+    @image_id.setter
+    def image_id(self, image_id: str):
+        """Sets the image_id of this VnfSpec.
+
+        custom OS image id other than the default id from falvor  # noqa: E501
+
+        :param image_id: The image_id of this VnfSpec.
+        :type image_id: str
+        """
+
+        self._image_id = image_id

@@ -32,13 +32,16 @@ class DeployVnfinstance(forms.SelfHandlingForm):
 
     user_data = forms.CharField(widget=forms.Textarea, label=_(
         "VNF cloud-config"), required=False)
+    image_id = forms.CharField(max_length=255, label=_("OS Image ID"),
+        help_text="Specify ID of custom OS image other than the default from flavor")
 
     def handle(self, request, data):
         try:
             vnf_spec = ni_nfvo_client.VnfSpec(flavor_id=data['vnfflavor_id'],
                                               vnf_name=data['vnf_name'],
                                               node_name=data['node_name'],
-                                              user_data=data['user_data'])
+                                              user_data=data['user_data'],
+                                              image_id=data['image_id'])
             vnf_id = ni_nfvo_vnf_api.deploy_vnf(vnf_spec)
             return self._get_vnf_w_timeout(vnf_id, 10)
         except Exception as e:
