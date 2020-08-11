@@ -23,17 +23,21 @@ class DeployVnfinstance(forms.SelfHandlingForm):
 
     vnfflavors = ni_mon_api.get_vnf_flavors()
     vnfflavor_choices = [(flavor.id, flavor.name) for flavor in vnfflavors]
-    vnfflavor_id = forms.ChoiceField(
-        choices=vnfflavor_choices, label=_("VNF Flavor"))
+    vnfflavor_id = forms.ChoiceField(choices=vnfflavor_choices,
+                                     label=_("VNF Flavor"))
 
     nodes = ni_mon_api.get_nodes()
     node_choices = [(node.name, node.name) for node in nodes]
     node_name = forms.ChoiceField(choices=node_choices, label=_("Deploy Node"))
 
-    user_data = forms.CharField(widget=forms.Textarea, label=_(
-        "VNF cloud-config"), required=False)
-    image_id = forms.CharField(max_length=255, label=_("OS Image ID"),
-        help_text="Specify ID of custom OS image other than the default from flavor")
+    user_data = forms.CharField(widget=forms.Textarea,
+                                label=_( "VNF cloud-config"),
+                                required=False)
+    image_id = forms.CharField(max_length=255,
+                               label=_("OS Image ID"),
+                               required=False,
+                               help_text="Specify ID of a custom OS image " \
+                                         "other than the default from flavor")
 
     def handle(self, request, data):
         try:
