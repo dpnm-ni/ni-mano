@@ -36,26 +36,20 @@ class CreateSfcr(forms.SelfHandlingForm):
                                     empty_value=None,
                                     label=_('dst_ip_prefix'))
     src_port_min = forms.IntegerField(required=False,
-                                      empty_value=None,
                                       label=_('src_port_min'))
     src_port_max = forms.IntegerField(required=False,
-                                      empty_value=None,
                                       label=_('src_port_max'))
     dst_port_min = forms.IntegerField(required=False,
-                                      empty_value=None,
                                       label=_('dst_port_min'))
     dst_port_max = forms.IntegerField(required=False,
-                                      empty_value=None,
                                       label=_('dst_port_max'))
     proto = forms.CharField(max_length=255,
                             required=False,
                             empty_value=None,
                             label=_('proto'))
     bw = forms.IntegerField(required=False,
-                            empty_value=None,
                             label=_('bw'))
     delay = forms.IntegerField(required=False,
-                               empty_value=None,
                                label=_('delay'))
     # duration = forms.IntegerField(required=False, label=_('duration'))
 
