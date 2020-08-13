@@ -23,16 +23,40 @@ class CreateSfcr(forms.SelfHandlingForm):
     nf_chain = forms.CharField(max_length=1024, label=_('nf_chain'))
     nf_chain.widget.attrs['placeholder'] = '["fw", "ids"]'
     source_client = forms.CharField(max_length=255, label=_('source_client'))
-    destination_client = forms.CharField(max_length=255, required=False, label=_('destination_client'))
-    src_ip_prefix = forms.CharField(max_length=255, required=False, label=_('src_ip_prefix'))
-    dst_ip_prefix = forms.CharField(max_length=255, required=False, label=_('dst_ip_prefix'))
-    src_port_min = forms.IntegerField(required=False, label=_('src_port_min'))
-    src_port_max = forms.IntegerField(required=False, label=_('src_port_max'))
-    dst_port_min = forms.IntegerField(required=False, label=_('dst_port_min'))
-    dst_port_max = forms.IntegerField(required=False, label=_('dst_port_max'))
-    proto = forms.CharField(max_length=255, required=False, label=_('proto'))
-    bw = forms.IntegerField(required=False, label=_('bw'))
-    delay = forms.IntegerField(required=False, label=_('delay'))
+    destination_client = forms.CharField(max_length=255,
+                                         required=False,
+                                         empty_value=None,
+                                         label=_('destination_client'))
+    src_ip_prefix = forms.CharField(max_length=255,
+                                    required=False,
+                                    empty_value=None,
+                                    label=_('src_ip_prefix'))
+    dst_ip_prefix = forms.CharField(max_length=255,
+                                    required=False,
+                                    empty_value=None,
+                                    label=_('dst_ip_prefix'))
+    src_port_min = forms.IntegerField(required=False,
+                                      empty_value=None,
+                                      label=_('src_port_min'))
+    src_port_max = forms.IntegerField(required=False,
+                                      empty_value=None,
+                                      label=_('src_port_max'))
+    dst_port_min = forms.IntegerField(required=False,
+                                      empty_value=None,
+                                      label=_('dst_port_min'))
+    dst_port_max = forms.IntegerField(required=False,
+                                      empty_value=None,
+                                      label=_('dst_port_max'))
+    proto = forms.CharField(max_length=255,
+                            required=False,
+                            empty_value=None,
+                            label=_('proto'))
+    bw = forms.IntegerField(required=False,
+                            empty_value=None,
+                            label=_('bw'))
+    delay = forms.IntegerField(required=False,
+                               empty_value=None,
+                               label=_('delay'))
     # duration = forms.IntegerField(required=False, label=_('duration'))
 
 

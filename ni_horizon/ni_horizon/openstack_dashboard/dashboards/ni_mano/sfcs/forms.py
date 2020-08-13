@@ -21,7 +21,7 @@ LOG = logging.getLogger(__name__)
 class CreateSfc(forms.SelfHandlingForm):
 
     sfc_name = forms.CharField(max_length=255, label=_('SFC Name'))
-    is_symmetric = forms.BooleanField(required=False, label=_('Symmetric'))
+    is_symmetric = forms.BooleanField(required=False, empty_value=None, label=_('Symmetric'))
     sfcr_ids = forms.CharField(
             widget=forms.Textarea(attrs={"placeholder": '[\n"sfcr_id_1",\n"sfcr_id_2"\n]'}),
             max_length=1024,
