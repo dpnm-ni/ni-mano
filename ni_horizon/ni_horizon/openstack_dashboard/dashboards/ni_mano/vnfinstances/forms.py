@@ -28,7 +28,11 @@ class DeployVnfinstance(forms.SelfHandlingForm):
 
     nodes = ni_mon_api.get_nodes()
     node_choices = [(n.name, n.name) for n in nodes if n.type == "compute"]
-    node_name = forms.ChoiceField(choices=node_choices, label=_("Deploy Node"))
+    # Add "all nodes" option to choice.
+    node_choices.append(('__All__', 'All'))
+    node_name = forms.ChoiceField(choices=node_choices,
+                                  initial=('__All__', 'All'),
+                                  label=_("Deploy Node"))
 
     user_data = forms.CharField(widget=forms.Textarea,
                                 label=_( "VNF cloud-config"),
@@ -43,9 +47,12 @@ class DeployVnfinstance(forms.SelfHandlingForm):
 
     def handle(self, request, data):
         try:
+            # if node_name is None, ni_nfvo client will not enforce deployment
+            # on any particular node.
+            node_name = None if data['node_name'] == '__All__' else data['node_name']
             vnf_spec = ni_nfvo_client.VnfSpec(flavor_id=data['vnfflavor_id'],
                                               vnf_name=data['vnf_name'],
-                                              node_name=data['node_name'],
+                                              node_name=node_name,
                                               user_data=data['user_data'],
                                               image_id=data['image_id'])
             vnf_id = ni_nfvo_vnf_api.deploy_vnf(vnf_spec)
@@ -67,3 +74,4 @@ class DeployVnfinstance(forms.SelfHandlingForm):
             tout = tout - 1
 
         return vnf_instance
+
