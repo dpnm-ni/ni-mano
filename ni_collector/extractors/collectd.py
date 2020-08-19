@@ -8,7 +8,6 @@ from __future__ import division
 import sys, traceback, logging
 from ni_collector.config import cfg
 
-
 logger = logging.getLogger(__name__)
 
 def get_measurements(data):

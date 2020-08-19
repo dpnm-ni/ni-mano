@@ -5,7 +5,8 @@ import json
 import pdb
 import logging
 
-from ni_collector import metric_extractor
+from ni_collector.extractors import collectd
+from ni_collector.extractors import generic
 from ni_collector.config import cfg
 
 from confluent_kafka import Producer
@@ -39,13 +40,7 @@ def delivery_report(err, msg):
         logger.error('Message delivery failed: {}'.format(err))
 
 
-@app.route('/', methods=['POST'])
-def recv_mon_data():
-    measurements = []
-    influxdb_data_points = []
-    for data in request.json:
-        measurements.extend(metric_extractor.get_measurements(data))
-
+def store_measurements(measurements):
     # Send extracted data to kafka topics
     # Asynchronously produce a message, the delivery report callback
     # will be triggered from poll() above, or flush() below, when the message has
@@ -58,6 +53,7 @@ def recv_mon_data():
         producer.poll(0)
 
     # Send extracted data to influxdb
+    influxdb_data_points = []
     for item in measurements:
         influxdb_data_points.append({"measurement": item[0],
                                      # timestamp from ms in collectd to ns in influxdb
@@ -66,8 +62,23 @@ def recv_mon_data():
                                      })
     influxdb_client.write_points(influxdb_data_points)
 
+
+@app.route('/collectd', methods=['POST'])
+def recv_collectd_data():
+    measurements = []
+    for data in request.json:
+        measurements.extend(collectd.get_measurements(data))
+    store_measurements(measurements)
     return Response(status=200)
 
+
+@app.route('/', methods=['POST'])
+def recv_generic_data():
+    measurements = []
+    for data in request.json:
+        measurements.extend(generic.get_measurements(data))
+    store_measurements(measurements)
+    return Response(status=200)
 
 def main():
     # Trigger any available delivery report callbacks from previous produce() calls
