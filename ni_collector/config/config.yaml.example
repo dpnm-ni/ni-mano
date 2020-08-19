@@ -1,0 +1,10 @@
+kafka_producer:
+  bootstrap.servers: <kafka_server_address>:9092
+  queue.buffering.max.messages: 500000
+  queue.buffering.max.ms: 1000
+  batch.num.messages: 100
+  api.version.request: True
+
+influxdb:
+  server: <influxdb_server_address>
+  database: ni

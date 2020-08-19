@@ -6,11 +6,10 @@
 
 from __future__ import division
 import sys, traceback, logging
-from kafka_extractor.config import cfg
+from ni_collector.config import cfg
 
 
 logger = logging.getLogger(__name__)
-ping_cfg = cfg["collectd"].get("ping")
 
 def get_measurements(data):
     result = []
