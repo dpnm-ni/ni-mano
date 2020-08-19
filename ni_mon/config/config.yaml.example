@@ -17,18 +17,3 @@ openstack_client:
 influxdb_client:
   server: <influxdb_server_address>
   database: collectd
-
-# The id of compute node should be the same as the node hostname
-topo:
-  nodes:
-  - id: "<node1_id>"
-    type: "compute"
-    core_freq_MHz: 3200
-  - id: "<sw1_id>"
-    type: "switch"
-  links:
-  - id: 1
-    node1_id: "<node1_id>"
-    node2_id: "<sw1_id>"
-    delay_us: 100
-    max_bw_mbps: 10000
