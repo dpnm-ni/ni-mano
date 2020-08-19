@@ -138,10 +138,10 @@ def delete_sample_sfc(sfc_id):
 
 
 def test_ni_nfvo():
-    vnf_fw1_id = deploy_vnf_from_flavor('vnf.fw.1.512', 'ci-fw1')
-    vnf_fw2_id = deploy_vnf_from_flavor('vnf.fw.1.512', 'ci-fw2')
-    client1_id = deploy_vnf_from_flavor('vnf.generic.1.512', 'ci-c1')
-    client2_id = deploy_vnf_from_flavor('vnf.generic.1.512', 'ci-c2')
+    vnf_fw1_id = deploy_vnf_from_flavor('vnf.fw.1.512.10G', 'ci-fw1')
+    vnf_fw2_id = deploy_vnf_from_flavor('vnf.fw.1.512.10G', 'ci-fw2')
+    client1_id = deploy_vnf_from_flavor('vnf.generic.1.512.10G', 'ci-c1')
+    client2_id = deploy_vnf_from_flavor('vnf.generic.1.512.10G', 'ci-c2')
 
     sfcr_id = create_sample_sfcr('ci-sfcr', client1_id, client2_id)
     sfc_id = create_sample_sfc('ci-sfc', sfcr_id, vnf_fw1_id, True)
