@@ -53,14 +53,15 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = ni_mon_client.DefaultApi(ni_mon_client.ApiClient(configuration))
-id = 'id_example' # str | The id of the link
+id = 'id_example' # str | The id of the vnf instance or compute node
+measurement_type = 'measurement_type_example' # str | The measurement metric, which can be get using getMeasurementTypes()
 
 try:
-    # get a link
-    api_response = api_instance.get_link(id)
+    # Return the latest value of a measurement of a vnf instance or compute node
+    api_response = api_instance.get_last_measurement(id, measurement_type)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling DefaultApi->get_link: %s\n" % e)
+    print("Exception when calling DefaultApi->get_last_measurement: %s\n" % e)
 
 ```
 
@@ -70,6 +71,7 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*DefaultApi* | [**get_last_measurement**](docs/DefaultApi.md#get_last_measurement) | **GET** /last_measurement/{id}/{measurement_type} | Return the latest value of a measurement of a vnf instance or compute node
 *DefaultApi* | [**get_link**](docs/DefaultApi.md#get_link) | **GET** /link/{id} | get a link
 *DefaultApi* | [**get_link_between_nodes**](docs/DefaultApi.md#get_link_between_nodes) | **GET** /link_between_nodes | get detailed information of a link between two specific nodes
 *DefaultApi* | [**get_links**](docs/DefaultApi.md#get_links) | **GET** /links | get list of link

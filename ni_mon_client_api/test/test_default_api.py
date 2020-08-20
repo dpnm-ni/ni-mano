@@ -29,6 +29,13 @@ class TestDefaultApi(unittest.TestCase):
     def tearDown(self):
         pass
 
+    def test_get_last_measurement(self):
+        """Test case for get_last_measurement
+
+        Return the latest value of a measurement of a vnf instance or compute node  # noqa: E501
+        """
+        pass
+
     def test_get_link(self):
         """Test case for get_link
 

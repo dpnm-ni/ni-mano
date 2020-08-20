@@ -218,6 +218,30 @@ paths:
             items:
               $ref: "#/definitions/MonitoringEntry"
       x-swagger-router-controller: "ni_mon.controllers.default_controller"
+  /last_measurement/{id}/{measurement_type}:
+    get:
+      summary: "Return the latest value of a measurement of a vnf instance or compute\
+        \ node"
+      operationId: "get_last_measurement"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The id of the vnf instance or compute node"
+        required: true
+        type: "string"
+      - name: "measurement_type"
+        in: "path"
+        description: "The measurement metric, which can be get using getMeasurementTypes()"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/MonitoringEntry"
+      x-swagger-router-controller: "ni_mon.controllers.default_controller"
   /measurement_types/{id}:
     get:
       summary: "get a list of measurements of a vnf instance or a compute node"
@@ -369,7 +393,7 @@ definitions:
         format: "double"
     example:
       component_type: "component_type"
-      measurement_value: 0.80082819046101150206595775671303272247314453125
+      measurement_value: 0.8008281904610115
       component_id: "component_id"
       measurement_type: "measurement_type"
       timestamp: "2000-01-23T04:56:07.000+00:00"

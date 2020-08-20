@@ -4,6 +4,7 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**get_last_measurement**](DefaultApi.md#get_last_measurement) | **GET** /last_measurement/{id}/{measurement_type} | Return the latest value of a measurement of a vnf instance or compute node
 [**get_link**](DefaultApi.md#get_link) | **GET** /link/{id} | get a link
 [**get_link_between_nodes**](DefaultApi.md#get_link_between_nodes) | **GET** /link_between_nodes | get detailed information of a link between two specific nodes
 [**get_links**](DefaultApi.md#get_links) | **GET** /links | get list of link
@@ -17,6 +18,54 @@ Method | HTTP request | Description
 [**get_vnf_instance**](DefaultApi.md#get_vnf_instance) | **GET** /vnfinstances/{id} | get detailed information of a vnf instance
 [**get_vnf_instances**](DefaultApi.md#get_vnf_instances) | **GET** /vnfinstances | get a list of vnf instances
 
+
+# **get_last_measurement**
+> MonitoringEntry get_last_measurement(id, measurement_type)
+
+Return the latest value of a measurement of a vnf instance or compute node
+
+### Example
+```python
+from __future__ import print_function
+import time
+import ni_mon_client
+from ni_mon_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = ni_mon_client.DefaultApi()
+id = 'id_example' # str | The id of the vnf instance or compute node
+measurement_type = 'measurement_type_example' # str | The measurement metric, which can be get using getMeasurementTypes()
+
+try:
+    # Return the latest value of a measurement of a vnf instance or compute node
+    api_response = api_instance.get_last_measurement(id, measurement_type)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->get_last_measurement: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **str**| The id of the vnf instance or compute node | 
+ **measurement_type** | **str**| The measurement metric, which can be get using getMeasurementTypes() | 
+
+### Return type
+
+[**MonitoringEntry**](MonitoringEntry.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_link**
 > Link get_link(id)

@@ -11,7 +11,7 @@ from flask import current_app
 client = InfluxDBClient(host=cfg['influxdb_client']['server'],
                         database=cfg['influxdb_client']['database'])
 
-def get_between_timestamps(host, measurement_type, start_time: int, end_time: int):
+def get_measurements(host, measurement_type, start_time: int, end_time: int):
     measurement = u"%s___%s" %(host, measurement_type)
     mon_entries = []
 
@@ -38,6 +38,28 @@ def get_between_timestamps(host, measurement_type, start_time: int, end_time: in
         mon_entries.append(mon_entry)
 
     return mon_entries
+
+
+def get_last_measurement(host, measurement_type):
+    measurement = u"%s___%s" % (host, measurement_type)
+
+    query = "SELECT time, LAST(value) AS value FROM \"{measurement}\";".format(
+        measurement=measurement,
+    )
+    result = client.query(query=query, epoch='ms')
+    points = list(result.get_points(measurement=measurement))
+
+    point = points[0]
+    time_datetime = datetime.fromtimestamp(point['time']/(10**3))
+    mon_entry = MonitoringEntry(
+        timestamp=time_datetime,
+        component_type=None,
+        component_id=host,
+        measurement_type=measurement_type,
+        measurement_value=float(point['value'])
+    )
+
+    return mon_entry
 
 def get_measurement_types(id):
 

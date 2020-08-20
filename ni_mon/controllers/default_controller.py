@@ -30,6 +30,20 @@ def get_measurement_types(id):  # noqa: E501
     return influxdb_client.get_measurement_types(id)
 
 
+def get_last_measurement(id, measurement_type):  # noqa: E501
+    """Return the latest value of a measurement of a vnf instance or compute node
+
+     # noqa: E501
+
+    :param id: The id of the vnf instance or compute node
+    :type id: str
+    :param measurement_type: The measurement metric, which can be get using getMeasurementTypes()
+    :type measurement_type: str
+
+    :rtype: MonitoringEntry
+    """
+    return influxdb_client.get_last_measurement(id, measurement_type)
+
 def get_measurement(id, measurement_type, start_time, end_time):  # noqa: E501
     """Return the value of a measurement of a vnf instance or compute node at a timestamp or a timestamp period
 
@@ -54,7 +68,7 @@ def get_measurement(id, measurement_type, start_time, end_time):  # noqa: E501
     start_time = start_time.replace(tzinfo=None)
     end_time = end_time.replace(tzinfo=None)
 
-    return influxdb_client.get_between_timestamps(id,
+    return influxdb_client.get_measurements(id,
             measurement_type,
             float(start_time.timestamp()),
             float(end_time.timestamp())
