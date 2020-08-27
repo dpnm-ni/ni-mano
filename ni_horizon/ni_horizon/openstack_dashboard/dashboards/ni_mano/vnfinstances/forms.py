@@ -17,6 +17,31 @@ from ni_mon_client.rest import ApiException as NimonApiException
 LOG = logging.getLogger(__name__)
 
 
+def get_node_choices():
+    nodes = ni_mon_api.get_nodes()
+    node_choices = [(n.name, n.name) for n in nodes
+                    if n.type == "compute" and n.status == "enabled"]
+    # Add "all nodes" option to choice.
+    node_choices.append(('__All__', 'All'))
+    return node_choices
+
+
+def _get_vnf_w_timeout(vnf_id, timeout):
+    tout = timeout
+    vnf_instance = None
+    while tout > 0:
+        try:
+            vnf_instance = ni_mon_api.get_vnf_instance(vnf_id)
+            return vnf_instance
+        except NimonApiException:
+            pass
+
+        time.sleep(1)
+        tout = tout - 1
+
+    return vnf_instance
+
+
 class DeployVnfinstance(forms.SelfHandlingForm):
 
     vnf_name = forms.CharField(max_length=255, label=_("VNF Instance Name"))
@@ -26,11 +51,7 @@ class DeployVnfinstance(forms.SelfHandlingForm):
     vnfflavor_id = forms.ChoiceField(choices=vnfflavor_choices,
                                      label=_("VNF Flavor"))
 
-    nodes = ni_mon_api.get_nodes()
-    node_choices = [(n.name, n.name) for n in nodes if n.type == "compute"]
-    # Add "all nodes" option to choice.
-    node_choices.append(('__All__', 'All'))
-    node_name = forms.ChoiceField(choices=node_choices,
+    node_name = forms.ChoiceField(choices=get_node_choices,
                                   initial=('__All__', 'All'),
                                   label=_("Deploy Node"))
 
@@ -45,6 +66,8 @@ class DeployVnfinstance(forms.SelfHandlingForm):
                                help_text="Specify ID of a custom OS image " \
                                          "other than the default from flavor")
 
+
+
     def handle(self, request, data):
         try:
             # if node_name is None, ni_nfvo client will not enforce deployment
@@ -56,22 +79,6 @@ class DeployVnfinstance(forms.SelfHandlingForm):
                                               user_data=data['user_data'],
                                               image_id=data['image_id'])
             vnf_id = ni_nfvo_vnf_api.deploy_vnf(vnf_spec)
-            return self._get_vnf_w_timeout(vnf_id, 10)
+            return _get_vnf_w_timeout(vnf_id, 10)
         except Exception as e:
             exceptions.handle(request, str(e))
-
-    def _get_vnf_w_timeout(self, vnf_id, timeout):
-        tout = timeout
-        vnf_instance = None
-        while tout > 0:
-            try:
-                vnf_instance = ni_mon_api.get_vnf_instance(vnf_id)
-                return vnf_instance
-            except NimonApiException:
-                pass
-
-            time.sleep(1)
-            tout = tout - 1
-
-        return vnf_instance
-

@@ -502,7 +502,7 @@ horizon.ni_topology = {
       name:d.name,
       type:d.type,
       status:d.status,
-      status_class: (d.status === 'ACTIVE') ? 'active' : 'down',
+      status_class: (d.status === 'enabled') ? 'active' : 'down',
       status_label: gettext('STATUS'),
       id_label: gettext('ID'),
       view_details_label: gettext('View Details'),
@@ -520,9 +520,6 @@ horizon.ni_topology = {
       });
     } else if (d instanceof self.Compute) {
       htmlData.compute_info = d;
-      // FIXME: hardcoded here.
-      htmlData.status = "Active",
-      htmlData.status_class = 'active',
       html = balloonTmpl.render(htmlData,{
         table1:deviceTmpl,
         table2:computeTmpl
