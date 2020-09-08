@@ -65,7 +65,23 @@ def virt(data):
         # 10000000: 10^9 / 100
         data['dstypes'][0] = 'gauge'
         data['values'][0] = (int)(data['values'][0]) / 10000000 / (int)(data['interval'])
-        return ('%s___%s' %(data['type_instance'], 'per_cpu_usage'))
+        return ('%s___%s' %(data['type_instance'], 'per_pcpu_usage'))
+
+    if data['type'] == 'virt_vcpu_steal':
+        # FIXME: this is a dirty fix & hacky. virt_vcpu is cpu time (ns), and
+        # we need to convert it into percentage. we modify data instance directly here.
+        # 10000000: 10^9 / 100
+        data['dstypes'][0] = 'gauge'
+        data['values'][0] = (int)(data['values'][0]) / 10000000 / (int)(data['interval'])
+        return ('%s___%s' %(data['type_instance'], 'per_pcpu_steal'))
+
+    if data['type'] == 'virt_vcpu_guest_avg':
+        # FIXME: this is a dirty fix & hacky. virt_vcpu is cpu time (ns), and
+        # we need to convert it into percentage. we modify data instance directly here.
+        # 10000000: 10^9 / 100
+        data['dstypes'][0] = 'gauge'
+        data['values'][0] = (int)(data['values'][0]) / 10000000 / (int)(data['interval'])
+        return "cpu_usage"
 
     if (data['type'] in ['if_octets', 'if_packets', 'if_dropped']):
         return ('%s___%s' %(data['type_instance'], data['type']))
@@ -73,15 +89,6 @@ def virt(data):
     if (data['type'] in ['disk_ops', 'disk_octets']):
         return ('%s___%s' % (data['type_instance'], data['type']))
 
-def aggregation(data):
-    if data['plugin_instance'] == 'virt-average' and data['type'] == 'virt_vcpu':
-        # FIXME: this is a dirty fix & hacky. virt_vcpu is cpu time (ns), and
-        # we need to convert it into percentage. we modify data instance directly here.
-        # 10000000: 10^9 / 100
-        data['dstypes'][0] = 'gauge'
-        data['values'][0] = (int)(data['values'][0]) / 10000000 / (int)(data['interval'])
-
-        return 'cpu_usage'
 
 def ping(data):
     if data['type'] == 'ping':
