@@ -60,27 +60,22 @@ def virt(data):
         return 'memory_free'
 
     if data['type'] == 'virt_vcpu':
-        # FIXME: this is a dirty fix & hacky. virt_vcpu is cpu time (ns), and
-        # we need to convert it into percentage. we modify data instance directly here.
+        # we need to convert cpu time (ns) into percentage.
+        # We enable storeRate in collectd so the value is gauge
+        # We do not need to consider interval since storeRate already handle it
         # 10000000: 10^9 / 100
         data['dstypes'][0] = 'gauge'
-        data['values'][0] = (int)(data['values'][0]) / 10000000 / (int)(data['interval'])
+        data['values'][0] = (int)(data['values'][0]) / 10000000
         return ('%s___%s' %(data['type_instance'], 'per_pcpu_usage'))
 
     if data['type'] == 'virt_vcpu_steal':
-        # FIXME: this is a dirty fix & hacky. virt_vcpu is cpu time (ns), and
-        # we need to convert it into percentage. we modify data instance directly here.
-        # 10000000: 10^9 / 100
         data['dstypes'][0] = 'gauge'
-        data['values'][0] = (int)(data['values'][0]) / 10000000 / (int)(data['interval'])
+        data['values'][0] = (int)(data['values'][0]) / 10000000
         return ('%s___%s' %(data['type_instance'], 'per_pcpu_steal'))
 
     if data['type'] == 'virt_vcpu_guest_avg':
-        # FIXME: this is a dirty fix & hacky. virt_vcpu is cpu time (ns), and
-        # we need to convert it into percentage. we modify data instance directly here.
-        # 10000000: 10^9 / 100
         data['dstypes'][0] = 'gauge'
-        data['values'][0] = (int)(data['values'][0]) / 10000000 / (int)(data['interval'])
+        data['values'][0] = (int)(data['values'][0]) / 10000000
         return "cpu_usage"
 
     if (data['type'] in ['if_octets', 'if_packets', 'if_dropped']):
