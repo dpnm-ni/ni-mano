@@ -41,6 +41,26 @@ def _abort_if_sfc_conflict(sfcr_ids, vnf_ids_lists):
                 abort(400, error_message)
 
 
+def get_vnf_status(vnf_id):
+    base_url = client.base_urls["compute"]
+    url = "/servers/{}".format(vnf_id)
+    headers = {'X-Auth-Token': client.get_token()}
+
+    req = requests.get("{}{}".format(base_url, url),
+                        headers=headers)
+
+    if req.status_code == 200:
+        return req.json()["server"]["status"]
+    else:
+        abort(req.status_code, req.text)
+
+def _abort_if_vnf_not_active(vnf_ids_lists):
+    for vnf_ids in vnf_ids_lists:
+        for vnf_id in vnf_ids:
+            if get_vnf_status(vnf_id) != 'ACTIVE':
+                abort(400, "vnf %s is not ACTIVE" %(vnf_id))
+
+
 def create_sfc(fc_prefix, sfcr_ids, vnf_ids_lists, is_symmetric=False):
     if len(vnf_ids_lists) == 0:
         error_message = "vnf list is empty"
@@ -53,6 +73,7 @@ def create_sfc(fc_prefix, sfcr_ids, vnf_ids_lists, is_symmetric=False):
         abort(404, error_message)
 
     _abort_if_sfc_conflict(sfcr_ids, vnf_ids_lists)
+    _abort_if_vnf_not_active(vnf_ids_lists)
 
     port_ids_list = []
     for vnf_ids in vnf_ids_lists:
@@ -288,6 +309,8 @@ def update_sfc(sfc_id, sfcr_ids=None, vnf_ids_lists=None):
         error_message = "sfc_id: {} not found".format(sfc_id)
         log.error(error_message)
         abort(404, error_message)
+
+    _abort_if_vnf_not_active(vnf_ids_lists)
 
     if vnf_ids_lists:
         _update_sfc_vnf_ids(sfc, vnf_ids_lists, update_db=False)
