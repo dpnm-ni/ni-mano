@@ -7,8 +7,7 @@ from ni_nfvo_client.rest import ApiException as NfvoApiException
 from ni_mon_client.rest import ApiException as NimonApiException
 
 from pprint import pprint
-from config import cfg
-
+from .config import cfg
 
 ni_mon_client_cfg = ni_mon_client.Configuration()
 ni_mon_client_cfg.host = cfg["ni_mon"]["host"]
