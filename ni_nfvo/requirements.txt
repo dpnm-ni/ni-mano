@@ -1,11 +1,13 @@
 # should also freeze depedencies modules
-Werkzeug==0.16.0
+Werkzeug==2.0.1
 
-connexion == 1.1.15
+connexion[swagger-ui]
+
+connexion == 2.6.0
 python_dateutil == 2.7.0
 setuptools >= 21.0.0
-python-openstackclient == 4.0.0
+python-openstackclient == 5.4.0
 tinydb == 3.15.1
 tinydb-serialization == 1.0.4
 
-networking-sfc == 9.0.0
+networking-sfc == 11.0.0
