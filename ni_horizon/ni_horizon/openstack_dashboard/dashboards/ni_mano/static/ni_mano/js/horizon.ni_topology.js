@@ -502,7 +502,7 @@ horizon.ni_topology = {
       name:d.name,
       type:d.type,
       status:d.status,
-      status_class: (d.status === 'ACTIVE') ? 'active' : 'down',
+      status_class: (d.status === 'ACTIVE' || d.status.toUpperCase() === 'RUNNING') ? 'active' : 'down',
       status_label: gettext('STATUS'),
       id_label: gettext('ID'),
       view_details_label: gettext('View Details'),

@@ -61,6 +61,12 @@ def get_ips(vnfinstance):
     return ", ".join(ips)
 
 
+def get_vnf_type(vnfinstance):
+    if vnfinstance.is_container == True:
+        return "Container"
+    else:
+        return "VM"
+
 class VnfinstancesTable(tables.DataTable):
 
     STATUS_CHOICES = (
@@ -72,6 +78,8 @@ class VnfinstancesTable(tables.DataTable):
         ("rescue", True),
         ("shelved", True),
         ("shelved_offloaded", True),
+        # for container
+        ("running", True),
     )
 
     STATUS_DISPLAY_CHOICES = (
@@ -107,12 +115,15 @@ class VnfinstancesTable(tables.DataTable):
         ("stopped", pgettext_lazy("Current status of an Instance", u"Stopped")),
         ("rescued", pgettext_lazy("Current status of an Instance", u"Rescued")),
         ("resized", pgettext_lazy("Current status of an Instance", u"Resized")),
+        # for container
+        ("running", pgettext_lazy("Current status of an Instance", u"Running")),
     )
 
 
     instance_id = tables.Column('id', verbose_name=_('ID'))
     name = tables.Column('name', link="horizon:admin:instances:detail", verbose_name=_('Name'))
     ips = tables.Column(get_ips, verbose_name=_('IP Addresses'))
+    vnf_type = tables.Column(get_vnf_type, verbose_name=_('VNF Type'))
     status = tables.Column('status',
         status=True,
         status_choices=STATUS_CHOICES,

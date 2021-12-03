@@ -58,13 +58,14 @@ class DeployVnfinstance(forms.SelfHandlingForm):
     user_data = forms.CharField(widget=forms.Textarea,
                                 label=_( "VNF cloud-config"),
                                 empty_value=None,
-                                required=False)
+                                required=False,
+                                help_text="feed to cloud-config. Available for VM only")
     image_id = forms.CharField(max_length=255,
-                               label=_("OS Image ID"),
+                               label=_("Image ID"),
                                empty_value=None,
-                               required=False,
-                               help_text="Specify ID of a custom OS image " \
-                                         "other than the default from flavor")
+                               required=True,
+                               help_text="Specify ID of a custom OS image (if VM) " \
+                                         "or dockerhub container image (if container)")
 
 
 
