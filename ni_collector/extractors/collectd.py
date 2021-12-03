@@ -84,6 +84,13 @@ def virt(data):
     if (data['type'] in ['disk_ops', 'disk_octets']):
         return ('%s___%s' % (data['type_instance'], data['type']))
 
+def docker(data):
+    return "%s___%s___%s" %(
+        data['plugin_instance'],
+        data['type'],
+        data['type_instance'],
+    )
+
 
 def ping(data):
     if data['type'] == 'ping':

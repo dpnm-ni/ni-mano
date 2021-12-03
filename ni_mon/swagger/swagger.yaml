@@ -131,7 +131,8 @@ paths:
       x-swagger-router-controller: "ni_mon.controllers.default_controller"
   /vnfflavors/{id}:
     get:
-      summary: "get detailed information of a vnfflavor"
+      summary: "get detailed information of a vnfflavor. Only available to VM (container\
+        \ do not have flavor)"
       operationId: "get_vnf_flavor"
       produces:
       - "application/json"
@@ -424,11 +425,20 @@ definitions:
         type: "string"
       name:
         type: "string"
+      is_container:
+        type: "boolean"
+        description: "whether the vnf is a container or a virtual machine"
       status:
         type: "string"
-        description: "state of VNF VM. (ACTIVE, SHUTOFF, ERROR, etc.)"
+        description: "state of VNF . (ACTIVE, SHUTOFF, ERROR, Running, etc.). The\
+          \ string can be different between VM and container"
       flavor_id:
         type: "string"
+        description: "the flavor id of the vnf"
+      image_id:
+        type: "string"
+        description: "i the dockerhub image (if container) or glance image (if VM)\
+          \ used for the vnf"
       node_id:
         type: "string"
       ports:
@@ -437,8 +447,10 @@ definitions:
           $ref: "#/definitions/NetworkPort"
     example:
       flavor_id: "flavor_id"
+      is_container: true
       name: "name"
       id: "id"
+      image_id: "image_id"
       ports:
       - port_name: "port_name"
         network_id: "network_id"

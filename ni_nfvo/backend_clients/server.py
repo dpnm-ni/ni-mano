@@ -5,55 +5,76 @@ import base64
 import logging
 
 from ni_nfvo.config import cfg
-from ni_nfvo.backend_clients.utils import get_net_id_from_name
 from ni_nfvo.backend_clients.utils import openstack_client as client
+from ni_nfvo.backend_clients.utils import zun_client, glance_client, nova_client
+from ni_nfvo.backend_clients.utils import callWithNonNoneArgs
 
 from flask import abort
 
 log = logging.getLogger(__name__)
 
 vnf_cfg = cfg["openstack_client"]["vnf"]
-mgmt_net_id = get_net_id_from_name(vnf_cfg["mgmt_net_name"])
-data_net_id = get_net_id_from_name(vnf_cfg["data_net_name"])
+mgmt_net_id = client.get_net_id_from_name(vnf_cfg["mgmt_net_name"])
+data_net_id = client.get_net_id_from_name(vnf_cfg["data_net_name"])
 
-def create_server(server_name, flavor_id, host_name, custom_user_data, image_id):
-    # extra specs API link: https://github.com/openstack/nova/blob/master/api-ref/source/os-flavor-extra-specs.inc
+
+
+def create_vnf(vnf_spec):
+    # image_id none: the default image id is in flavor_id, which means using VM
+    if (glance_client.is_vm_image_id(vnf_spec.image_id)):
+        return _create_vm(vnf_spec)
+    else:
+        return _create_container(vnf_spec)
+
+
+def _create_container(vnf_spec):
+    if vnf_spec.vnf_name:
+        _server_name = vnf_spec.vnf_name
+    else:
+        _server_name = "vnf_{}".format(str(uuid.uuid4()))
+
+    flavor = nova_client.client.flavors.get(vnf_spec.flavor_id)
+
+    vnf = callWithNonNoneArgs(zun_client.client.containers.run,
+            name=_server_name,
+            cpu=flavor.vcpus,
+            memory=flavor.ram,
+            command=vnf_spec.command,
+            image=vnf_spec.image_id,
+            host=vnf_spec.node_name,
+            labels={"flavor_id": vnf_spec.flavor_id},
+            # default params
+            image_driver="docker",
+            interactive=True,
+            tty=True,
+            nets=[
+                    {"network": mgmt_net_id},
+                    {"network": data_net_id},
+                ],
+        )
+
+    return vnf.uuid, 200
+
+
+def _create_vm(vnf_spec):
     base_url = client.base_urls["compute"]
     headers = {'X-Auth-Token': client.get_token()}
 
-    url = "/flavors/{flavors_id}/os-extra_specs".format(flavors_id=flavor_id)
-    req = requests.get("{}{}".format(base_url, url),
-        headers=headers)
-    if req.status_code != 200:
-        log.error(req.text)
-        abort(req.status_code, req.text)
-
-    extra_specs = req.json()
-    try:
-        os_image_id = image_id if image_id is not None else extra_specs["extra_specs"]["os_image_id"]
-        default_user_data = extra_specs["extra_specs"].get("default_user_data")
-    except Exception as e:
-        return str(e), 404
-
-    if custom_user_data is not None:
-        user_data = base64.b64encode(custom_user_data.encode('ascii'))
-    elif default_user_data is not None:
-        # store user_data in extra_specs convert \n to \\n. need to restore
-        default_user_data = default_user_data.replace('\\n', '\n')
-        user_data = base64.b64encode(default_user_data.encode('ascii'))
+    if vnf_spec.user_data is not None:
+        user_data = base64.b64encode(vnf_spec.user_data.encode('ascii'))
     else:
         user_data = ''
 
-    if server_name:
-        _server_name = server_name
+    if vnf_spec.vnf_name:
+        _server_name = vnf_spec.vnf_name
     else:
         _server_name = "vnf_{}".format(str(uuid.uuid4()))
 
     data = {
                 "server": {
                     "name" : _server_name,
-                    "imageRef" : os_image_id,
-                    "flavorRef" : flavor_id,
+                    "imageRef" : vnf_spec.image_id,
+                    "flavorRef" : vnf_spec.flavor_id,
                     "user_data" : user_data,
                     "networks": [
                         {"uuid": mgmt_net_id},
@@ -62,10 +83,10 @@ def create_server(server_name, flavor_id, host_name, custom_user_data, image_id)
                 }
             }
 
-    if host_name is not None:
+    if vnf_spec.node_name is not None:
         # FIXME: this assume the availability zone is nova. However, if
         # the host does not belong to nova zone, somehow command still works ...
-        data["server"]["availability_zone"]="nova:{}".format(host_name)
+        data["server"]["availability_zone"]="nova:{}".format(vnf_spec.node_name)
 
     url = "/servers"
     req = requests.post("{}{}".format(base_url, url),
@@ -78,31 +99,37 @@ def create_server(server_name, flavor_id, host_name, custom_user_data, image_id)
         log.error(req.text)
         abort(req.status_code, req.text)
 
-def stop_server(server_id):
-    base_url = client.base_urls["compute"]
-    url = "/servers/{}/action".format(server_id)
-    headers = {'X-Auth-Token': client.get_token()}
+def stop_server(vnf_id):
+    if zun_client.is_container(vnf_id):
+        zun_client.client.containers.stop(vnf_id)
+    else:
+        base_url = client.base_urls["compute"]
+        url = "/servers/{}/action".format(vnf_id)
+        headers = {'X-Auth-Token': client.get_token()}
 
-    data = {
-                "os-stop" : "dummy"
-            }
+        data = {
+                    "os-stop" : "dummy"
+                }
 
-    req = requests.post("{}{}".format(base_url, url),
-        json=data,
-        headers=headers)
+        req = requests.post("{}{}".format(base_url, url),
+            json=data,
+            headers=headers)
 
-    if req.status_code != 202:
-        log.error(req.text)
-        abort(req.status_code, req.text)
+        if req.status_code != 202:
+            log.error(req.text)
+            abort(req.status_code, req.text)
 
-def destroy_server(server_id):
-    base_url = client.base_urls["compute"]
-    url = "/servers/{}".format(server_id)
-    headers = {'X-Auth-Token': client.get_token()}
+def destroy_server(vnf_id):
+    if zun_client.is_container(vnf_id):
+        zun_client.zun_client.containers.kill(vnf_id)
+    else:
+        base_url = client.base_urls["compute"]
+        url = "/servers/{}".format(vnf_id)
+        headers = {'X-Auth-Token': client.get_token()}
 
-    req = requests.delete("{}{}".format(base_url, url),
-        headers=headers)
+        req = requests.delete("{}{}".format(base_url, url),
+            headers=headers)
 
-    if req.status_code != 204:
-        log.error(req.text)
-        abort(req.status_code, req.text)
+        if req.status_code != 204:
+            log.error(req.text)
+            abort(req.status_code, req.text)

@@ -11,7 +11,10 @@ from ni_mon.models.topology import Topology  # noqa: E501
 from ni_mon.models.network_port import NetworkPort  # noqa: E501
 from ni_mon import util
 
-from ni_mon.clients import openstack_client, kafka_client, influxdb_client
+from ni_mon.clients import kafka_client, influxdb_client
+from ni_mon.clients.openstack_client import openstack_client
+from ni_mon.clients.zun_client import zun_client
+from zunclient.v1.containers import Container
 from ni_mon.config import cfg, topo
 
 from flask import abort
@@ -356,27 +359,33 @@ def get_vnf_instances():  # noqa: E501
     :rtype: List[VNFInstance]
     """
 
-    raw_vnfs = openstack_client.get_compute_data("/servers/detail")
-    raw_vnfs = raw_vnfs.get("servers")
-    if raw_vnfs is None:
-        abort(404)
+    vnfs = []
+    raw_vms = openstack_client.get_compute_data("/servers/detail")
+    raw_vms = raw_vms.get("servers")
+    if raw_vms is not None:
+        vnfs.extend(raw_vms)
+
+    containers = zun_client.client.containers.list()
+    if len(containers) > 0:
+        vnfs.extend(containers)
 
     raw_ports = openstack_client.get_network_data("v2.0/ports")
     raw_ports = raw_ports.get("ports")
     if raw_ports is None:
         abort(404)
 
-    vnf_instances = []
-    for raw_vnf in raw_vnfs:
+    vnf_infos = []
+    for vnf in vnfs:
         ports = []
         for raw_port in raw_ports:
-            if raw_port["device_id"] == raw_vnf["id"]:
+            vnf_id = vnf.uuid if type(vnf) == Container else vnf["id"]
+            if raw_port["device_id"] == vnf_id:
                 port = _get_ports(raw_port)
                 ports.append(port)
 
-        vnf = _get_vnf_instance(raw_vnf, ports)
-        vnf_instances.append(vnf)
-    return vnf_instances
+        vnf_info = _get_vnf_instance(vnf, ports)
+        vnf_infos.append(vnf_info)
+    return vnf_infos
 
 
 def _get_ports(raw_port):
@@ -388,15 +397,30 @@ def _get_ports(raw_port):
         )
 
 
-def _get_vnf_instance(raw_vnf, ports):
-    return VNFInstance(
-            id=raw_vnf["id"],
-            name=raw_vnf["name"],
-            status=raw_vnf["status"],
-            flavor_id=raw_vnf["flavor"]["id"],
+def _get_vnf_instance(vnf, ports):
+    if type(vnf) == Container:
+        return VNFInstance(
+            id=vnf.uuid,
+            name=vnf.name,
+            status=vnf.status,
+            # node id is the same as host
+            node_id=vnf.host,
+            flavor_id=vnf.labels.get("flavor_id"),
+            ports=ports,
+            image_id=vnf.image,
+            is_container=True
+        )
+    else:
+        return VNFInstance(
+            id=vnf["id"],
+            name=vnf["name"],
+            status=vnf["status"],
+            flavor_id=vnf["flavor"]["id"],
             # node id is the same as hostname
-            node_id=raw_vnf["OS-EXT-SRV-ATTR:host"],
-            ports=ports
+            node_id=vnf["OS-EXT-SRV-ATTR:host"],
+            ports=ports,
+            image_id=vnf["image"]["id"],
+            is_container=False
         )
 
 

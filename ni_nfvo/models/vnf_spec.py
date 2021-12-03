@@ -15,7 +15,7 @@ class VnfSpec(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, flavor_id: str=None, node_name: str=None, vnf_name: str=None, user_data: str=None, image_id: str=None):  # noqa: E501
+    def __init__(self, flavor_id: str=None, node_name: str=None, vnf_name: str=None, user_data: str=None, image_id: str=None, command: List[str]=None):  # noqa: E501
         """VnfSpec - a model defined in Swagger
 
         :param flavor_id: The flavor_id of this VnfSpec.  # noqa: E501
@@ -28,13 +28,16 @@ class VnfSpec(Model):
         :type user_data: str
         :param image_id: The image_id of this VnfSpec.  # noqa: E501
         :type image_id: str
+        :param command: The command of this VnfSpec.  # noqa: E501
+        :type command: List[str]
         """
         self.swagger_types = {
             'flavor_id': str,
             'node_name': str,
             'vnf_name': str,
             'user_data': str,
-            'image_id': str
+            'image_id': str,
+            'command': List[str]
         }
 
         self.attribute_map = {
@@ -42,7 +45,8 @@ class VnfSpec(Model):
             'node_name': 'node_name',
             'vnf_name': 'vnf_name',
             'user_data': 'user_data',
-            'image_id': 'image_id'
+            'image_id': 'image_id',
+            'command': 'command'
         }
 
         self._flavor_id = flavor_id
@@ -50,6 +54,7 @@ class VnfSpec(Model):
         self._vnf_name = vnf_name
         self._user_data = user_data
         self._image_id = image_id
+        self._command = command
 
     @classmethod
     def from_dict(cls, dikt) -> 'VnfSpec':
@@ -66,6 +71,7 @@ class VnfSpec(Model):
     def flavor_id(self) -> str:
         """Gets the flavor_id of this VnfSpec.
 
+        flavor used to deploy vnf  # noqa: E501
 
         :return: The flavor_id of this VnfSpec.
         :rtype: str
@@ -76,6 +82,7 @@ class VnfSpec(Model):
     def flavor_id(self, flavor_id: str):
         """Sets the flavor_id of this VnfSpec.
 
+        flavor used to deploy vnf  # noqa: E501
 
         :param flavor_id: The flavor_id of this VnfSpec.
         :type flavor_id: str
@@ -133,7 +140,7 @@ class VnfSpec(Model):
     def user_data(self) -> str:
         """Gets the user_data of this VnfSpec.
 
-        configuration to pass to the Vnf at boot (e.g., cloud-init)  # noqa: E501
+        [VM only] configuration to pass to the Vnf at boot (e.g., cloud-init)  # noqa: E501
 
         :return: The user_data of this VnfSpec.
         :rtype: str
@@ -144,7 +151,7 @@ class VnfSpec(Model):
     def user_data(self, user_data: str):
         """Sets the user_data of this VnfSpec.
 
-        configuration to pass to the Vnf at boot (e.g., cloud-init)  # noqa: E501
+        [VM only] configuration to pass to the Vnf at boot (e.g., cloud-init)  # noqa: E501
 
         :param user_data: The user_data of this VnfSpec.
         :type user_data: str
@@ -156,7 +163,7 @@ class VnfSpec(Model):
     def image_id(self) -> str:
         """Gets the image_id of this VnfSpec.
 
-        custom OS image id other than the default id from falvor  # noqa: E501
+        if container: put the dockerhub container (e.g., ubuntu:18.04). If VM, put the OS image id.  # noqa: E501
 
         :return: The image_id of this VnfSpec.
         :rtype: str
@@ -167,10 +174,35 @@ class VnfSpec(Model):
     def image_id(self, image_id: str):
         """Sets the image_id of this VnfSpec.
 
-        custom OS image id other than the default id from falvor  # noqa: E501
+        if container: put the dockerhub container (e.g., ubuntu:18.04). If VM, put the OS image id.  # noqa: E501
 
         :param image_id: The image_id of this VnfSpec.
         :type image_id: str
         """
+        if image_id is None:
+            raise ValueError("Invalid value for `image_id`, must not be `None`")  # noqa: E501
 
         self._image_id = image_id
+
+    @property
+    def command(self) -> List[str]:
+        """Gets the command of this VnfSpec.
+
+        [Container only] Command to run when start the container,e.g., ./script.sh  # noqa: E501
+
+        :return: The command of this VnfSpec.
+        :rtype: List[str]
+        """
+        return self._command
+
+    @command.setter
+    def command(self, command: List[str]):
+        """Sets the command of this VnfSpec.
+
+        [Container only] Command to run when start the container,e.g., ./script.sh  # noqa: E501
+
+        :param command: The command of this VnfSpec.
+        :type command: List[str]
+        """
+
+        self._command = command

@@ -5,8 +5,8 @@ import netaddr
 import logging
 
 from ni_nfvo.config import cfg
-from ni_nfvo.backend_clients.utils import get_net_id_from_name
 from ni_nfvo.backend_clients.utils import openstack_client as client
+from ni_nfvo.backend_clients.utils import zun_client
 from ni_nfvo.database import db
 
 from flask import abort
@@ -14,7 +14,7 @@ from flask import abort
 log = logging.getLogger(__name__)
 
 vnf_cfg = cfg["openstack_client"]["vnf"]
-data_net_id = get_net_id_from_name(vnf_cfg["data_net_name"])
+data_net_id = client.get_net_id_from_name(vnf_cfg["data_net_name"])
 base_url = client.base_urls["network"]
 
 
@@ -41,23 +41,27 @@ def _abort_if_sfc_conflict(sfcr_ids, vnf_ids_lists):
                 abort(400, error_message)
 
 
-def get_vnf_status(vnf_id):
-    base_url = client.base_urls["compute"]
-    url = "/servers/{}".format(vnf_id)
-    headers = {'X-Auth-Token': client.get_token()}
-
-    req = requests.get("{}{}".format(base_url, url),
-                        headers=headers)
-
-    if req.status_code == 200:
-        return req.json()["server"]["status"]
+def is_vnf_active(vnf_id):
+    if zun_client.is_container(vnf_id):
+        vnf = zun_client.client.containers.get(vnf_id)
+        return vnf.status == "Running"
     else:
-        abort(req.status_code, req.text)
+        base_url = client.base_urls["compute"]
+        url = "/servers/{}".format(vnf_id)
+        headers = {'X-Auth-Token': client.get_token()}
+
+        req = requests.get("{}{}".format(base_url, url),
+                            headers=headers)
+
+        if req.status_code == 200:
+            return (req.json()["server"]["status"] == 'ACTIVE')
+        else:
+            abort(req.status_code, req.text)
 
 def _abort_if_vnf_not_active(vnf_ids_lists):
     for vnf_ids in vnf_ids_lists:
         for vnf_id in vnf_ids:
-            if get_vnf_status(vnf_id) != 'ACTIVE':
+            if not is_vnf_active(vnf_id):
                 abort(400, "vnf %s is not ACTIVE" %(vnf_id))
 
 

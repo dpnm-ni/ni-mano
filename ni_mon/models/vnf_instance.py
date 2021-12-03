@@ -16,17 +16,21 @@ class VNFInstance(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, id: str=None, name: str=None, status: str=None, flavor_id: str=None, node_id: str=None, ports: List[NetworkPort]=None):  # noqa: E501
+    def __init__(self, id: str=None, name: str=None, is_container: bool=None, status: str=None, flavor_id: str=None, image_id: str=None, node_id: str=None, ports: List[NetworkPort]=None):  # noqa: E501
         """VNFInstance - a model defined in Swagger
 
         :param id: The id of this VNFInstance.  # noqa: E501
         :type id: str
         :param name: The name of this VNFInstance.  # noqa: E501
         :type name: str
+        :param is_container: The is_container of this VNFInstance.  # noqa: E501
+        :type is_container: bool
         :param status: The status of this VNFInstance.  # noqa: E501
         :type status: str
         :param flavor_id: The flavor_id of this VNFInstance.  # noqa: E501
         :type flavor_id: str
+        :param image_id: The image_id of this VNFInstance.  # noqa: E501
+        :type image_id: str
         :param node_id: The node_id of this VNFInstance.  # noqa: E501
         :type node_id: str
         :param ports: The ports of this VNFInstance.  # noqa: E501
@@ -35,8 +39,10 @@ class VNFInstance(Model):
         self.swagger_types = {
             'id': str,
             'name': str,
+            'is_container': bool,
             'status': str,
             'flavor_id': str,
+            'image_id': str,
             'node_id': str,
             'ports': List[NetworkPort]
         }
@@ -44,16 +50,20 @@ class VNFInstance(Model):
         self.attribute_map = {
             'id': 'id',
             'name': 'name',
+            'is_container': 'is_container',
             'status': 'status',
             'flavor_id': 'flavor_id',
+            'image_id': 'image_id',
             'node_id': 'node_id',
             'ports': 'ports'
         }
 
         self._id = id
         self._name = name
+        self._is_container = is_container
         self._status = status
         self._flavor_id = flavor_id
+        self._image_id = image_id
         self._node_id = node_id
         self._ports = ports
 
@@ -111,10 +121,33 @@ class VNFInstance(Model):
         self._name = name
 
     @property
+    def is_container(self) -> bool:
+        """Gets the is_container of this VNFInstance.
+
+        whether the vnf is a container or a virtual machine  # noqa: E501
+
+        :return: The is_container of this VNFInstance.
+        :rtype: bool
+        """
+        return self._is_container
+
+    @is_container.setter
+    def is_container(self, is_container: bool):
+        """Sets the is_container of this VNFInstance.
+
+        whether the vnf is a container or a virtual machine  # noqa: E501
+
+        :param is_container: The is_container of this VNFInstance.
+        :type is_container: bool
+        """
+
+        self._is_container = is_container
+
+    @property
     def status(self) -> str:
         """Gets the status of this VNFInstance.
 
-        state of VNF VM. (ACTIVE, SHUTOFF, ERROR, etc.)  # noqa: E501
+        state of VNF . (ACTIVE, SHUTOFF, ERROR, Running, etc.). The string can be different between VM and container  # noqa: E501
 
         :return: The status of this VNFInstance.
         :rtype: str
@@ -125,7 +158,7 @@ class VNFInstance(Model):
     def status(self, status: str):
         """Sets the status of this VNFInstance.
 
-        state of VNF VM. (ACTIVE, SHUTOFF, ERROR, etc.)  # noqa: E501
+        state of VNF . (ACTIVE, SHUTOFF, ERROR, Running, etc.). The string can be different between VM and container  # noqa: E501
 
         :param status: The status of this VNFInstance.
         :type status: str
@@ -137,6 +170,7 @@ class VNFInstance(Model):
     def flavor_id(self) -> str:
         """Gets the flavor_id of this VNFInstance.
 
+        the flavor id of the vnf  # noqa: E501
 
         :return: The flavor_id of this VNFInstance.
         :rtype: str
@@ -147,12 +181,36 @@ class VNFInstance(Model):
     def flavor_id(self, flavor_id: str):
         """Sets the flavor_id of this VNFInstance.
 
+        the flavor id of the vnf  # noqa: E501
 
         :param flavor_id: The flavor_id of this VNFInstance.
         :type flavor_id: str
         """
 
         self._flavor_id = flavor_id
+
+    @property
+    def image_id(self) -> str:
+        """Gets the image_id of this VNFInstance.
+
+        i the dockerhub image (if container) or glance image (if VM) used for the vnf  # noqa: E501
+
+        :return: The image_id of this VNFInstance.
+        :rtype: str
+        """
+        return self._image_id
+
+    @image_id.setter
+    def image_id(self, image_id: str):
+        """Sets the image_id of this VNFInstance.
+
+        i the dockerhub image (if container) or glance image (if VM) used for the vnf  # noqa: E501
+
+        :param image_id: The image_id of this VNFInstance.
+        :type image_id: str
+        """
+
+        self._image_id = image_id
 
     @property
     def node_id(self) -> str:

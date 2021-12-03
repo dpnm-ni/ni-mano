@@ -184,7 +184,7 @@ class Sfcr(Model):
     def source_client(self) -> str:
         """Gets the source_client of this Sfcr.
 
-        the id of the source VM (not Vnf)  # noqa: E501
+        the id of the source VM/container (not Vnf)  # noqa: E501
 
         :return: The source_client of this Sfcr.
         :rtype: str
@@ -195,7 +195,7 @@ class Sfcr(Model):
     def source_client(self, source_client: str):
         """Sets the source_client of this Sfcr.
 
-        the id of the source VM (not Vnf)  # noqa: E501
+        the id of the source VM/container (not Vnf)  # noqa: E501
 
         :param source_client: The source_client of this Sfcr.
         :type source_client: str
@@ -207,7 +207,7 @@ class Sfcr(Model):
     def destination_client(self) -> str:
         """Gets the destination_client of this Sfcr.
 
-        the id of the destination VM (not Vnf)  # noqa: E501
+        the id of the destination VM/container (not Vnf)  # noqa: E501
 
         :return: The destination_client of this Sfcr.
         :rtype: str
@@ -218,7 +218,7 @@ class Sfcr(Model):
     def destination_client(self, destination_client: str):
         """Sets the destination_client of this Sfcr.
 
-        the id of the destination VM (not Vnf)  # noqa: E501
+        the id of the destination VM/container (not Vnf)  # noqa: E501
 
         :param destination_client: The destination_client of this Sfcr.
         :type destination_client: str

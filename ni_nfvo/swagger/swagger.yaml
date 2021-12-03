@@ -246,10 +246,10 @@ definitions:
         type: "string"
       source_client:
         type: "string"
-        description: "the id of the source VM (not Vnf)"
+        description: "the id of the source VM/container (not Vnf)"
       destination_client:
         type: "string"
-        description: "the id of the destination VM (not Vnf)"
+        description: "the id of the destination VM/container (not Vnf)"
       src_ip_prefix:
         type: "string"
       dst_ip_prefix:
@@ -316,10 +316,10 @@ definitions:
         type: "string"
       source_client:
         type: "string"
-        description: "the id of the source VM (not Vnf)"
+        description: "the id of the source VM/container (not Vnf)"
       destination_client:
         type: "string"
-        description: "the id of the destination VM (not Vnf)"
+        description: "the id of the destination VM/container (not Vnf)"
       src_ip_prefix:
         type: "string"
       dst_ip_prefix:
@@ -476,9 +476,11 @@ definitions:
     type: "object"
     required:
     - "flavor_id"
+    - "image_id"
     properties:
       flavor_id:
         type: "string"
+        description: "flavor used to deploy vnf"
       node_name:
         type: "string"
         description: "name of the compute node where Vnf will be deployed"
@@ -486,10 +488,17 @@ definitions:
         type: "string"
       user_data:
         type: "string"
-        description: "configuration to pass to the Vnf at boot (e.g., cloud-init)"
+        description: "[VM only] configuration to pass to the Vnf at boot (e.g., cloud-init)"
       image_id:
         type: "string"
-        description: "custom OS image id other than the default id from falvor"
+        description: "if container: put the dockerhub container (e.g., ubuntu:18.04).\
+          \ If VM, put the OS image id."
+      command:
+        type: "array"
+        description: "[Container only] Command to run when start the container,e.g.,\
+          \ ./script.sh"
+        items:
+          type: "string"
     description: "specification to deploy Vnf."
     example:
       flavor_id: "flavor_id"
@@ -497,6 +506,9 @@ definitions:
       vnf_name: "vnf_name"
       user_data: "user_data"
       image_id: "image_id"
+      command:
+      - "command"
+      - "command"
 externalDocs:
   description: "Find out more about DPNM NI."
   url: "http://dpnm.postech.ac.kr/"
