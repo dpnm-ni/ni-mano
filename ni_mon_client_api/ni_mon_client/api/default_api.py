@@ -87,12 +87,12 @@ class DefaultApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'id' is set
-        if ('id' not in params or
-                params['id'] is None):
+        if self.api_client.client_side_validation and ('id' not in params or
+                                                       params['id'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `id` when calling `get_last_measurement`")  # noqa: E501
         # verify the required parameter 'measurement_type' is set
-        if ('measurement_type' not in params or
-                params['measurement_type'] is None):
+        if self.api_client.client_side_validation and ('measurement_type' not in params or
+                                                       params['measurement_type'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `measurement_type` when calling `get_last_measurement`")  # noqa: E501
 
         collection_formats = {}
@@ -186,8 +186,8 @@ class DefaultApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'id' is set
-        if ('id' not in params or
-                params['id'] is None):
+        if self.api_client.client_side_validation and ('id' not in params or
+                                                       params['id'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `id` when calling `get_link`")  # noqa: E501
 
         collection_formats = {}
@@ -281,12 +281,12 @@ class DefaultApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'node1_id' is set
-        if ('node1_id' not in params or
-                params['node1_id'] is None):
+        if self.api_client.client_side_validation and ('node1_id' not in params or
+                                                       params['node1_id'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `node1_id` when calling `get_link_between_nodes`")  # noqa: E501
         # verify the required parameter 'node2_id' is set
-        if ('node2_id' not in params or
-                params['node2_id'] is None):
+        if self.api_client.client_side_validation and ('node2_id' not in params or
+                                                       params['node2_id'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `node2_id` when calling `get_link_between_nodes`")  # noqa: E501
 
         collection_formats = {}
@@ -471,20 +471,20 @@ class DefaultApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'id' is set
-        if ('id' not in params or
-                params['id'] is None):
+        if self.api_client.client_side_validation and ('id' not in params or
+                                                       params['id'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `id` when calling `get_measurement`")  # noqa: E501
         # verify the required parameter 'measurement_type' is set
-        if ('measurement_type' not in params or
-                params['measurement_type'] is None):
+        if self.api_client.client_side_validation and ('measurement_type' not in params or
+                                                       params['measurement_type'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `measurement_type` when calling `get_measurement`")  # noqa: E501
         # verify the required parameter 'start_time' is set
-        if ('start_time' not in params or
-                params['start_time'] is None):
+        if self.api_client.client_side_validation and ('start_time' not in params or
+                                                       params['start_time'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `start_time` when calling `get_measurement`")  # noqa: E501
         # verify the required parameter 'end_time' is set
-        if ('end_time' not in params or
-                params['end_time'] is None):
+        if self.api_client.client_side_validation and ('end_time' not in params or
+                                                       params['end_time'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `end_time` when calling `get_measurement`")  # noqa: E501
 
         collection_formats = {}
@@ -582,8 +582,8 @@ class DefaultApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'id' is set
-        if ('id' not in params or
-                params['id'] is None):
+        if self.api_client.client_side_validation and ('id' not in params or
+                                                       params['id'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `id` when calling `get_measurement_types`")  # noqa: E501
 
         collection_formats = {}
@@ -675,8 +675,8 @@ class DefaultApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'id' is set
-        if ('id' not in params or
-                params['id'] is None):
+        if self.api_client.client_side_validation and ('id' not in params or
+                                                       params['id'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `id` when calling `get_node`")  # noqa: E501
 
         collection_formats = {}
@@ -887,7 +887,7 @@ class DefaultApi(object):
             collection_formats=collection_formats)
 
     def get_vnf_flavor(self, id, **kwargs):  # noqa: E501
-        """get detailed information of a vnfflavor  # noqa: E501
+        """get detailed information of a vnfflavor. Only available to VM (container do not have flavor)  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -908,7 +908,7 @@ class DefaultApi(object):
             return data
 
     def get_vnf_flavor_with_http_info(self, id, **kwargs):  # noqa: E501
-        """get detailed information of a vnfflavor  # noqa: E501
+        """get detailed information of a vnfflavor. Only available to VM (container do not have flavor)  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -938,8 +938,8 @@ class DefaultApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'id' is set
-        if ('id' not in params or
-                params['id'] is None):
+        if self.api_client.client_side_validation and ('id' not in params or
+                                                       params['id'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `id` when calling `get_vnf_flavor`")  # noqa: E501
 
         collection_formats = {}
@@ -1116,8 +1116,8 @@ class DefaultApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'id' is set
-        if ('id' not in params or
-                params['id'] is None):
+        if self.api_client.client_side_validation and ('id' not in params or
+                                                       params['id'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `id` when calling `get_vnf_instance`")  # noqa: E501
 
         collection_formats = {}

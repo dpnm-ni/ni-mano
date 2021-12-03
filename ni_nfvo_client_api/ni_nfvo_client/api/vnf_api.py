@@ -85,8 +85,8 @@ class VnfApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'vnf_spec' is set
-        if ('vnf_spec' not in params or
-                params['vnf_spec'] is None):
+        if self.api_client.client_side_validation and ('vnf_spec' not in params or
+                                                       params['vnf_spec'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `vnf_spec` when calling `deploy_vnf`")  # noqa: E501
 
         collection_formats = {}
@@ -184,8 +184,8 @@ class VnfApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'id' is set
-        if ('id' not in params or
-                params['id'] is None):
+        if self.api_client.client_side_validation and ('id' not in params or
+                                                       params['id'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `id` when calling `destroy_vnf`")  # noqa: E501
 
         collection_formats = {}
@@ -283,8 +283,8 @@ class VnfApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'id' is set
-        if ('id' not in params or
-                params['id'] is None):
+        if self.api_client.client_side_validation and ('id' not in params or
+                                                       params['id'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `id` when calling `shutdown_vnf`")  # noqa: E501
 
         collection_formats = {}

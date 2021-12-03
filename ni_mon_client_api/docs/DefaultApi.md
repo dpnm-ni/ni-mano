@@ -13,7 +13,7 @@ Method | HTTP request | Description
 [**get_node**](DefaultApi.md#get_node) | **GET** /nodes/{id} | get information of a node
 [**get_nodes**](DefaultApi.md#get_nodes) | **GET** /nodes | get a list of nodes
 [**get_topology**](DefaultApi.md#get_topology) | **GET** /topology | Return a topology with lists of node names and link ids
-[**get_vnf_flavor**](DefaultApi.md#get_vnf_flavor) | **GET** /vnfflavors/{id} | get detailed information of a vnfflavor
+[**get_vnf_flavor**](DefaultApi.md#get_vnf_flavor) | **GET** /vnfflavors/{id} | get detailed information of a vnfflavor. Only available to VM (container do not have flavor)
 [**get_vnf_flavors**](DefaultApi.md#get_vnf_flavors) | **GET** /vnfflavors | get a list of vnfflavors
 [**get_vnf_instance**](DefaultApi.md#get_vnf_instance) | **GET** /vnfinstances/{id} | get detailed information of a vnf instance
 [**get_vnf_instances**](DefaultApi.md#get_vnf_instances) | **GET** /vnfinstances | get a list of vnf instances
@@ -434,7 +434,7 @@ No authorization required
 # **get_vnf_flavor**
 > VNFFlavor get_vnf_flavor(id)
 
-get detailed information of a vnfflavor
+get detailed information of a vnfflavor. Only available to VM (container do not have flavor)
 
 ### Example
 ```python
@@ -449,7 +449,7 @@ api_instance = ni_mon_client.DefaultApi()
 id = 'id_example' # str | The id of the vnfflavor
 
 try:
-    # get detailed information of a vnfflavor
+    # get detailed information of a vnfflavor. Only available to VM (container do not have flavor)
     api_response = api_instance.get_vnf_flavor(id)
     pprint(api_response)
 except ApiException as e:

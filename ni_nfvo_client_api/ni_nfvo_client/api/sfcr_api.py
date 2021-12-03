@@ -85,8 +85,8 @@ class SfcrApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'sfcr_spec' is set
-        if ('sfcr_spec' not in params or
-                params['sfcr_spec'] is None):
+        if self.api_client.client_side_validation and ('sfcr_spec' not in params or
+                                                       params['sfcr_spec'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `sfcr_spec` when calling `add_sfcr`")  # noqa: E501
 
         collection_formats = {}
@@ -184,8 +184,8 @@ class SfcrApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'id' is set
-        if ('id' not in params or
-                params['id'] is None):
+        if self.api_client.client_side_validation and ('id' not in params or
+                                                       params['id'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `id` when calling `del_sfcr`")  # noqa: E501
 
         collection_formats = {}

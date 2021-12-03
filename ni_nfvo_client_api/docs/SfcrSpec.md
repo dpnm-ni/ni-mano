@@ -4,8 +4,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **str** |  | [optional] 
-**source_client** | **str** | the id of the source VM (not Vnf) | 
-**destination_client** | **str** | the id of the destination VM (not Vnf) | [optional] 
+**source_client** | **str** | the id of the source VM/container (not Vnf) | 
+**destination_client** | **str** | the id of the destination VM/container (not Vnf) | [optional] 
 **src_ip_prefix** | **str** |  | [optional] 
 **dst_ip_prefix** | **str** |  | [optional] 
 **src_port_min** | **int** |  | [optional] 

@@ -87,8 +87,8 @@ class SfcApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'id' is set
-        if ('id' not in params or
-                params['id'] is None):
+        if self.api_client.client_side_validation and ('id' not in params or
+                                                       params['id'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `id` when calling `del_sfc`")  # noqa: E501
 
         collection_formats = {}
@@ -277,8 +277,8 @@ class SfcApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'sfc_spec' is set
-        if ('sfc_spec' not in params or
-                params['sfc_spec'] is None):
+        if self.api_client.client_side_validation and ('sfc_spec' not in params or
+                                                       params['sfc_spec'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `sfc_spec` when calling `set_sfc`")  # noqa: E501
 
         collection_formats = {}
@@ -378,12 +378,12 @@ class SfcApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'id' is set
-        if ('id' not in params or
-                params['id'] is None):
+        if self.api_client.client_side_validation and ('id' not in params or
+                                                       params['id'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `id` when calling `update_sfc`")  # noqa: E501
         # verify the required parameter 'sfc_update_spec' is set
-        if ('sfc_update_spec' not in params or
-                params['sfc_update_spec'] is None):
+        if self.api_client.client_side_validation and ('sfc_update_spec' not in params or
+                                                       params['sfc_update_spec'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `sfc_update_spec` when calling `update_sfc`")  # noqa: E501
 
         collection_formats = {}

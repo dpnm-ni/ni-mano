@@ -95,7 +95,7 @@ class TestDefaultApi(unittest.TestCase):
     def test_get_vnf_flavor(self):
         """Test case for get_vnf_flavor
 
-        get detailed information of a vnfflavor  # noqa: E501
+        get detailed information of a vnfflavor. Only available to VM (container do not have flavor)  # noqa: E501
         """
         pass
 
