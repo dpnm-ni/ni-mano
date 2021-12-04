@@ -1,6 +1,7 @@
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ungettext_lazy
 from django.utils.translation import pgettext_lazy
+from django import urls
 
 from horizon import tables
 
@@ -67,6 +68,15 @@ def get_vnf_type(vnfinstance):
     else:
         return "VM"
 
+
+def get_vnf_detail_link(vnfinstance):
+    if vnfinstance.is_container == True:
+        # its in angular, so cannot do urls.reverse. So I do it the hardway here...
+        return "/dashboard/ngdetails/OS::Zun::Container/{}".format(vnfinstance.id)
+    else:
+        return urls.reverse("horizon:admin:instances:detail", args=(vnfinstance.id,))
+
+
 class VnfinstancesTable(tables.DataTable):
 
     STATUS_CHOICES = (
@@ -121,7 +131,7 @@ class VnfinstancesTable(tables.DataTable):
 
 
     instance_id = tables.Column('id', verbose_name=_('ID'))
-    name = tables.Column('name', link="horizon:admin:instances:detail", verbose_name=_('Name'))
+    name = tables.Column('name', link=get_vnf_detail_link, verbose_name=_('Name'))
     ips = tables.Column(get_ips, verbose_name=_('IP Addresses'))
     vnf_type = tables.Column(get_vnf_type, verbose_name=_('VNF Type'))
     status = tables.Column('status',
