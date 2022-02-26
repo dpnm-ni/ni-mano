@@ -100,3 +100,8 @@ def ping(data):
         other_host = "%s-%s-%s" %("NI-Compute", other_host[2], other_host[3])
 
         return ('%s___%s' %(other_host, data['type']))
+
+
+def ipmi(data):
+    if data['type_instance'].startswith("Pwr Consumption"):
+        return "power_consumption"
