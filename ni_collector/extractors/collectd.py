@@ -103,5 +103,6 @@ def ping(data):
 
 
 def ipmi(data):
-    if data['type_instance'].startswith("Pwr Consumption"):
+    # https://stackoverflow.com/questions/20461847/str-startswith-with-a-list-of-strings-to-test-for
+    if data['type_instance'].startswith(("Pwr Consumption", "System Level")):
         return "power_consumption"
