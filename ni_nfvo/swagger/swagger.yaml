@@ -476,7 +476,6 @@ definitions:
     type: "object"
     required:
     - "flavor_id"
-    - "image_id"
     properties:
       flavor_id:
         type: "string"
@@ -492,7 +491,7 @@ definitions:
       image_id:
         type: "string"
         description: "if container: put the dockerhub container (e.g., ubuntu:18.04).\
-          \ If VM, put the OS image id."
+          \ If VM, put the OS image id. default to ubuntu image id in the config file"
       command:
         type: "array"
         description: "[Container only] Command to run when start the container,e.g.,\

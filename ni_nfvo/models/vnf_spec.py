@@ -163,7 +163,7 @@ class VnfSpec(Model):
     def image_id(self) -> str:
         """Gets the image_id of this VnfSpec.
 
-        if container: put the dockerhub container (e.g., ubuntu:18.04). If VM, put the OS image id.  # noqa: E501
+        if container: put the dockerhub container (e.g., ubuntu:18.04). If VM, put the OS image id. default to ubuntu image id in the config file  # noqa: E501
 
         :return: The image_id of this VnfSpec.
         :rtype: str
@@ -174,13 +174,11 @@ class VnfSpec(Model):
     def image_id(self, image_id: str):
         """Sets the image_id of this VnfSpec.
 
-        if container: put the dockerhub container (e.g., ubuntu:18.04). If VM, put the OS image id.  # noqa: E501
+        if container: put the dockerhub container (e.g., ubuntu:18.04). If VM, put the OS image id. default to ubuntu image id in the config file  # noqa: E501
 
         :param image_id: The image_id of this VnfSpec.
         :type image_id: str
         """
-        if image_id is None:
-            raise ValueError("Invalid value for `image_id`, must not be `None`")  # noqa: E501
 
         self._image_id = image_id
 

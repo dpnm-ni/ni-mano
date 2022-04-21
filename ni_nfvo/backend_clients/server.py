@@ -16,11 +16,13 @@ log = logging.getLogger(__name__)
 vnf_cfg = cfg["openstack_client"]["vnf"]
 mgmt_net_id = client.get_net_id_from_name(vnf_cfg["mgmt_net_name"])
 data_net_id = client.get_net_id_from_name(vnf_cfg["data_net_name"])
-
+default_image_id = vnf_cfg["default_image_id"]
 
 
 def create_vnf(vnf_spec):
-    # image_id none: the default image id is in flavor_id, which means using VM
+    if (vnf_spec.image_id is None):
+        vnf_spec.image_id = default_image_id
+
     if (glance_client.is_vm_image_id(vnf_spec.image_id)):
         return _create_vm(vnf_spec)
     else:
