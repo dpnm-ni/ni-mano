@@ -11,3 +11,4 @@ requests == 2.22.0
 confluent-kafka==1.1.0
 pyyaml==5.1.2
 influxdb==5.2.3
+python-zunclient==4.3.0
