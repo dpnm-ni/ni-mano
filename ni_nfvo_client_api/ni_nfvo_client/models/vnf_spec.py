@@ -71,7 +71,8 @@ class VnfSpec(object):
             self.vnf_name = vnf_name
         if user_data is not None:
             self.user_data = user_data
-        self.image_id = image_id
+        if image_id is not None:
+            self.image_id = image_id
         if command is not None:
             self.command = command
 
@@ -171,7 +172,7 @@ class VnfSpec(object):
     def image_id(self):
         """Gets the image_id of this VnfSpec.  # noqa: E501
 
-        if container: put the dockerhub container (e.g., ubuntu:18.04). If VM, put the OS image id.  # noqa: E501
+        if container: put the dockerhub container (e.g., ubuntu:18.04). If VM, put the OS image id. default to ubuntu image id in the config file  # noqa: E501
 
         :return: The image_id of this VnfSpec.  # noqa: E501
         :rtype: str
@@ -182,13 +183,11 @@ class VnfSpec(object):
     def image_id(self, image_id):
         """Sets the image_id of this VnfSpec.
 
-        if container: put the dockerhub container (e.g., ubuntu:18.04). If VM, put the OS image id.  # noqa: E501
+        if container: put the dockerhub container (e.g., ubuntu:18.04). If VM, put the OS image id. default to ubuntu image id in the config file  # noqa: E501
 
         :param image_id: The image_id of this VnfSpec.  # noqa: E501
         :type: str
         """
-        if self._configuration.client_side_validation and image_id is None:
-            raise ValueError("Invalid value for `image_id`, must not be `None`")  # noqa: E501
 
         self._image_id = image_id
 
