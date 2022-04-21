@@ -63,7 +63,7 @@ class DeployVnfinstance(forms.SelfHandlingForm):
     image_id = forms.CharField(max_length=255,
                                label=_("Image ID"),
                                empty_value=None,
-                               required=True,
+                               required=False,
                                help_text="Specify ID of a custom OS image (if VM) " \
                                          "or dockerhub container image (if container)")
 
