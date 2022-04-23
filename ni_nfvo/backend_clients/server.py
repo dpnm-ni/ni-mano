@@ -16,11 +16,14 @@ log = logging.getLogger(__name__)
 vnf_cfg = cfg["openstack_client"]["vnf"]
 mgmt_net_id = client.get_net_id_from_name(vnf_cfg["mgmt_net_name"])
 data_net_id = client.get_net_id_from_name(vnf_cfg["data_net_name"])
-default_image_id = vnf_cfg["default_image_id"]
+default_image_name = vnf_cfg["default_image_name"]
 
 
 def create_vnf(vnf_spec):
     if (vnf_spec.image_id is None):
+        default_image_id = glance_client.get_id_from_name(default_image_name)
+        if default_image_id is None:
+            abort(404, "cannot find image with default_image_name of " + default_image_name)
         vnf_spec.image_id = default_image_id
 
     if (glance_client.is_vm_image_id(vnf_spec.image_id)):

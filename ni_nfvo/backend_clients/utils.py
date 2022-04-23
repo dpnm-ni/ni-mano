@@ -85,6 +85,14 @@ class GlanceClient():
         except glanceclient.exc.HTTPNotFound:
             return False
 
+    def get_id_from_name(self, image_name):
+        images = self.client.images.list()
+        for image in images:
+            if image.name == image_name:
+                return image.id
+        return None
+
+
 
 class NovaClient():
     def __init__(self, auth_cfg):

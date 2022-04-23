@@ -12,4 +12,4 @@ openstack_client:
     # the name should be unique
     data_net_name: "NI-data"
     mgmt_net_name: "NI-management"
-    default_image_id: "default_image_id"
+    default_image_name: "default_image_name"
