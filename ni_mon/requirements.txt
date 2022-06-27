@@ -8,6 +8,6 @@ python_dateutil == 2.7.0
 setuptools >= 21.0.0
 python-keystoneclient == 3.20.0
 requests == 2.22.0
-pyyaml==5.1.2
+pyyaml==5.4
 influxdb==5.2.3
 python-zunclient==4.3.0
