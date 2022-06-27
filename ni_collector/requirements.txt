@@ -1,7 +1,6 @@
 # Python 2.6 compatibility
 # argparse==1.2.1
 
-confluent-kafka==1.1.0
 pyyaml==5.1.2
 influxdb==5.2.3
 flask
