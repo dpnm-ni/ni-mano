@@ -5,7 +5,6 @@ NI-Mon is generated with [swagger-codegen](https://github.com/swagger-api/swagge
 ## Requirements
 - Python 3.5.2+
 - Running Openstack cluster that NI-Mon monitors
-- Running kafka instance and kafka_extractor instance
 - Packages
 
     ```

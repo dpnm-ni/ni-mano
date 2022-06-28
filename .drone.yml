@@ -63,7 +63,6 @@ steps:
   # config ni_mon
   - cd ni_mon/config
   - cp config.yaml.example config.yaml
-  - sed -i "s/<kafka_server_address>/$MONITORING_HOST_DEV/g" config.yaml
   - sed -i "s/<controller_ip>/$CONTROLLER_HOST_DEV/g" config.yaml
   - sed -i "s/<influxdb_server_address>/$MONITORING_HOST_DEV/g" config.yaml
   - sed -i "s/<password>/$OPENSTACK_PASSWORD/g" config.yaml

@@ -11,7 +11,7 @@ from ni_mon.models.topology import Topology  # noqa: E501
 from ni_mon.models.network_port import NetworkPort  # noqa: E501
 from ni_mon import util
 
-from ni_mon.clients import kafka_client, influxdb_client
+from ni_mon.clients import influxdb_client
 from ni_mon.clients.openstack_client import openstack_client
 from ni_mon.clients.zun_client import zun_client
 from zunclient.v1.containers import Container

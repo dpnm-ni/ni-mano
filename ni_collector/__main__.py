@@ -9,7 +9,6 @@ from ni_collector.extractors import collectd
 from ni_collector.extractors import generic
 from ni_collector.config import cfg
 
-from confluent_kafka import Producer
 from influxdb import InfluxDBClient
 
 from flask import Flask, request, Response
@@ -18,8 +17,6 @@ from flask import Flask, request, Response
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
-
-producer = Producer(cfg['kafka_producer'])
 
 influxdb_cfg = cfg['influxdb']
 influxdb_client = InfluxDBClient(host=influxdb_cfg['server'],
@@ -41,17 +38,6 @@ def delivery_report(err, msg):
 
 
 def store_measurements(measurements):
-    # Send extracted data to kafka topics
-    # Asynchronously produce a message, the delivery report callback
-    # will be triggered from poll() above, or flush() below, when the message has
-    # been successfully delivered or failed permanently.
-    for item in measurements:
-        producer.produce(topic='ni',
-                         value=str({item[0]: item[1]}),
-                         timestamp=int(item[2]),
-                         callback=delivery_report)
-        producer.poll(0)
-
     # Send extracted data to influxdb
     influxdb_data_points = []
     for item in measurements:
@@ -81,10 +67,6 @@ def recv_generic_data():
     return Response(status=200)
 
 def main():
-    # Trigger any available delivery report callbacks from previous produce() calls
-    # see: https://github.com/confluentinc/confluent-kafka-python/issues/16
-    producer.poll(0)
-
     app.run(host='0.0.0.0', port=8401)
 
 
