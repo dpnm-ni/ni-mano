@@ -1,5 +1,5 @@
 # should also freeze depedencies modules
-Werkzeug==2.0.1
+Werkzeug==2.2.3
 
 connexion[swagger-ui]
 
