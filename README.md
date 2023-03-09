@@ -6,6 +6,8 @@ Master: [![Build Status](http://141.223.82.61:9010/api/badges/dpnm-ni/ni-mano/st
 Monorepo for the ni-mano related modules.
 Browse each sub folders for detailed README.
 
+Requirement: python >=3.8.
+
 NI-MANO architecture documentation on google doc: [link](https://docs.google.com/document/d/1mPfyjV3OFvtscQvKekPSgNlGsp_RAB2p5eQLtXOguFU)
 
 # Local testing with drone CI
